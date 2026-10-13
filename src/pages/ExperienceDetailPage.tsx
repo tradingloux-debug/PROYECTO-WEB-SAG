@@ -50,12 +50,12 @@ export const ExperienceDetailPage: React.FC = () => {
   if (!experience) {
     return (
       <div className="py-24 text-center max-w-md mx-auto">
-        <h2 className="text-xl font-bold">Experiencia no encontrada</h2>
+        <h2 className="text-xl font-bold">{t.detail.notFoundTitle}</h2>
         <button
           onClick={() => navigate('/experiencias')}
           className="mt-4 px-4 py-2 bg-slate-900 text-white rounded-lg text-xs"
         >
-          Volver al catálogo
+          {t.detail.backToCatalog}
         </button>
       </div>
     );
@@ -83,11 +83,11 @@ export const ExperienceDetailPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
           <Breadcrumbs
             items={[
-              { label: 'Experiencias', path: '/experiencias' },
+              { label: t.detail.experiencesLabel, path: '/experiencias' },
               { label: title },
             ]}
             backAction={{
-              label: 'Volver a experiencias',
+              label: t.detail.backToExperiences,
               path: '/experiencias',
             }}
             className="flex-1 min-w-0"
@@ -101,12 +101,12 @@ export const ExperienceDetailPage: React.FC = () => {
             {copiedLink ? (
               <>
                 <CheckCircle2 className="w-3.5 h-3.5 text-teal-600" />
-                <span className="text-teal-700 font-medium">Enlace copiado</span>
+                <span className="text-teal-700 font-medium">{t.detail.linkCopied}</span>
               </>
             ) : (
               <>
                 <Share2 className="w-3.5 h-3.5" />
-                <span>Compartir</span>
+                <span>{t.detail.share}</span>
               </>
             )}
           </button>
@@ -149,7 +149,7 @@ export const ExperienceDetailPage: React.FC = () => {
                   <span className="text-[11px] text-neutral-400 block mb-0.5">{t.detail.approxGroupSize}</span>
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900">
                     <Users className="w-3.5 h-3.5 text-teal-700" />
-                    <span>{experience.minPeople} - {experience.maxPeople} personas</span>
+                    <span>{experience.minPeople} - {experience.maxPeople} {t.detail.people}</span>
                   </div>
                 </div>
 
@@ -162,7 +162,7 @@ export const ExperienceDetailPage: React.FC = () => {
                 </div>
 
                 <div className="p-3 bg-neutral-50 rounded-xl border border-neutral-200/60">
-                  <span className="text-[11px] text-neutral-400 block mb-0.5">Ubicación</span>
+                  <span className="text-[11px] text-neutral-400 block mb-0.5">{t.detail.location}</span>
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900 truncate">
                     <MapPin className="w-3.5 h-3.5 text-teal-700 shrink-0" />
                     <span className="truncate">{experience.location}</span>
@@ -186,7 +186,7 @@ export const ExperienceDetailPage: React.FC = () => {
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FDBA2D] hover:bg-[#f5b124] text-slate-950 font-bold text-xs transition-all shadow-xs cursor-pointer"
                   >
                     <Compass className="w-3.5 h-3.5 text-slate-950" />
-                    <span>Explorar en 360°</span>
+                    <span>{t.detail.explore360}</span>
                   </button>
                 )}
               </div>
@@ -201,15 +201,15 @@ export const ExperienceDetailPage: React.FC = () => {
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <h2 className="text-xl font-bold text-[#063A5B] font-display flex items-center gap-2">
                     <Compass className="w-5 h-5 text-[#00A6A6]" />
-                    <span>Exploración 360° interactiva</span>
+                    <span>{t.detail.panoramaTitle}</span>
                   </h2>
                   <span className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-teal-50 text-[#00A6A6] border border-teal-200 flex items-center gap-1">
                     <Move className="w-3 h-3" />
-                    <span>Arrastra para mover en 360°</span>
+                    <span>{t.detail.panoramaDrag}</span>
                   </span>
                 </div>
                 <p className="text-xs text-neutral-500">
-                  Explora la panorámica en 360 grados antes de tu visita. Haz clic y arrastra con el cursor o en tu pantalla táctil para mover la perspectiva en cualquier dirección.
+                  {t.detail.panoramaHelp}
                 </p>
                 <div className="pt-2">
                   <Interactive360Viewer
@@ -228,10 +228,10 @@ export const ExperienceDetailPage: React.FC = () => {
               <section className="space-y-4 pt-4 border-t border-neutral-100 bg-[#F7F4ED]/80 rounded-3xl p-6 sm:p-7 border border-neutral-200/80">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#55A94B] text-xs font-bold font-mono">
                   <Heart className="w-3.5 h-3.5 fill-[#55A94B]" />
-                  <span>Anfitriones Locales</span>
+                  <span>{t.detail.localHosts}</span>
                 </div>
                 <h2 className="text-xl font-bold text-[#063A5B] font-display">
-                  Conoce a tus anfitriones
+                  {t.detail.meetHosts}
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-5 items-start">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-emerald-900 shrink-0 border-2 border-white shadow-md">
@@ -257,12 +257,12 @@ export const ExperienceDetailPage: React.FC = () => {
                 {/* Community Contribution Impact */}
                 <div className="pt-4 border-t border-neutral-200/60 mt-4 space-y-1.5">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#063A5B]">
-                    Cómo contribuye tu visita
+                    {t.detail.visitImpact}
                   </h4>
                   <p className="text-xs text-neutral-600 leading-relaxed">
                     {experience.hostStory.impactEs
                       ? (language === 'es' ? experience.hostStory.impactEs : experience.hostStory.impactEn)
-                      : 'Información por confirmar'}
+                      : t.detail.infoToConfirm}
                   </p>
                 </div>
               </section>

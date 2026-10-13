@@ -8,12 +8,10 @@ import {
   MapPin,
   Clock,
   Heart,
-  Star,
   Compass,
   Sparkles,
-  Users,
   ArrowRight,
-  BookmarkCheck,
+  Images,
 } from 'lucide-react';
 import { VirtualTour360 } from '../common/VirtualTour360';
 
@@ -51,13 +49,13 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
   const getCategoryLabel = () => {
     switch (experience.category) {
       case 'cultura':
-        return 'Cultura';
+        return t.categories.culture;
       case 'gastronomia':
-        return 'Gastronomía';
+        return t.categories.gastronomy;
       case 'naturaleza':
-        return 'Naturaleza';
+        return t.categories.nature;
       case 'aventura':
-        return 'Aventura';
+        return t.categories.adventure;
       default:
         return experience.category;
     }
@@ -69,17 +67,17 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
   const formattedPrice = experience.price && experience.price > 0 ? (
     <div className="flex flex-col">
       <div className="flex items-baseline gap-1">
-        <span className="text-xs font-semibold text-neutral-500">Desde</span>
+        <span className="text-xs font-semibold text-neutral-500">{t.card.from}</span>
         <span className="text-2xl font-black font-mono text-[#063A5B] tracking-tight">
           ${experience.price}
         </span>
       </div>
-      <span className="text-[11px] text-neutral-400 font-medium -mt-0.5">por persona</span>
+      <span className="text-[11px] text-neutral-400 font-medium -mt-0.5">{t.card.perPerson}</span>
     </div>
   ) : (
     <div className="flex flex-col">
-      <span className="text-sm font-bold text-neutral-600">Precio por confirmar</span>
-      <span className="text-[11px] text-neutral-400">Consultar disponibilidad</span>
+      <span className="text-sm font-bold text-neutral-600">{t.card.priceToConfirm}</span>
+      <span className="text-[11px] text-neutral-400">{t.card.checkAvailability}</span>
     </div>
   );
 
@@ -124,32 +122,12 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
           <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10 max-w-[80%]">
             {experience.featured && (
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#FDBA2D] text-slate-950 text-[10.5px] font-extrabold shadow-2xs">
-                Recomendada
+                {t.card.recommended}
               </span>
             )}
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#063A5B]/90 backdrop-blur-md text-white text-[10.5px] font-bold">
               {getCategoryLabel()}
             </span>
-            {experience.isLocalExperience && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#55A94B] text-white text-[10.5px] font-bold shadow-2xs">
-                <Users className="w-3 h-3" />
-                <span>Experiencia local</span>
-              </span>
-            )}
-            {has360 && (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowTour360(true);
-                }}
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md text-[#FDBA2D] text-[10.5px] font-bold border border-amber-400/30 hover:bg-slate-900 transition-all cursor-pointer"
-                title="Abrir imagen 360° interactiva"
-              >
-                <Sparkles className="w-3 h-3 text-[#FDBA2D]" />
-                <span>Explorar 360°</span>
-              </button>
-            )}
           </div>
 
           {/* Favorite button */}
@@ -159,7 +137,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               onClick={handleFavoriteClick}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
-              aria-label={favoriteActive ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+              aria-label={favoriteActive ? t.card.removeFavorite : t.card.saveFavorite}
               className={`w-9 h-9 rounded-full flex items-center justify-center transition-all backdrop-blur-md cursor-pointer ${
                 favoriteActive
                   ? 'bg-rose-500 text-white shadow-md scale-105'
@@ -170,8 +148,31 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             </button>
             {showTooltip && (
               <span className="absolute top-10 right-0 whitespace-nowrap bg-slate-900 text-white text-[10px] font-medium px-2 py-1 rounded shadow-lg pointer-events-none">
-                {favoriteActive ? 'Guardada en favoritos' : 'Guardar experiencia'}
+                {favoriteActive ? t.card.savedFavorite : t.card.saveFavorite}
               </span>
+            )}
+          </div>
+
+          <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5">
+            {experience.images.length > 1 && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/55 backdrop-blur-md text-white text-[10px] font-semibold border border-white/15">
+                <Images className="w-3 h-3" />
+                {experience.images.length}
+              </span>
+            )}
+            {has360 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowTour360(true);
+                }}
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-[#FDBA2D] text-[10px] font-bold border border-amber-400/30"
+                title={t.card.open360}
+              >
+                <Sparkles className="w-3 h-3" />
+                <span>360°</span>
+              </button>
             )}
           </div>
         </div>
@@ -196,15 +197,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
               <span>{experience.duration}</span>
-              {experience.demoRating && (
-                <>
-                  <span className="text-neutral-300">·</span>
-                  <div className="flex items-center gap-1 text-neutral-700">
-                    <Star className="w-3.5 h-3.5 text-[#FDBA2D] fill-[#FDBA2D]" />
-                    <span className="font-bold font-mono">{experience.demoRating.toFixed(1)}</span>
-                  </div>
-                </>
-              )}
             </div>
 
             {/* Breve descripción */}
@@ -225,7 +217,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               }}
               className="px-5 py-2.5 bg-[#00A6A6] hover:bg-[#009191] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md group-hover:shadow-lg flex items-center gap-1.5 cursor-pointer shrink-0"
             >
-              <span>Ver experiencia</span>
+              <span>{t.card.viewDetails}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -266,7 +258,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10 max-w-[80%]">
           {experience.featured && (
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#FDBA2D] text-slate-950 text-[10.5px] font-extrabold shadow-2xs">
-              Recomendada
+              {t.card.recommended}
             </span>
           )}
 
@@ -274,27 +266,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             {getCategoryLabel()}
           </span>
 
-          {experience.isLocalExperience && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#55A94B] text-white text-[10.5px] font-bold shadow-2xs">
-              <Users className="w-3 h-3" />
-              <span>Experiencia local</span>
-            </span>
-          )}
-
-          {has360 && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowTour360(true);
-              }}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md text-[#FDBA2D] text-[10.5px] font-bold border border-amber-400/30 hover:bg-slate-900 transition-all cursor-pointer"
-              title="Abrir imagen 360° interactiva"
-            >
-              <Sparkles className="w-3 h-3 text-[#FDBA2D]" />
-              <span>Explorar 360°</span>
-            </button>
-          )}
         </div>
 
         {/* 12. FAVORITOS con icono de corazón y tooltip */}
@@ -304,7 +275,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             onClick={handleFavoriteClick}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
-            aria-label={favoriteActive ? 'Quitar de favoritos' : 'Guardar experiencia'}
+            aria-label={favoriteActive ? t.card.removeFavorite : t.card.saveFavorite}
             className={`w-9 h-9 rounded-full flex items-center justify-center transition-all backdrop-blur-md cursor-pointer ${
               favoriteActive
                 ? 'bg-rose-500 text-white shadow-md scale-105'
@@ -315,23 +286,38 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
           </button>
           {showTooltip && (
             <span className="absolute top-10 right-0 whitespace-nowrap bg-slate-900 text-white text-[10px] font-medium px-2 py-1 rounded shadow-lg pointer-events-none">
-              {favoriteActive ? 'Guardada en favoritos' : 'Guardar experiencia'}
+              {favoriteActive ? t.card.savedFavorite : t.card.saveFavorite}
             </span>
           )}
         </div>
 
-        {/* Rating y ubicación sobre el pie de la imagen */}
-        {experience.demoRating && (
-          <div className="absolute bottom-2.5 left-3 text-white text-[11px] font-medium flex items-center gap-1.5 z-10">
-            <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/15">
-              <Star className="w-3 h-3 text-[#FDBA2D] fill-[#FDBA2D]" />
-              <span className="font-bold font-mono">{experience.demoRating.toFixed(1)}</span>
-            </div>
-            <span className="text-[10.5px] text-slate-200 drop-shadow-sm font-medium">
-              {experience.department}
-            </span>
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
+          <span className="text-[10.5px] text-white drop-shadow-sm font-semibold">
+            {experience.department}
+          </span>
+          <div className="flex items-center gap-1.5">
+            {experience.images.length > 1 && (
+              <span className="inline-flex items-center gap-1 bg-black/55 backdrop-blur-md px-2 py-1 rounded-full border border-white/15 text-white text-[10px] font-semibold">
+                <Images className="w-3 h-3" />
+                {experience.images.length}
+              </span>
+            )}
+            {has360 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowTour360(true);
+                }}
+                className="inline-flex items-center gap-1 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-full border border-amber-400/30 text-[#FDBA2D] text-[10px] font-bold"
+                title={t.card.open360}
+              >
+                <Sparkles className="w-3 h-3" />
+                360°
+              </button>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       {/* 9. INFORMACIÓN DE LA CARD:
@@ -373,7 +359,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             }}
             className="px-4 py-2.5 bg-[#00A6A6] hover:bg-[#009191] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md group-hover:shadow-lg flex items-center gap-1 cursor-pointer shrink-0"
           >
-            <span>Ver experiencia</span>
+            <span>{t.card.viewDetails}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

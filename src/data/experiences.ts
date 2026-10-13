@@ -6,6 +6,7 @@ import expSuchitoto from '../assets/images/exp_culture_suchitoto_1791258103725.j
 import expCoffee from '../assets/images/exp_coffee_apaneca_1791258112096.jpg';
 import expSurf from '../assets/images/exp_adventure_surf_tunco_1791258121258.jpg';
 import expSantaAna from '../assets/images/exp_nature_santa_ana_1791258129967.jpg';
+import expTazumal from '../assets/images/exp_maya_tazumal_1791865355034.jpg';
 import panoSantaAna from '../assets/images/pano360_santa_ana_v2.jpg';
 import panoSurfTunco from '../assets/images/pano360_surf_tunco_v2.jpg';
 import panoSuchitoto from '../assets/images/pano360_suchitoto_v2.jpg';
@@ -929,7 +930,7 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['individual', 'parejas', 'familias', 'grupos'],
     minPeople: 1,
     maxPeople: 12,
-    images: [expSuchitoto, expSantaAna],
+    images: [expTazumal],
     includedEs: [
       'Entradas y admisiones oficiales a Joya de Cerén y Tazumal',
       'Arqueólogo o guía patrimonial certificado durante todo el recorrido',

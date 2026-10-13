@@ -47,6 +47,15 @@ export interface TranslationDictionary {
     benefit4Desc: string;
   };
   catalog: {
+    badge: string;
+    pageTitle: string;
+    pageSubtitle: string;
+    searchPlaceholder: string;
+    allChip: string;
+    localChip: string;
+    virtualTourChip: string;
+    clearSearch: string;
+    resetActive: string;
     title: string;
     subtitle: string;
     searchLabel: string;
@@ -80,6 +89,16 @@ export interface TranslationDictionary {
     viewDetails: string;
     demoTag: string;
     duration: string;
+    recommended: string;
+    localExperience: string;
+    explore360: string;
+    open360: string;
+    priceToConfirm: string;
+    checkAvailability: string;
+    removeFavorite: string;
+    saveFavorite: string;
+    savedFavorite: string;
+    photos: string;
   };
   detail: {
     backToCatalog: string;
@@ -102,6 +121,27 @@ export interface TranslationDictionary {
     bookNowBtn: string;
     reserveCta: string;
     perPersonSmall: string;
+    experiencesLabel: string;
+    backToExperiences: string;
+    notFoundTitle: string;
+    share: string;
+    linkCopied: string;
+    people: string;
+    location: string;
+    explore360: string;
+    panoramaTitle: string;
+    panoramaDrag: string;
+    panoramaHelp: string;
+    localHosts: string;
+    meetHosts: string;
+    visitImpact: string;
+    infoToConfirm: string;
+    image: string;
+    thumbnail: string;
+    openGallery: string;
+    previousImage: string;
+    nextImage: string;
+    closeGallery: string;
   };
   checkout: {
     title: string;

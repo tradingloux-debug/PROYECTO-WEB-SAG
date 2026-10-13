@@ -41,7 +41,7 @@ const initialFilters: ExperienceFilterState = {
 
 export const ExperiencesPage: React.FC = () => {
   const { query, navigate } = useRouter();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [visibleCount, setVisibleCount] = useState<number>(9);
@@ -184,7 +184,7 @@ export const ExperiencesPage: React.FC = () => {
   const quickChips = [
     {
       id: 'todos',
-      label: 'Todos',
+      label: t.catalog.allChip,
       active:
         filters.category === 'all' &&
         !filters.onlyLocal &&
@@ -198,7 +198,7 @@ export const ExperiencesPage: React.FC = () => {
     },
     {
       id: 'cultura',
-      label: 'Cultura',
+      label: t.categories.culture,
       active: filters.category === 'cultura' && !filters.onlyLocal,
       onClick: () =>
         handleFilterChange({
@@ -209,7 +209,7 @@ export const ExperiencesPage: React.FC = () => {
     },
     {
       id: 'gastronomia',
-      label: 'Gastronomía',
+      label: t.categories.gastronomy,
       active: filters.category === 'gastronomia' && !filters.onlyLocal,
       onClick: () =>
         handleFilterChange({
@@ -220,7 +220,7 @@ export const ExperiencesPage: React.FC = () => {
     },
     {
       id: 'naturaleza',
-      label: 'Naturaleza',
+      label: t.categories.nature,
       active: filters.category === 'naturaleza' && !filters.onlyLocal,
       onClick: () =>
         handleFilterChange({
@@ -231,7 +231,7 @@ export const ExperiencesPage: React.FC = () => {
     },
     {
       id: 'aventura',
-      label: 'Aventura',
+      label: t.categories.adventure,
       active: filters.category === 'aventura' && !filters.onlyLocal,
       onClick: () =>
         handleFilterChange({
@@ -242,7 +242,7 @@ export const ExperiencesPage: React.FC = () => {
     },
     {
       id: 'locales',
-      label: 'Experiencias locales',
+      label: t.catalog.localChip,
       active: Boolean(filters.onlyLocal),
       onClick: () =>
         handleFilterChange({
@@ -252,7 +252,7 @@ export const ExperiencesPage: React.FC = () => {
     },
     {
       id: '360',
-      label: '360°',
+      label: t.catalog.virtualTourChip,
       active: Boolean(filters.only360),
       onClick: () =>
         handleFilterChange({
@@ -268,15 +268,15 @@ export const ExperiencesPage: React.FC = () => {
         <div className="space-y-6 max-w-4xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-neutral-200/80 text-[#063A5B] text-xs font-bold font-mono shadow-2xs">
             <Compass className="w-3.5 h-3.5 text-[#00A6A6]" />
-            <span>Catálogo Auténtico de El Salvador</span>
+            <span>{t.catalog.badge}</span>
           </div>
 
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-5xl font-black text-[#063A5B] tracking-tight font-display leading-[1.12]">
-              Encuentra tu próxima experiencia
+              {t.catalog.pageTitle}
             </h1>
             <p className="text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
-              Descubre cultura, naturaleza, gastronomía y aventura en diferentes rincones de El Salvador.
+              {t.catalog.pageSubtitle}
             </p>
           </div>
 
@@ -289,7 +289,7 @@ export const ExperiencesPage: React.FC = () => {
               type="text"
               value={filters.searchQuery}
               onChange={(e) => handleFilterChange({ searchQuery: e.target.value })}
-              placeholder="¿Qué quieres vivir en El Salvador? (playa, café, volcán, Suchitoto...)"
+              placeholder={t.catalog.searchPlaceholder}
               className="flex-1 py-2 sm:py-2.5 text-xs sm:text-sm text-neutral-800 placeholder:text-neutral-400 bg-transparent focus:outline-hidden font-medium"
             />
             {filters.searchQuery && (
@@ -298,7 +298,7 @@ export const ExperiencesPage: React.FC = () => {
                 onClick={() => handleFilterChange({ searchQuery: '' })}
                 className="px-3 py-1 text-xs text-neutral-400 hover:text-neutral-700 font-semibold cursor-pointer"
               >
-                Limpiar
+                {t.catalog.clearSearch}
               </button>
             )}
           </div>
@@ -329,7 +329,7 @@ export const ExperiencesPage: React.FC = () => {
               <span className="font-mono text-base font-black text-[#00A6A6] mr-1">
                 {filteredExperiences.length}
               </span>
-              experiencias encontradas
+              {t.catalog.resultsFound}
             </p>
 
             {activeFiltersCount > 0 && (
@@ -339,7 +339,7 @@ export const ExperiencesPage: React.FC = () => {
                 className="text-xs text-neutral-500 hover:text-[#00A6A6] font-semibold flex items-center gap-1 cursor-pointer transition-colors"
               >
                 <RotateCcw className="w-3 h-3" />
-                <span>Restablecer ({activeFiltersCount})</span>
+                <span>{t.catalog.resetActive} ({activeFiltersCount})</span>
               </button>
             )}
           </div>
@@ -354,7 +354,7 @@ export const ExperiencesPage: React.FC = () => {
             >
               <SlidersHorizontal className="w-3.5 h-3.5 text-[#FDBA2D]" />
               <span>
-                Filtros {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ''}
+                {t.catalog.filtersTitle} {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ''}
               </span>
             </button>
 
