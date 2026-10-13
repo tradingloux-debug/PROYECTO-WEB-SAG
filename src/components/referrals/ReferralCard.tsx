@@ -2,16 +2,28 @@ import React, { useState } from 'react';
 import { ReferralProgramState } from '../../types/referral';
 import { Copy, Check, Share2, Users, Gift, Sparkles, CheckCircle2 } from 'lucide-react';
 import { trackEvent } from '../../services/analytics';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface ReferralCardProps {
   state: ReferralProgramState;
 }
 
 export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
+  const { language } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
 
+  if (!state.currentCode) return null;
   const code = state.currentCode.code;
+  const copy = language === 'es' ? {
+    badge: 'Programa Comparte GIA', title: 'Invita a tus amigos a descubrir El Salvador',
+    description: <>Tus invitados obtienen un <strong>5% de descuento</strong> en su primera reserva, y tú acumulas <strong>${state.currentCode.rewardValue} USD en Créditos GIA</strong> por cada experiencia completada.</>,
+    code: 'Tu código de recomendación', copied: '¡Copiado!', copy: 'Copiar código', share: 'Compartir', invited: 'Personas invitadas', completed: 'Reservas completadas', credits: 'Crédito GIA acumulado',
+  } : {
+    badge: 'Share GIA Program', title: 'Invite friends to discover El Salvador',
+    description: <>Your guests receive <strong>5% off</strong> their first booking, and you earn <strong>${state.currentCode.rewardValue} USD in GIA Credits</strong> for each completed experience.</>,
+    code: 'Your referral code', copied: 'Copied!', copy: 'Copy code', share: 'Share', invited: 'People invited', completed: 'Completed bookings', credits: 'GIA credit earned',
+  };
 
   const handleCopy = () => {
     if (navigator.clipboard) {
@@ -27,7 +39,7 @@ export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
     if (navigator.share) {
       navigator.share({
         title: 'GIA Experiences - El Salvador',
-        text: `¡Usa mi código ${code} en GIA Experiences para obtener un 10% de descuento en experiencias turísticas auténticas por El Salvador!`,
+        text: language === 'es' ? `Usa mi código ${code} en GIA Experiences para obtener 5% de descuento en tu primera reserva.` : `Use my code ${code} at GIA Experiences to get 5% off your first booking.`,
         url: window.location.origin,
       }).catch(() => {});
     } else {
@@ -42,13 +54,13 @@ export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
       <div className="max-w-xl space-y-2">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold font-mono">
           <Gift className="w-3.5 h-3.5 text-amber-400" />
-          <span>Programa Comparte GIA</span>
+          <span>{copy.badge}</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold font-display">
-          Invita a tus amigos a descubrir El Salvador
+          {copy.title}
         </h2>
         <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-          Tus invitados obtienen un <strong>10% de descuento</strong> en su primera reserva, y tú acumulas <strong>${state.currentCode.rewardValue} USD en Créditos GIA</strong> por cada experiencia completada.
+          {copy.description}
         </p>
       </div>
 
@@ -56,7 +68,7 @@ export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
       <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span className="text-[11px] font-mono text-slate-300 block mb-1">
-            Tu código de recomendación
+            {copy.code}
           </span>
           <span className="text-2xl sm:text-3xl font-black font-mono tracking-widest text-amber-400">
             {code}
@@ -70,7 +82,7 @@ export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
             className="px-4 py-2.5 bg-white text-slate-950 font-bold text-xs rounded-xl shadow-xs hover:bg-neutral-100 transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? '¡Copiado!' : 'Copiar código'}</span>
+            <span>{copied ? copy.copied : copy.copy}</span>
           </button>
 
           <button
@@ -79,7 +91,7 @@ export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
             className="px-4 py-2.5 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Share2 className="w-4 h-4" />
-            <span>Compartir</span>
+            <span>{copy.share}</span>
           </button>
         </div>
       </div>
@@ -87,21 +99,21 @@ export const ReferralCard: React.FC<ReferralCardProps> = ({ state }) => {
       {/* Metrics Counters */}
       <div className="grid grid-cols-3 gap-3 pt-2">
         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-          <span className="text-[11px] text-slate-400 block">Personas invitadas</span>
+          <span className="text-[11px] text-slate-400 block">{copy.invited}</span>
           <span className="text-xl sm:text-2xl font-black font-mono text-white mt-1 block">
             {state.invitedCount}
           </span>
         </div>
 
         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-          <span className="text-[11px] text-slate-400 block">Reservas completadas</span>
+          <span className="text-[11px] text-slate-400 block">{copy.completed}</span>
           <span className="text-xl sm:text-2xl font-black font-mono text-white mt-1 block">
             {state.completedBookingsCount}
           </span>
         </div>
 
         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-          <span className="text-[11px] text-slate-400 block">Crédito GIA acumulado</span>
+          <span className="text-[11px] text-slate-400 block">{copy.credits}</span>
           <span className="text-xl sm:text-2xl font-black font-mono text-amber-400 mt-1 block">
             ${state.creditsBalance} USD
           </span>

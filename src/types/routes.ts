@@ -37,4 +37,12 @@ export interface TourRoute {
   itinerary: RouteItineraryDay[];
   active: boolean;
   featured?: boolean;
+  packageStyleEs?: string;
+  packageStyleEn?: string;
+  accommodationEs?: string;
+  accommodationEn?: string;
+  mobilityEs?: string;
+  mobilityEn?: string;
+  mealsEs?: string;
+  mealsEn?: string;
 }

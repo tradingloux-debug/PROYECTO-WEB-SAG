@@ -1,6 +1,7 @@
 import React from 'react';
 import { CreditTransaction } from '../../types/referral';
 import { Coins, ArrowDownLeft, ArrowUpRight, History, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface GiaCreditsCardProps {
   balance: number;
@@ -8,6 +9,7 @@ interface GiaCreditsCardProps {
 }
 
 export const GiaCreditsCard: React.FC<GiaCreditsCardProps> = ({ balance, transactions }) => {
+  const { language } = useLanguage();
   return (
     <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-2xs space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-100">
@@ -17,7 +19,7 @@ export const GiaCreditsCard: React.FC<GiaCreditsCardProps> = ({ balance, transac
           </div>
           <div>
             <span className="text-xs font-semibold text-neutral-500 uppercase tracking-wider block">
-              Tu saldo disponible
+              {language === 'es' ? 'Tu saldo disponible' : 'Your available balance'}
             </span>
             <h3 className="text-2xl sm:text-3xl font-black font-mono text-slate-900">
               ${balance} <span className="text-sm font-sans font-normal text-neutral-500">GIA Credits</span>
@@ -27,7 +29,7 @@ export const GiaCreditsCard: React.FC<GiaCreditsCardProps> = ({ balance, transac
 
         <div className="text-xs text-neutral-500 max-w-xs leading-relaxed bg-neutral-50 p-3 rounded-xl border border-neutral-200/60 flex items-start gap-2">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-          <span>Puedes redimir tu saldo como descuento directo durante el checkout de cualquier experiencia.</span>
+          <span>{language === 'es' ? 'Puedes redimir tu saldo como descuento directo durante la reserva de cualquier experiencia.' : 'You can redeem your balance as a direct discount when booking any experience.'}</span>
         </div>
       </div>
 
@@ -35,7 +37,7 @@ export const GiaCreditsCard: React.FC<GiaCreditsCardProps> = ({ balance, transac
       <div className="space-y-3">
         <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
           <History className="w-3.5 h-3.5 text-neutral-400" />
-          <span>Historial de movimientos</span>
+          <span>{language === 'es' ? 'Historial de movimientos' : 'Transaction history'}</span>
         </h4>
 
         {transactions.length > 0 ? (
@@ -76,7 +78,7 @@ export const GiaCreditsCard: React.FC<GiaCreditsCardProps> = ({ balance, transac
           </div>
         ) : (
           <p className="text-xs text-neutral-400 py-3 text-center">
-            Aún no tienes transacciones registradas.
+            {language === 'es' ? 'Aún no tienes transacciones registradas.' : 'You do not have any transactions yet.'}
           </p>
         )}
       </div>

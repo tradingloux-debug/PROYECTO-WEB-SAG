@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useBookingDraft } from '../context/BookingDraftContext';
+import { useAccount } from '../context/AccountContext';
 import { storageService } from '../services/storage';
 import { referralService } from '../services/referralService';
 import { trackEvent } from '../services/analytics';
@@ -26,6 +27,7 @@ export const CheckoutPage: React.FC = () => {
   const { navigate } = useRouter();
   const { language, t } = useLanguage();
   const { draft, setLastConfirmedBooking } = useBookingDraft();
+  const { profile } = useAccount();
 
   // If no draft exists, redirect gracefully to catalog
   if (!draft) {
@@ -53,11 +55,11 @@ export const CheckoutPage: React.FC = () => {
 
   // Form state for traveler details
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    country: '',
+    firstName: profile?.firstName || '',
+    lastName: profile?.lastName || '',
+    email: profile?.email || '',
+    phone: profile?.phone || '',
+    country: profile?.country || '',
     notes: '',
     agreeTerms: false,
   });
@@ -77,6 +79,7 @@ export const CheckoutPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const totalPeople = draft.adults + draft.children;
+  const isRouteBooking = draft.experienceId.startsWith('route-');
   const subtotal = draft.pricePerPerson * totalPeople;
 
   // Calculate discount from promo code
@@ -100,7 +103,7 @@ export const CheckoutPage: React.FC = () => {
     setPromoMessage(null);
     if (!promoCodeInput.trim()) return;
 
-    const result = referralService.validateCode(promoCodeInput);
+    const result = referralService.validateCode(promoCodeInput, referralState.currentCode?.code, language);
     if (result.valid && result.discountType && result.discountValue) {
       setAppliedPromo({
         code: promoCodeInput.trim().toUpperCase(),
@@ -154,7 +157,7 @@ export const CheckoutPage: React.FC = () => {
 
     // If credits were used, redeem them from wallet
     if (creditsAmount > 0) {
-      referralService.redeemCredits(creditsAmount, code);
+      referralService.redeemCredits(creditsAmount, code, language);
     }
 
     const newBooking: Booking = {
@@ -184,6 +187,10 @@ export const CheckoutPage: React.FC = () => {
 
     try {
       await storageService.saveBooking(newBooking);
+      if (profile && profile.email.trim().toLowerCase() === newBooking.email.trim().toLowerCase()) {
+        const bookings = await storageService.listRecentBookings();
+        referralService.unlockAfterFirstBooking(profile, bookings);
+      }
       setLastConfirmedBooking(newBooking);
 
       trackEvent('booking_confirmed', {
@@ -196,7 +203,7 @@ export const CheckoutPage: React.FC = () => {
       navigate('/reserva-confirmada');
     } catch (err) {
       console.error('Error saving booking', err);
-      setErrors({ form: 'No se pudo registrar la reserva. Intenta nuevamente.' });
+      setErrors({ form: language === 'es' ? 'No se pudo registrar la reserva. Intenta nuevamente.' : 'We could not save your booking. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -209,11 +216,11 @@ export const CheckoutPage: React.FC = () => {
         {/* Back navigation */}
         <button
           type="button"
-          onClick={() => navigate(`/experiencias/${draft.experienceSlug}`)}
+          onClick={() => navigate(isRouteBooking ? `/rutas/${draft.experienceSlug}` : `/experiencias/${draft.experienceSlug}`)}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-neutral-900 transition-colors mb-6 cursor-pointer"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>{language === 'es' ? '← Volver al detalle de la experiencia' : '← Back to experience details'}</span>
+          <span>{language === 'es' ? `← Volver al detalle ${isRouteBooking ? 'del tour' : 'de la experiencia'}` : `← Back to ${isRouteBooking ? 'tour' : 'experience'} details`}</span>
         </button>
 
         <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 tracking-tight font-display mb-8">
@@ -244,7 +251,7 @@ export const CheckoutPage: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <span className="text-[11px] text-neutral-400 block mb-0.5">Experiencia</span>
+                <span className="text-[11px] text-neutral-400 block mb-0.5">{language === 'es' ? (isRouteBooking ? 'Tour completo' : 'Experiencia') : (isRouteBooking ? 'Complete tour' : 'Experience')}</span>
                 <p className="text-xs font-bold text-neutral-900 leading-snug">
                   {draft.experienceTitle}
                 </p>
@@ -267,7 +274,7 @@ export const CheckoutPage: React.FC = () => {
                 <p className="text-xs font-bold text-neutral-900 flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5 text-teal-700" />
                   <span>
-                    {draft.adults} adultos {draft.children > 0 && `· ${draft.children} niños`}
+                    {draft.adults} {language === 'es' ? 'adultos' : 'adults'} {draft.children > 0 && `· ${draft.children} ${language === 'es' ? 'niños' : 'children'}`}
                   </span>
                 </p>
               </div>
@@ -290,7 +297,7 @@ export const CheckoutPage: React.FC = () => {
                   type="text"
                   value={formData.firstName}
                   onChange={e => setFormData({ ...formData, firstName: e.target.value })}
-                  placeholder="Ej. Sofia"
+                  placeholder={language === 'es' ? 'Ej. Sofía' : 'E.g. Sophia'}
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.firstName ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -307,7 +314,7 @@ export const CheckoutPage: React.FC = () => {
                   type="text"
                   value={formData.lastName}
                   onChange={e => setFormData({ ...formData, lastName: e.target.value })}
-                  placeholder="Ej. Martinez"
+                  placeholder={language === 'es' ? 'Ej. Martínez' : 'E.g. Martinez'}
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.lastName ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -341,7 +348,7 @@ export const CheckoutPage: React.FC = () => {
                   type="tel"
                   value={formData.phone}
                   onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+1 (555) 000-0000 o +503 ..."
+                  placeholder="+1 (555) 000-0000 / +503 ..."
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.phone ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -358,7 +365,7 @@ export const CheckoutPage: React.FC = () => {
                   type="text"
                   value={formData.country}
                   onChange={e => setFormData({ ...formData, country: e.target.value })}
-                  placeholder="Ej. Estados Unidos, Canadá, España, El Salvador..."
+                  placeholder={language === 'es' ? 'Ej. Estados Unidos, Canadá, España, El Salvador...' : 'E.g. United States, Canada, Spain, El Salvador...'}
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.country ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -392,14 +399,14 @@ export const CheckoutPage: React.FC = () => {
             <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200/80 space-y-2">
               <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                 <Tag className="w-3.5 h-3.5 text-teal-700" />
-                <span>¿Tienes un código GIA o de recomendación?</span>
+                <span>{language === 'es' ? '¿Tienes un código GIA o de recomendación?' : 'Do you have a GIA or referral code?'}</span>
               </label>
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={promoCodeInput}
                   onChange={e => setPromoCodeInput(e.target.value.toUpperCase())}
-                  placeholder="Ej. ANDREA10 o BIENVENIDO5"
+                  placeholder={language === 'es' ? 'Ej. BIENVENIDO5' : 'E.g. BIENVENIDO5'}
                   className="flex-1 px-3.5 py-2 text-xs rounded-xl border border-neutral-200 bg-white font-mono uppercase focus:ring-2 focus:ring-teal-700"
                 />
                 <button
@@ -407,7 +414,7 @@ export const CheckoutPage: React.FC = () => {
                   onClick={handleApplyPromo}
                   className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-colors shrink-0"
                 >
-                  Aplicar
+                  {language === 'es' ? 'Aplicar' : 'Apply'}
                 </button>
               </div>
 
@@ -437,7 +444,7 @@ export const CheckoutPage: React.FC = () => {
                       className="rounded text-teal-800 focus:ring-teal-700"
                     />
                     <Coins className="w-3.5 h-3.5 text-amber-500" />
-                    <span>Usar mis Créditos GIA (${availableCredits} USD disponibles)</span>
+                    <span>{language === 'es' ? `Usar mis Créditos GIA ($${availableCredits} USD disponibles)` : `Use my GIA Credits ($${availableCredits} USD available)`}</span>
                   </label>
                   {useCredits && (
                     <span className="text-xs font-mono font-bold text-emerald-700">
@@ -455,7 +462,7 @@ export const CheckoutPage: React.FC = () => {
                 <span className="font-mono">${draft.pricePerPerson} USD</span>
               </div>
               <div className="flex items-center justify-between text-neutral-600">
-                <span>Total de viajeros</span>
+                <span>{language === 'es' ? 'Total de viajeros' : 'Total travelers'}</span>
                 <span className="font-mono">{totalPeople}</span>
               </div>
               <div className="flex items-center justify-between text-neutral-600">
@@ -465,14 +472,14 @@ export const CheckoutPage: React.FC = () => {
 
               {discountAmount > 0 && (
                 <div className="flex items-center justify-between text-emerald-700 font-semibold">
-                  <span>Descuento ({appliedPromo?.code})</span>
+                  <span>{language === 'es' ? 'Descuento' : 'Discount'} ({appliedPromo?.code})</span>
                   <span className="font-mono">-${discountAmount} USD</span>
                 </div>
               )}
 
               {creditsAmount > 0 && (
                 <div className="flex items-center justify-between text-emerald-700 font-semibold">
-                  <span>Créditos GIA aplicados</span>
+                  <span>{language === 'es' ? 'Créditos GIA aplicados' : 'GIA Credits applied'}</span>
                   <span className="font-mono">-${creditsAmount} USD</span>
                 </div>
               )}

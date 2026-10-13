@@ -6,6 +6,7 @@ import { Interactive360Viewer } from '../components/common/Interactive360Viewer'
 import { VirtualTour360 } from '../components/common/VirtualTour360';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useBookingDraft } from '../context/BookingDraftContext';
 import { trackEvent } from '../services/analytics';
 import { tripStorage } from '../services/tripStorage';
 import { plannerEngine } from '../services/plannerEngine';
@@ -23,14 +24,20 @@ import {
   Move,
   BookmarkCheck,
   Plus,
+  BedDouble,
+  CarFront,
+  UtensilsCrossed,
+  Headphones,
 } from 'lucide-react';
 
 export const RouteDetailPage: React.FC = () => {
   const { slug, navigate } = useRouter();
   const { language } = useLanguage();
+  const { setDraft } = useBookingDraft();
   const [activeTab, setActiveTab] = useState<'itinerary' | 'map' | 'included'>('itinerary');
   const [addedToTrip, setAddedToTrip] = useState(false);
   const [tour360Open, setTour360Open] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(() => new Date(Date.now() + 86400000).toISOString().split('T')[0]);
 
   const route = DEMO_ROUTES.find(r => r.slug === slug) || DEMO_ROUTES[0];
 
@@ -43,6 +50,17 @@ export const RouteDetailPage: React.FC = () => {
   };
 
   const handleBookRoute = () => {
+    setDraft({
+      experienceId: route.id,
+      experienceTitle: title,
+      experienceSlug: route.slug,
+      experienceLocation: route.destinations.join(' · '),
+      experienceImage: route.images[0],
+      pricePerPerson: route.price,
+      date: selectedDate,
+      adults: 2,
+      children: 0,
+    });
     navigate('/checkout');
   };
 
@@ -75,11 +93,11 @@ export const RouteDetailPage: React.FC = () => {
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Volver a todas las Rutas GIA</span>
+            <span>{language === 'es' ? 'Volver a todos los tours GIA' : 'Back to all GIA tours'}</span>
           </button>
 
           <span className="text-xs font-mono font-bold text-teal-800">
-            {route.days} Días de Exploración
+            {route.days} {language === 'es' ? 'días de exploración' : 'days of exploration'}
           </span>
         </div>
       </div>
@@ -99,7 +117,7 @@ export const RouteDetailPage: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 text-white">
                 <span className="text-xs font-mono text-amber-300 font-bold uppercase tracking-wider block mb-1">
-                  Ruta Multidía Curada
+                  {language === 'es' ? 'Tour completo coordinado' : 'Coordinated complete tour'}
                 </span>
                 <h1 className="text-2xl sm:text-4xl font-extrabold font-display leading-tight">
                   {title}
@@ -113,11 +131,11 @@ export const RouteDetailPage: React.FC = () => {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5 font-mono">
                     <Compass className="w-4 h-4 text-teal-600" />
-                    <span>Vista 360° interactiva de la ruta</span>
+                    <span>{language === 'es' ? 'Vista 360° interactiva del tour' : 'Interactive 360° tour view'}</span>
                   </h3>
                   <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-full bg-teal-50 text-[#00A6A6] border border-teal-200 flex items-center gap-1">
                     <Move className="w-3 h-3" />
-                    <span>Arrastra para mover en 360°</span>
+                    <span>{language === 'es' ? 'Arrastra para mover en 360°' : 'Drag to move in 360°'}</span>
                   </span>
                 </div>
                 <Interactive360Viewer
@@ -134,31 +152,36 @@ export const RouteDetailPage: React.FC = () => {
           {/* Sticky Booking & Customization Card */}
           <div className="lg:col-span-1 bg-white rounded-3xl border border-neutral-200/90 p-6 shadow-md space-y-6 sticky top-24">
             <div className="border-b border-neutral-100 pb-5">
-              <span className="text-xs text-neutral-400 block mb-0.5">Precio estimado desde</span>
+              <span className="text-xs text-neutral-400 block mb-0.5">{language === 'es' ? 'Precio estimado desde' : 'Estimated price from'}</span>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-3xl font-black font-mono text-slate-900">
                   ${route.price}
                 </span>
-                <span className="text-xs text-neutral-500 font-medium">USD / persona</span>
+                <span className="text-xs text-neutral-500 font-medium">USD / {language === 'es' ? 'persona' : 'person'}</span>
               </div>
               <p className="text-[11px] text-teal-800 font-medium mt-1">
-                Incluye {route.days} días de traslados, hospedaje y actividades guiadas.
+                {language === 'es' ? `Incluye ${route.days} días de movilidad, hospedaje y actividades coordinadas.` : `Includes ${route.days} days of transportation, lodging, and coordinated activities.`}
               </p>
             </div>
+
+            <label className="block">
+              <span className="text-xs font-bold text-slate-800 block mb-1.5">{language === 'es' ? 'Fecha de inicio del tour' : 'Tour start date'}</span>
+              <input type="date" value={selectedDate} min={new Date().toISOString().split('T')[0]} onChange={event => setSelectedDate(event.target.value)} className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 bg-neutral-50 text-xs font-semibold focus:ring-2 focus:ring-teal-700 outline-hidden" />
+            </label>
 
             {/* Route Facts */}
             <div className="space-y-3 text-xs">
               <div className="flex items-center justify-between py-1.5 border-b border-neutral-100">
-                <span className="text-neutral-500">Duración total:</span>
-                <span className="font-bold text-slate-900 font-mono">{route.days} Días / {route.days - 1} Noches</span>
+                <span className="text-neutral-500">{language === 'es' ? 'Duración total:' : 'Total duration:'}</span>
+                <span className="font-bold text-slate-900 font-mono">{route.days} {language === 'es' ? 'días' : 'days'} / {route.days - 1} {language === 'es' ? 'noches' : 'nights'}</span>
               </div>
               <div className="flex items-center justify-between py-1.5 border-b border-neutral-100">
-                <span className="text-neutral-500">Destinos visitados:</span>
-                <span className="font-bold text-slate-900">{route.destinations.length} regiones</span>
+                <span className="text-neutral-500">{language === 'es' ? 'Destinos visitados:' : 'Destinations:'}</span>
+                <span className="font-bold text-slate-900">{route.destinations.length} {language === 'es' ? 'regiones' : 'regions'}</span>
               </div>
               <div className="flex items-center justify-between py-1.5 border-b border-neutral-100">
-                <span className="text-neutral-500">Tipo de viaje:</span>
-                <span className="font-bold text-slate-900">Experiencia Completa</span>
+                <span className="text-neutral-500">{language === 'es' ? 'Tipo de viaje:' : 'Trip type:'}</span>
+                <span className="font-bold text-slate-900">{language === 'es' ? (route.packageStyleEs || 'Tour completo') : (route.packageStyleEn || 'Complete tour')}</span>
               </div>
             </div>
 
@@ -169,7 +192,7 @@ export const RouteDetailPage: React.FC = () => {
                 onClick={handleBookRoute}
                 className="w-full py-3.5 bg-[#00A6A6] hover:bg-[#009191] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Reservar esta ruta</span>
+                <span>{language === 'es' ? 'Reservar este tour' : 'Book this tour'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -179,7 +202,7 @@ export const RouteDetailPage: React.FC = () => {
                 className="w-full py-3.5 bg-[#FDBA2D] hover:bg-[#f5b124] text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-slate-950" />
-                <span>Personalizar esta ruta</span>
+                <span>{language === 'es' ? 'Personalizar este tour' : 'Customize this tour'}</span>
               </button>
 
               <button
@@ -231,17 +254,26 @@ export const RouteDetailPage: React.FC = () => {
         <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-2xs space-y-6">
           <div className="max-w-3xl space-y-2">
             <h2 className="text-xl font-bold text-slate-900 font-display">
-              Sobre esta ruta
+              {language === 'es' ? 'Sobre este tour completo' : 'About this complete tour'}
             </h2>
             <p className="text-sm text-neutral-700 leading-relaxed">
               {description}
             </p>
           </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { icon: BedDouble, titleEs: 'Alojamiento', titleEn: 'Lodging', valueEs: route.accommodationEs || `${route.days - 1} noches en alojamientos seleccionados`, valueEn: route.accommodationEn || `${route.days - 1} nights in selected accommodations` },
+              { icon: CarFront, titleEs: 'Movilidad', titleEn: 'Transportation', valueEs: route.mobilityEs || 'Traslados terrestres coordinados entre destinos', valueEn: route.mobilityEn || 'Coordinated ground transportation between destinations' },
+              { icon: UtensilsCrossed, titleEs: 'Alimentación', titleEn: 'Meals', valueEs: route.mealsEs || 'Alimentos y degustaciones indicados en el programa', valueEn: route.mealsEn || 'Meals and tastings listed in the itinerary' },
+              { icon: Headphones, titleEs: 'Asistencia', titleEn: 'Support', valueEs: 'Coordinación de GIA antes y durante el recorrido', valueEn: 'GIA coordination before and throughout the journey' },
+            ].map(item => <div key={item.titleEs} className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200"><item.icon className="w-5 h-5 text-teal-700 mb-2" /><h3 className="text-xs font-black text-slate-900">{language === 'es' ? item.titleEs : item.titleEn}</h3><p className="text-[11px] text-neutral-600 leading-relaxed mt-1">{language === 'es' ? item.valueEs : item.valueEn}</p></div>)}
+          </div>
+
           {/* Interactive Route Map */}
           <div className="space-y-3 pt-4 border-t border-neutral-100">
             <h3 className="text-base font-bold text-slate-900 font-display">
-              Mapa del Recorrido y Paradas
+              {language === 'es' ? 'Mapa del recorrido y paradas' : 'Route map and stops'}
             </h3>
             <RouteMap stops={route.itinerary} title={title} />
           </div>
@@ -250,7 +282,7 @@ export const RouteDetailPage: React.FC = () => {
         {/* Day by Day Itinerary */}
         <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-2xs space-y-6">
           <h2 className="text-xl font-bold text-slate-900 font-display">
-            Itinerario Día a Día
+            {language === 'es' ? 'Itinerario día a día' : 'Day-by-day itinerary'}
           </h2>
 
           <div className="space-y-6">
@@ -265,7 +297,7 @@ export const RouteDetailPage: React.FC = () => {
                       D{item.day}
                     </span>
                     <h3 className="text-sm sm:text-base font-bold text-slate-900">
-                      {item.titleEs}
+                      {language === 'es' ? item.titleEs : item.titleEn}
                     </h3>
                   </div>
                   <span className="text-xs font-mono text-neutral-500">
@@ -274,7 +306,7 @@ export const RouteDetailPage: React.FC = () => {
                 </div>
 
                 <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                  {item.descriptionEs}
+                  {language === 'es' ? item.descriptionEs : item.descriptionEn}
                 </p>
 
                 {/* Linked experiences */}
@@ -290,7 +322,7 @@ export const RouteDetailPage: React.FC = () => {
                           onClick={() => navigate(`/experiencias/${exp.slug}`)}
                           className="px-3 py-1.5 rounded-xl bg-white border border-neutral-200 hover:border-teal-700 text-[11px] font-semibold text-slate-800 hover:text-teal-900 flex items-center gap-1.5 transition-colors"
                         >
-                          <span>{exp.titleEs}</span>
+                          <span>{language === 'es' ? exp.titleEs : exp.titleEn}</span>
                           <span className="text-teal-700 font-mono">(${exp.price})</span>
                         </button>
                       );
@@ -309,10 +341,10 @@ export const RouteDetailPage: React.FC = () => {
               <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs">
                 ✓
               </span>
-              <span>Qué incluye esta ruta</span>
+              <span>{language === 'es' ? 'Qué incluye este tour' : 'What this tour includes'}</span>
             </h3>
             <ul className="space-y-2 text-xs text-neutral-700">
-              {route.includedEs.map((inc, i) => (
+              {(language === 'es' ? route.includedEs : route.includedEn).map((inc, i) => (
                 <li key={i} className="flex items-start gap-2 leading-relaxed">
                   <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>{inc}</span>
@@ -326,10 +358,10 @@ export const RouteDetailPage: React.FC = () => {
               <span className="w-6 h-6 rounded-full bg-neutral-200 text-neutral-700 flex items-center justify-center text-xs">
                 ×
               </span>
-              <span>No incluye</span>
+              <span>{language === 'es' ? 'No incluye' : 'Not included'}</span>
             </h3>
             <ul className="space-y-2 text-xs text-neutral-600">
-              {route.notIncludedEs.map((notInc, i) => (
+              {(language === 'es' ? route.notIncludedEs : route.notIncludedEn).map((notInc, i) => (
                 <li key={i} className="flex items-start gap-2 leading-relaxed">
                   <X className="w-3.5 h-3.5 text-neutral-400 shrink-0 mt-0.5" />
                   <span>{notInc}</span>

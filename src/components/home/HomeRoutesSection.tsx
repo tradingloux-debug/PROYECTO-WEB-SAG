@@ -10,7 +10,7 @@ export const HomeRoutesSection: React.FC = () => {
   const { language } = useLanguage();
 
   // Highlight 3 multi-day routes
-  const routes = DEMO_ROUTES.slice(0, 3);
+  const routes = DEMO_ROUTES.filter(route => ['route-6', 'route-7', 'route-8'].includes(route.id));
 
   return (
     <section className="py-20 bg-white">
@@ -19,13 +19,13 @@ export const HomeRoutesSection: React.FC = () => {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#00A6A6] text-xs font-bold font-mono uppercase">
               <Route className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Itinerarios multidía' : 'Multi-day itineraries'}</span>
+              <span>{language === 'es' ? 'Tours completos GIA' : 'Complete GIA tours'}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-[#063A5B] tracking-tight font-display">
-              {language === 'es' ? 'Más que un tour. Un viaje completo.' : 'More than a tour. A complete journey.'}
+              {language === 'es' ? 'Alojamiento, movilidad y experiencias en un solo viaje.' : 'Lodging, transportation, and experiences in one journey.'}
             </h2>
             <p className="text-sm sm:text-base text-neutral-600 max-w-2xl">
-              {language === 'es' ? 'Recorre diferentes destinos de El Salvador en viajes coordinados de 2 a 10 días, combinando volcanes, pueblos coloniales, cafetales y olas del Pacífico.' : 'Explore El Salvador on coordinated 2-to-10-day trips combining volcanoes, colonial towns, coffee farms, and Pacific waves.'}
+              {language === 'es' ? 'Viaja por El Salvador con hospedaje seleccionado, transporte privado, guías y actividades coordinadas por nuestra tour operadora.' : 'Travel across El Salvador with selected lodging, private transportation, guides, and activities coordinated by our tour operator.'}
             </p>
           </div>
 

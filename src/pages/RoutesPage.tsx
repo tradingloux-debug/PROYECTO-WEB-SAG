@@ -4,7 +4,7 @@ import { RouteCard } from '../components/routes/RouteCard';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
 import { trackEvent } from '../services/analytics';
-import { Calendar, Compass, Sparkles, ArrowRight } from 'lucide-react';
+import { Compass, Sparkles, BedDouble, CarFront, MapPinned, Headphones } from 'lucide-react';
 
 export const RoutesPage: React.FC = () => {
   const { navigate } = useRouter();
@@ -23,26 +23,31 @@ export const RoutesPage: React.FC = () => {
         <div className="max-w-3xl space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#00A6A6] text-xs font-bold font-mono">
             <Compass className="w-3.5 h-3.5 text-[#00A6A6]" />
-            <span>Itinerarios Multidía por El Salvador</span>
+            <span>{language === 'es' ? 'Tours completos por El Salvador' : 'Complete tours across El Salvador'}</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black text-[#063A5B] tracking-tight font-display">
-            Más que un tour. Un viaje completo.
+            {language === 'es' ? 'Tu viaje completo, coordinado de principio a fin.' : 'Your complete trip, coordinated from start to finish.'}
           </h1>
           <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
-            Recorre diferentes destinos, culturas y paisajes en experiencias diseñadas para conocer el país más allá de un solo lugar. Rutas conectadas de 2 a 10 días con transporte, anfitriones y experiencias coordinadas.
+            {language === 'es' ? 'Explora varios destinos sin preocuparte por la logística. Cada paquete integra alojamiento seleccionado, movilidad terrestre, actividades guiadas y acompañamiento de GIA.' : 'Explore multiple destinations without worrying about logistics. Every package combines selected lodging, ground transportation, guided activities, and GIA support.'}
           </p>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { icon: BedDouble, es: 'Alojamiento seleccionado', en: 'Selected lodging' },
+            { icon: CarFront, es: 'Movilidad coordinada', en: 'Coordinated transport' },
+            { icon: MapPinned, es: 'Experiencias y entradas', en: 'Experiences & tickets' },
+            { icon: Headphones, es: 'Asistencia de GIA', en: 'GIA travel support' },
+          ].map(item => <div key={item.es} className="bg-white rounded-2xl border border-neutral-200 p-4 flex items-center gap-3 text-xs font-bold text-slate-800"><item.icon className="w-5 h-5 text-teal-700 shrink-0" /><span>{language === 'es' ? item.es : item.en}</span></div>)}
         </div>
 
         {/* Duration Filter Segmented Control */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="text-neutral-400 font-semibold mr-1 shrink-0">Duración:</span>
+          <span className="text-neutral-400 font-semibold mr-1 shrink-0">{language === 'es' ? 'Duración:' : 'Duration:'}</span>
           {[
-            { id: 'all', label: 'Todas las rutas' },
-            { id: 2, label: '2 Días (Escapada)' },
-            { id: 3, label: '3 Días (Fin de semana)' },
-            { id: 5, label: '5 Días (Esencial)' },
-            { id: 7, label: '7 Días (Semana completa)' },
-            { id: 10, label: '10 Días (Gran Travesía)' },
+            { id: 'all', label: language === 'es' ? 'Todos los tours' : 'All tours' },
+            ...Array.from(new Set(DEMO_ROUTES.map(route => route.days))).sort((a, b) => a - b).map(days => ({ id: days, label: `${days} ${language === 'es' ? 'días' : 'days'}` })),
           ].map(opt => (
             <button
               key={opt.id}
@@ -77,13 +82,13 @@ export const RoutesPage: React.FC = () => {
         <div className="bg-gradient-to-r from-teal-900 to-slate-950 rounded-3xl p-8 sm:p-10 text-white flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-md border border-slate-800">
           <div className="space-y-2 max-w-xl">
             <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">
-              ¿Quieres una ruta exclusiva?
+              {language === 'es' ? '¿Quieres una ruta exclusiva?' : 'Would you like a private route?'}
             </span>
             <h3 className="text-2xl font-bold font-display">
-              Diseña un viaje único con Planea con GIA
+              {language === 'es' ? 'Diseña un viaje único con Planea con GIA' : 'Design a unique trip with Plan with GIA'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Dinos cuántos días tienes y tus intereses. Nuestro asistente inteligente estructurará una ruta personalizada combinando tus destinos favoritos.
+              {language === 'es' ? 'Dinos cuántos días tienes, quiénes viajan y qué deseas vivir. GIA preparará una propuesta personalizada de alojamiento, movilidad y experiencias.' : 'Tell us your dates, travelers, and interests. GIA will prepare a customized lodging, transportation, and experience proposal.'}
             </p>
           </div>
 
@@ -93,7 +98,7 @@ export const RoutesPage: React.FC = () => {
             className="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Crear mi viaje personalizado</span>
+            <span>{language === 'es' ? 'Crear mi viaje personalizado' : 'Create my custom trip'}</span>
           </button>
         </div>
       </div>
