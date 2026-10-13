@@ -4,6 +4,7 @@ import { useRouter } from '../../context/RouterContext';
 import { VirtualTour360 } from '../common/VirtualTour360';
 import { Compass, Sparkles, Move, Maximize2, ArrowRight, MousePointer2 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { localizeCategory } from '../../utils/localize';
 
 export const ImmersiveSection: React.FC = () => {
   const { navigate } = useRouter();
@@ -124,7 +125,7 @@ export const ImmersiveSection: React.FC = () => {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#20C5C7]">
-                      {exp.category}
+                      {localizeCategory(exp.category, language)}
                     </span>
                     <span className="inline-flex items-center gap-1 text-[10.5px] text-teal-300 bg-teal-500/10 px-2 py-0.5 rounded-md border border-teal-500/20">
                       <Move className="w-3 h-3" />

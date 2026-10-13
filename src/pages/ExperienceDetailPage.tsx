@@ -10,6 +10,7 @@ import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
 import { trackEvent } from '../services/analytics';
+import { localizeDuration } from '../utils/localize';
 import {
   MapPin,
   Clock,
@@ -170,7 +171,7 @@ export const ExperienceDetailPage: React.FC = () => {
                   <span className="text-[11px] text-neutral-400 block mb-0.5">{t.card.duration}</span>
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900">
                     <Clock className="w-3.5 h-3.5 text-teal-700" />
-                    <span>{experience.duration}</span>
+                    <span>{localizeDuration(experience.duration, language)}</span>
                   </div>
                 </div>
 

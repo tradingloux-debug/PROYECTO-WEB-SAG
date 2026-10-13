@@ -54,7 +54,7 @@ export const FloatingWhatsApp: React.FC = () => {
               setDismissedTooltip(true);
             }}
             className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-full cursor-pointer"
-            aria-label="Cerrar tooltip"
+            aria-label={language === 'es' ? 'Cerrar ayuda' : 'Close help'}
           >
             <X className="w-3 h-3" />
           </button>
@@ -66,7 +66,7 @@ export const FloatingWhatsApp: React.FC = () => {
         href={waUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat por WhatsApp con GIA Experiences (+503 7011-9564)"
+        aria-label={language === 'es' ? 'Chat por WhatsApp con GIA Experiences (+503 7011-9564)' : 'Chat with GIA Experiences on WhatsApp (+503 7011-9564)'}
         className="w-13 h-13 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105 cursor-pointer ring-4 ring-white/80"
       >
         <MessageCircle className="w-7 h-7 fill-white" />

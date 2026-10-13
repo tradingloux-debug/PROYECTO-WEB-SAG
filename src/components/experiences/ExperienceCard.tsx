@@ -14,6 +14,7 @@ import {
   Images,
 } from 'lucide-react';
 import { VirtualTour360 } from '../common/VirtualTour360';
+import { localizeDuration } from '../../utils/localize';
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -196,7 +197,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             {/* Duración */}
             <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
-              <span>{experience.duration}</span>
+              <span>{localizeDuration(experience.duration, language)}</span>
             </div>
 
             {/* Breve descripción */}
@@ -338,7 +339,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
           {/* Duración */}
           <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium">
             <Clock className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-            <span>{experience.duration}</span>
+            <span>{localizeDuration(experience.duration, language)}</span>
           </div>
 
           {/* Breve descripción de máximo 2 líneas */}

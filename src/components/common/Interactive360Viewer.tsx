@@ -14,6 +14,7 @@ import {
   Layers,
   Sparkles
 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface Hotspot360 {
   id: string;
@@ -48,6 +49,7 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
   onExpand,
   isExpanded = false,
 }) => {
+  const { language } = useLanguage();
   const viewerHotspots = hotspots ?? EMPTY_HOTSPOTS;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -377,7 +379,7 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
             draggable={false}
           />
           <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs text-amber-300 border border-amber-500/30">
-            Vista panorámica interactiva 2D
+            {language === 'es' ? 'Vista panorámica interactiva 2D' : 'Interactive 2D panoramic view'}
           </div>
         </div>
       )}
@@ -428,7 +430,7 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
         <div className="space-y-1 pointer-events-auto">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-500/20 backdrop-blur-md text-teal-300 text-[11px] font-mono font-bold border border-teal-400/40 shadow-xs">
             <Compass className="w-3.5 h-3.5 animate-spin-slow" />
-            <span>FOTOGRAFÍA 360° INTERACTIVA</span>
+            <span>{language === 'es' ? 'FOTOGRAFÍA 360° INTERACTIVA' : 'INTERACTIVE 360° PHOTO'}</span>
           </div>
           <h3 className="text-sm sm:text-base font-extrabold text-white drop-shadow-md leading-snug">
             {title}
@@ -459,7 +461,7 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
               type="button"
               onClick={onExpand}
               className="p-2 rounded-xl bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/15 transition-all cursor-pointer shadow-md hover:scale-105"
-              title={isExpanded ? 'Minimizar' : 'Pantalla Completa 360°'}
+              title={isExpanded ? (language === 'es' ? 'Minimizar' : 'Minimize') : (language === 'es' ? 'Pantalla completa 360°' : 'Full-screen 360°')}
               aria-label="Expandir visor 360"
             >
               {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -473,7 +475,7 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
           <div className="bg-slate-900/85 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-2xl border border-white/20 shadow-2xl flex items-center gap-2.5 animate-bounce">
             <Move className="w-4 h-4 text-teal-400" />
-            <span>Haz clic y arrastra en cualquier dirección para mover la imagen 360°</span>
+            <span>{language === 'es' ? 'Haz clic y arrastra en cualquier dirección para mover la imagen 360°' : 'Click and drag in any direction to move the 360° image'}</span>
           </div>
         </div>
       )}
@@ -489,10 +491,10 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
               ? 'bg-teal-500 text-white shadow-xs'
               : 'bg-white/10 text-slate-300 hover:bg-white/20'
           }`}
-          title={isAutoRotating ? 'Pausar giro automático' : 'Activar giro panorámico continuo'}
+          title={isAutoRotating ? (language === 'es' ? 'Pausar giro automático' : 'Pause automatic rotation') : (language === 'es' ? 'Activar giro panorámico continuo' : 'Start continuous panoramic rotation')}
         >
           {isAutoRotating ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-          <span className="hidden sm:inline">{isAutoRotating ? 'Pausar' : 'Girar'}</span>
+          <span className="hidden sm:inline">{isAutoRotating ? (language === 'es' ? 'Pausar' : 'Pause') : (language === 'es' ? 'Girar' : 'Rotate')}</span>
         </button>
 
         <div className="w-px h-4 bg-white/20" />
@@ -502,8 +504,8 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
           type="button"
           onClick={handleZoomIn}
           className="p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-          title="Acercar (Zoom In)"
-          aria-label="Acercar vista 360"
+          title={language === 'es' ? 'Acercar' : 'Zoom in'}
+          aria-label={language === 'es' ? 'Acercar vista 360' : 'Zoom in on 360° view'}
         >
           <ZoomIn className="w-3.5 h-3.5" />
         </button>
@@ -513,8 +515,8 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
           type="button"
           onClick={handleZoomOut}
           className="p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-          title="Alejar (Zoom Out)"
-          aria-label="Alejar vista 360"
+          title={language === 'es' ? 'Alejar' : 'Zoom out'}
+          aria-label={language === 'es' ? 'Alejar vista 360' : 'Zoom out of 360° view'}
         >
           <ZoomOut className="w-3.5 h-3.5" />
         </button>
@@ -527,13 +529,13 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
           title="Restablecer vista centrada"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Centrar</span>
+          <span className="hidden sm:inline">{language === 'es' ? 'Centrar' : 'Center'}</span>
         </button>
 
         <div className="w-px h-4 bg-white/20" />
 
         <div className="text-[11px] font-mono text-slate-400 px-1 hidden md:block">
-          Arrastra para explorar
+          {language === 'es' ? 'Arrastra para explorar' : 'Drag to explore'}
         </div>
       </div>
     </div>

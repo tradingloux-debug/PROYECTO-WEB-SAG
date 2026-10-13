@@ -14,7 +14,7 @@ export const DiscoveryOptions: React.FC = () => {
   const threePaths = [
     {
       id: 'experiencias',
-      title: 'EXPERIENCIAS',
+      title: language === 'es' ? 'EXPERIENCIAS' : 'EXPERIENCES',
       description: language === 'es' ? 'Encuentra actividades para unas horas o un día.' : 'Find activities for a few hours or a full day.',
       cta: language === 'es' ? 'Explorar' : 'Explore',
       link: '/experiencias',
@@ -25,7 +25,7 @@ export const DiscoveryOptions: React.FC = () => {
     },
     {
       id: 'rutas',
-      title: 'RUTAS GIA',
+      title: language === 'es' ? 'RUTAS GIA' : 'GIA ROUTES',
       description: language === 'es' ? 'Recorre distintos destinos en viajes de varios días.' : 'Visit several destinations on multi-day trips.',
       cta: language === 'es' ? 'Ver rutas' : 'View routes',
       link: '/rutas',
@@ -36,7 +36,7 @@ export const DiscoveryOptions: React.FC = () => {
     },
     {
       id: 'planea',
-      title: 'PLANEA CON GIA',
+      title: language === 'es' ? 'PLANEA CON GIA' : 'PLAN WITH GIA',
       description: language === 'es' ? 'Dinos lo que quieres vivir y crea un viaje personalizado.' : 'Tell us what you want to experience and create a custom trip.',
       cta: language === 'es' ? 'Crear mi viaje' : 'Create my trip',
       link: '/planea-con-gia',

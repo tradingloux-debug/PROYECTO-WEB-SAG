@@ -37,20 +37,20 @@ export const Footer: React.FC = () => {
               className="text-left focus:outline-hidden cursor-pointer inline-block"
               aria-label="GIA Experiences"
             >
-              <GiaLogo size="navbar" />
+              <GiaLogo size="navbar" alt={language === 'es' ? 'GIA Experiences — El Salvador diseñado para ti' : 'GIA Experiences — El Salvador, designed for you'} />
             </button>
             <p className="text-xs text-neutral-500 max-w-sm leading-relaxed">
-              Plataforma para descubrir, diseñar y vivir experiencias únicas en El Salvador. Turismo auténtico conectado con personas, cultura y naturaleza.
+              {language === 'es' ? 'Plataforma para descubrir, diseñar y vivir experiencias únicas en El Salvador. Turismo auténtico conectado con personas, cultura y naturaleza.' : 'A platform to discover, design, and experience unique journeys in El Salvador. Authentic tourism connected with people, culture, and nature.'}
             </p>
             <div className="space-y-1.5 pt-1">
               <div className="flex items-center gap-1.5 text-xs text-[#00A6A6] font-semibold">
                 <MapPin className="w-3.5 h-3.5 shrink-0" />
-                <span>El Salvador, Centroamérica · El Salvador diseñado para ti</span>
+                <span>{language === 'es' ? 'El Salvador, Centroamérica · El Salvador diseñado para ti' : 'El Salvador, Central America · El Salvador, designed for you'}</span>
               </div>
               <a
                 href={`mailto:${contactEmail}`}
                 className="flex items-center gap-1.5 text-xs text-neutral-600 hover:text-[#00A6A6] transition-colors font-medium group"
-                title="Escribir correo a GIA Experiences"
+                title={language === 'es' ? 'Escribir correo a GIA Experiences' : 'Email GIA Experiences'}
               >
                 <Mail className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
                 <span className="group-hover:underline">{contactEmail}</span>
@@ -264,12 +264,12 @@ export const Footer: React.FC = () => {
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-neutral-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
           <p>
-            © {new Date().getFullYear()} GIA Experiences. El Salvador diseñado para ti.
+            © {new Date().getFullYear()} GIA Experiences. {language === 'es' ? 'El Salvador diseñado para ti.' : 'El Salvador, designed for you.'}
           </p>
           <div className="flex items-center gap-4 text-neutral-400">
-            <span>Contacto: <a href={`mailto:${contactEmail}`} className="text-[#00A6A6] hover:underline font-medium">{contactEmail}</a></span>
+            <span>{language === 'es' ? 'Contacto:' : 'Contact:'} <a href={`mailto:${contactEmail}`} className="text-[#00A6A6] hover:underline font-medium">{contactEmail}</a></span>
             <span>·</span>
-            <span>Turismo auténtico, comunitario y sostenible.</span>
+            <span>{language === 'es' ? 'Turismo auténtico, comunitario y sostenible.' : 'Authentic, community-based, and sustainable tourism.'}</span>
           </div>
         </div>
       </div>
@@ -294,7 +294,7 @@ export const Footer: React.FC = () => {
             {/* Email Card with Quick Action */}
             <div className="p-3.5 bg-teal-50/70 border border-teal-100 rounded-2xl space-y-2">
               <div className="text-[11px] font-bold uppercase tracking-wider text-teal-800 font-mono">
-                Correo Electrónico de Contacto
+                {language === 'es' ? 'Correo electrónico de contacto' : 'Contact email'}
               </div>
               <div className="flex items-center justify-between gap-2 bg-white px-3 py-2 rounded-xl border border-teal-200/60 shadow-2xs">
                 <a
@@ -309,24 +309,24 @@ export const Footer: React.FC = () => {
                   type="button"
                   onClick={handleCopyEmail}
                   className="px-2 py-1 text-[11px] font-bold text-neutral-600 hover:text-[#063A5B] bg-neutral-100 hover:bg-neutral-200 rounded-lg flex items-center gap-1 cursor-pointer transition-colors shrink-0"
-                  title="Copiar correo al portapapeles"
+                  title={language === 'es' ? 'Copiar correo al portapapeles' : 'Copy email to clipboard'}
                 >
                   {copied ? (
                     <>
                       <Check className="w-3 h-3 text-emerald-600" />
-                      <span className="text-emerald-700">Copiado</span>
+                      <span className="text-emerald-700">{language === 'es' ? 'Copiado' : 'Copied'}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="w-3 h-3" />
-                      <span>Copiar</span>
+                      <span>{language === 'es' ? 'Copiar' : 'Copy'}</span>
                     </>
                   )}
                 </button>
               </div>
 
               <p className="text-[11px] text-neutral-500">
-                Horario de atención: Lunes a Domingo de 08:00 a 18:00 (GMT-6)
+                {language === 'es' ? 'Horario de atención: lunes a domingo de 08:00 a 18:00 (GMT-6)' : 'Service hours: Monday to Sunday, 08:00 to 18:00 (GMT-6)'}
               </p>
             </div>
 
@@ -336,14 +336,14 @@ export const Footer: React.FC = () => {
                 className="flex-1 py-2.5 bg-[#00A6A6] hover:bg-[#009191] text-white text-xs font-bold rounded-xl text-center cursor-pointer transition-colors flex items-center justify-center gap-1.5"
               >
                 <Mail className="w-3.5 h-3.5" />
-                <span>Enviar correo</span>
+                <span>{language === 'es' ? 'Enviar correo' : 'Send email'}</span>
               </a>
               <button
                 type="button"
                 onClick={() => setModalData(null)}
                 className="px-5 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-bold rounded-xl cursor-pointer transition-colors"
               >
-                Cerrar
+                {language === 'es' ? 'Cerrar' : 'Close'}
               </button>
             </div>
           </div>
