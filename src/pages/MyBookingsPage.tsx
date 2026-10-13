@@ -1,0 +1,250 @@
+import React, { useState, useEffect } from 'react';
+import { storageService } from '../services/storage';
+import { Booking } from '../types/booking';
+import { useRouter } from '../context/RouterContext';
+import { useLanguage } from '../context/LanguageContext';
+import {
+  Search,
+  Calendar,
+  Users,
+  MapPin,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  FileText,
+  ArrowRight,
+  Mail,
+} from 'lucide-react';
+
+export const MyBookingsPage: React.FC = () => {
+  const { navigate } = useRouter();
+  const { t } = useLanguage();
+
+  const [searchCode, setSearchCode] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+  const [searchedBooking, setSearchedBooking] = useState<Booking | null | 'not_found'>(null);
+  const [recentBookings, setRecentBookings] = useState<Booking[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    storageService.listRecentBookings().then(list => {
+      setRecentBookings(list);
+    });
+  }, []);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchCode.trim()) return;
+
+    setIsSearching(true);
+    const result = await storageService.getBookingByCode(searchCode, searchEmail);
+    setSearchedBooking(result || 'not_found');
+    setIsSearching(false);
+  };
+
+  const getStatusBadge = (status: Booking['status']) => {
+    switch (status) {
+      case 'PENDING':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+            {t.myBookings.statusPending}
+          </span>
+        );
+      case 'CONFIRMED':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+            {t.myBookings.statusConfirmed}
+          </span>
+        );
+      case 'CANCELLED':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200">
+            {t.myBookings.statusCancelled}
+          </span>
+        );
+      case 'COMPLETED':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+            {t.myBookings.statusCompleted}
+          </span>
+        );
+    }
+  };
+
+  const renderBookingCard = (b: Booking) => (
+    <div
+      key={b.id}
+      className="bg-white rounded-2xl border border-neutral-200/90 p-5 sm:p-6 shadow-2xs space-y-4"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-neutral-100">
+        <div>
+          <span className="text-[11px] text-neutral-400 font-mono uppercase block">Código</span>
+          <span className="text-lg font-bold font-mono text-neutral-900 tracking-wider">
+            {b.bookingCode}
+          </span>
+        </div>
+        <div>{getStatusBadge(b.status)}</div>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="text-base font-bold text-neutral-900">
+          {b.experienceTitle}
+        </h3>
+        <p className="text-xs text-neutral-500 flex items-center gap-1.5">
+          <MapPin className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+          <span>{b.experienceLocation}</span>
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
+        <div className="p-2.5 bg-neutral-50 rounded-xl">
+          <span className="text-[11px] text-neutral-400 block">{t.myBookings.dateBooked}</span>
+          <span className="font-semibold text-neutral-900 font-mono flex items-center gap-1 mt-0.5">
+            <Calendar className="w-3.5 h-3.5 text-teal-700" />
+            {b.date}
+          </span>
+        </div>
+
+        <div className="p-2.5 bg-neutral-50 rounded-xl">
+          <span className="text-[11px] text-neutral-400 block">{t.myBookings.guests}</span>
+          <span className="font-semibold text-neutral-900 flex items-center gap-1 mt-0.5">
+            <Users className="w-3.5 h-3.5 text-teal-700" />
+            {b.adults + b.children} personas
+          </span>
+        </div>
+
+        <div className="p-2.5 bg-neutral-50 rounded-xl col-span-2 sm:col-span-1">
+          <span className="text-[11px] text-neutral-400 block">{t.myBookings.totalPaid}</span>
+          <span className="font-bold text-teal-900 font-mono text-sm mt-0.5 block">
+            ${b.total} USD
+          </span>
+        </div>
+      </div>
+
+      <div className="pt-2 text-xs text-neutral-500 flex items-center justify-between border-t border-neutral-100">
+        <span>Contacto: {b.customerFirstName} {b.customerLastName} ({b.email})</span>
+        <button
+          type="button"
+          onClick={() => navigate(`/experiencias/${b.experienceSlug}`)}
+          className="text-xs font-semibold text-teal-800 hover:text-teal-950 flex items-center gap-1"
+        >
+          <span>Ver experiencia</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="bg-neutral-50/60 min-h-screen py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Header */}
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">
+            {t.myBookings.title}
+          </h1>
+          <p className="text-xs sm:text-sm text-neutral-500 mt-1 max-w-xl">
+            {t.myBookings.subtitle}
+          </p>
+        </div>
+
+        {/* Search by code and email box */}
+        <div className="bg-white rounded-2xl border border-neutral-200/90 p-6 shadow-2xs space-y-4">
+          <h2 className="text-sm font-bold text-neutral-900 font-display flex items-center gap-2">
+            <Search className="w-4 h-4 text-teal-700" />
+            <span>{t.myBookings.searchFormTitle}</span>
+          </h2>
+
+          <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label className="text-[11px] font-semibold text-neutral-600 block mb-1">
+                Código de reserva *
+              </label>
+              <input
+                type="text"
+                value={searchCode}
+                onChange={e => setSearchCode(e.target.value.toUpperCase())}
+                placeholder={t.myBookings.bookingCodePlaceholder}
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-neutral-200 bg-neutral-50/50 focus:bg-white focus:ring-2 focus:ring-teal-700 uppercase font-mono"
+              />
+            </div>
+
+            <div>
+              <label className="text-[11px] font-semibold text-neutral-600 block mb-1">
+                Correo electrónico (opcional)
+              </label>
+              <input
+                type="email"
+                value={searchEmail}
+                onChange={e => setSearchEmail(e.target.value)}
+                placeholder={t.myBookings.emailPlaceholder}
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-neutral-200 bg-neutral-50/50 focus:bg-white focus:ring-2 focus:ring-teal-700"
+              />
+            </div>
+
+            <div className="flex items-end">
+              <button
+                type="submit"
+                disabled={isSearching}
+                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+              >
+                {t.myBookings.searchBtn}
+              </button>
+            </div>
+          </form>
+
+          {/* Searched Booking Result */}
+          {searchedBooking === 'not_found' && (
+            <div className="p-4 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5 mt-2">
+              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-bold">{t.myBookings.noBookingsFoundTitle}</p>
+                <p className="text-amber-800">{t.myBookings.noBookingsFoundDesc}</p>
+                <p className="pt-1 text-[11px] text-amber-900">
+                  ¿Dudas con tu código? Contáctanos a{' '}
+                  <a href="mailto:guiaexperiencessv@gmail.com" className="font-bold underline text-[#00A6A6]">
+                    guiaexperiencessv@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
+
+          {searchedBooking && searchedBooking !== 'not_found' && (
+            <div className="mt-4 pt-4 border-t border-neutral-100">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-teal-800 mb-3">
+                Resultado de búsqueda
+              </h3>
+              {renderBookingCard(searchedBooking)}
+            </div>
+          )}
+        </div>
+
+        {/* Recent bookings list on this device */}
+        <div className="space-y-4">
+          <h2 className="text-base font-bold text-neutral-900 font-display flex items-center gap-2">
+            <FileText className="w-4 h-4 text-teal-700" />
+            <span>{t.myBookings.recentBookingsTitle}</span>
+          </h2>
+
+          {recentBookings.length > 0 ? (
+            <div className="space-y-4">
+              {recentBookings.map(b => renderBookingCard(b))}
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl border border-neutral-200/80 p-8 text-center text-xs text-neutral-500">
+              <p>Aún no has registrado ninguna solicitud de reserva en este navegador.</p>
+              <button
+                type="button"
+                onClick={() => navigate('/experiencias')}
+                className="mt-3 px-4 py-2 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors inline-block"
+              >
+                Explorar experiencias disponibles
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

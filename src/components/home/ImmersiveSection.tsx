@@ -1,0 +1,177 @@
+import React, { useState } from 'react';
+import { DEMO_EXPERIENCES } from '../../data/experiences';
+import { useRouter } from '../../context/RouterContext';
+import { Interactive360Viewer } from '../common/Interactive360Viewer';
+import { VirtualTour360 } from '../common/VirtualTour360';
+import { Compass, Sparkles, Move, Maximize2, ArrowRight } from 'lucide-react';
+
+export const ImmersiveSection: React.FC = () => {
+  const { navigate } = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState<string>('todos');
+
+  // Filter experiences with 360 images
+  const all360Experiences = DEMO_EXPERIENCES.filter(
+    (exp) => exp.has360 && exp.virtualTour360Url
+  );
+
+  const filteredList =
+    selectedCategory === 'todos'
+      ? all360Experiences.slice(0, 6)
+      : all360Experiences.filter((exp) => exp.category === selectedCategory).slice(0, 6);
+
+  const [activeTourModal, setActiveTourModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    location: string;
+    image: string;
+  }>({
+    isOpen: false,
+    title: '',
+    location: '',
+    image: '',
+  });
+
+  return (
+    <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
+      {/* Background radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00A6A6]/15 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 backdrop-blur-md text-teal-300 text-xs font-bold font-mono uppercase border border-teal-500/30">
+              <Compass className="w-3.5 h-3.5 animate-spin-slow" />
+              <span>Imágenes 360° Interactivas · Mueve y Explora</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight font-display">
+              Explora El Salvador en 360° interactivo
+            </h2>
+            <p className="text-sm sm:text-base text-slate-300 max-w-2xl">
+              Gira y arrastra con tu mouse o dedo para mirar en todas las direcciones. Descubre la majestuosidad del cráter de Santa Ana, las olas del Pacífico en El Tunco, la arquitectura colonial de Suchitoto y la caldera del lago antes de tu viaje.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'todos', label: 'Todos los recorridos 360°' },
+              { id: 'naturaleza', label: 'Volcanes & Lagos' },
+              { id: 'aventura', label: 'Playas & Olas' },
+              { id: 'cultura', label: 'Cultura Colonial' },
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  selectedCategory === cat.id
+                    ? 'bg-[#00A6A6] text-white shadow-md'
+                    : 'bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Immersive 360 Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredList.map((exp) => (
+            <div
+              key={exp.id}
+              className="bg-slate-900/90 rounded-2xl border border-white/10 overflow-hidden shadow-xl flex flex-col justify-between hover:border-teal-400/50 transition-all group/card"
+            >
+              <div className="p-3">
+                <Interactive360Viewer
+                  imageSrc={exp.virtualTour360Url || exp.images[0]}
+                  title={exp.titleEs}
+                  locationName={exp.location}
+                  className="h-[260px] w-full rounded-xl"
+                  onExpand={() =>
+                    setActiveTourModal({
+                      isOpen: true,
+                      title: exp.titleEs,
+                      location: exp.location,
+                      image: exp.virtualTour360Url || exp.images[0],
+                    })
+                  }
+                />
+              </div>
+
+              <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#20C5C7]">
+                      {exp.category}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[10.5px] text-teal-300 bg-teal-500/10 px-2 py-0.5 rounded-md border border-teal-500/20">
+                      <Move className="w-3 h-3" />
+                      <span>Arrastra para mover</span>
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-white line-clamp-2 group-hover/card:text-[#20C5C7] transition-colors">
+                    {exp.titleEs}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                    {exp.shortDescriptionEs}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 pt-3 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/experiencias/${exp.slug}`)}
+                    className="flex-1 py-2 px-3 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer text-center"
+                  >
+                    Ver experiencia y reservar
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveTourModal({
+                        isOpen: true,
+                        title: exp.titleEs,
+                        location: exp.location,
+                        image: exp.virtualTour360Url || exp.images[0],
+                      })
+                    }
+                    className="py-2 px-3 bg-[#00A6A6] hover:bg-[#009191] text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer shadow-xs"
+                    title="Abrir en pantalla completa 360°"
+                  >
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span>360°</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom CTA for 360 experiences */}
+        <div className="mt-12 text-center">
+          <button
+            type="button"
+            onClick={() => navigate('/experiencias?tour360=true')}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all border border-white/15 cursor-pointer shadow-sm hover:scale-105"
+          >
+            <Compass className="w-4 h-4 text-[#20C5C7]" />
+            <span>Explorar todas las experiencias con fotos 360° interactivas</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </button>
+        </div>
+      </div>
+
+      {/* 360 Fullscreen Viewer Modal */}
+      <VirtualTour360
+        isOpen={activeTourModal.isOpen}
+        onClose={() =>
+          setActiveTourModal({ isOpen: false, title: '', location: '', image: '' })
+        }
+        title={activeTourModal.title}
+        locationName={activeTourModal.location}
+        imageSrc={activeTourModal.image}
+      />
+    </section>
+  );
+};
