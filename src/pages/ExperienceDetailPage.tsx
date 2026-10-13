@@ -26,6 +26,7 @@ import {
   Heart,
   Compass,
   Move,
+  Camera,
 } from 'lucide-react';
 
 export const ExperienceDetailPage: React.FC = () => {
@@ -116,6 +117,34 @@ export const ExperienceDetailPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         {/* Gallery */}
         <ExperienceGallery images={experience.images} title={title} />
+
+        {experience.imageCredits && experience.imageCredits.length > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-neutral-500">
+            <Camera className="w-3.5 h-3.5 text-teal-700" aria-hidden="true" />
+            <span>{language === 'es' ? 'Créditos de fotografía:' : 'Photo credits:'}</span>
+            {experience.imageCredits.map((credit, index) => (
+              <React.Fragment key={`${credit.author}-${index}`}>
+                {index > 0 && <span aria-hidden="true">·</span>}
+                <a
+                  href={credit.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold text-teal-800 underline decoration-teal-300 underline-offset-2 hover:text-teal-600"
+                >
+                  {credit.author}
+                </a>
+                <a
+                  href={credit.licenseUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-teal-700"
+                >
+                  ({credit.license})
+                </a>
+              </React.Fragment>
+            ))}
+          </div>
+        )}
 
         {/* 2-Column Layout: Left Details + Right Sticky Booking */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">

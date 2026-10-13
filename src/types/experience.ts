@@ -29,6 +29,13 @@ export interface HostStory {
   impactEn: string;
 }
 
+export interface PhotoCredit {
+  author: string;
+  sourceUrl: string;
+  license: string;
+  licenseUrl: string;
+}
+
 export type LocalCategory =
   | 'gastronomia_local'
   | 'cocina_tradicional'
@@ -67,6 +74,7 @@ export interface Experience {
   minPeople: number;
   maxPeople: number;
   images: string[];
+  imageCredits?: PhotoCredit[];
   includedEs: string[];
   includedEn: string[];
   notIncludedEs: string[];

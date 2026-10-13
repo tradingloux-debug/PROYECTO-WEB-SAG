@@ -7,6 +7,13 @@ import expCoffee from '../assets/images/exp_coffee_apaneca_1791258112096.jpg';
 import expSurf from '../assets/images/exp_adventure_surf_tunco_1791258121258.jpg';
 import expSantaAna from '../assets/images/exp_nature_santa_ana_1791258129967.jpg';
 import expTazumal from '../assets/images/exp_maya_tazumal_1791865355034.jpg';
+import expJuayua from '../assets/images/exp_juayua_chorros_calera.jpg';
+import expElImposible from '../assets/images/exp_el_imposible_piedra_sellada.jpg';
+import expSanSalvador from '../assets/images/exp_san_salvador_catedral.jpg';
+import expJiquilisco from '../assets/images/exp_jiquilisco_bahia.jpg';
+import expIlopango from '../assets/images/exp_ilopango_lago.jpg';
+import expPerquin from '../assets/images/exp_perquin_morazan.jpg';
+import expRioSapo from '../assets/images/exp_rio_sapo_morazan.jpg';
 import panoSantaAna from '../assets/images/pano360_santa_ana_v2.jpg';
 import panoSurfTunco from '../assets/images/pano360_surf_tunco_v2.jpg';
 import panoSuchitoto from '../assets/images/pano360_suchitoto_v2.jpg';
@@ -452,7 +459,13 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['parejas', 'familias', 'grupos'],
     minPeople: 2,
     maxPeople: 10,
-    images: [heroCoatepeque, expCoffee],
+    images: [expJuayua, expCoffee],
+    imageCredits: [{
+      author: 'ElmerGuevara',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Chorros_de_La_Calera.JPG',
+      license: 'CC BY-SA 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+    }],
     includedEs: [
       'Guía montañista local con equipo de cuerdas de apoyo',
       'Chaleco salvavidas para pozas profundas (opcional)',
@@ -545,7 +558,13 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['individual', 'parejas', 'grupos'],
     minPeople: 2,
     maxPeople: 8,
-    images: [heroCoatepeque, expSantaAna],
+    images: [expElImposible, expSantaAna],
+    imageCredits: [{
+      author: 'davidjoviera',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Posa_piedra_sellada_Parque_Nacional_El_Imposible,_El_Salvador_-_panoramio.jpg',
+      license: 'CC BY 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/3.0/'
+    }],
     includedEs: [
       'Guía guardaparque nativo de la comunidad',
       'Pase de ingreso y permisos oficiales de conservación',
@@ -643,7 +662,13 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['individual', 'parejas', 'familias', 'grupos'],
     minPeople: 1,
     maxPeople: 15,
-    images: [expSuchitoto, heroCoatepeque],
+    images: [expSanSalvador, expSuchitoto],
+    imageCredits: [{
+      author: 'Byron Beltran',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Catedral_Metropolitana_San_Salvador.JPG',
+      license: 'CC BY-SA 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+    }],
     includedEs: [
       'Guía profesional especializado en historia urbana y arquitectura',
       'Entrada al Palacio Nacional y salas de exposición',
@@ -827,7 +852,13 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['parejas', 'familias', 'grupos'],
     minPeople: 2,
     maxPeople: 8,
-    images: [expCoffee, expSurf],
+    images: [expJiquilisco, expSurf],
+    imageCredits: [{
+      author: 'ElmerGuevara',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bahia_de_Jiquilisco,_El_Salvador.JPG',
+      license: 'CC BY-SA 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+    }],
     includedEs: [
       'Paseo privado en lancha techada por canales de manglares',
       'Acompañamiento de pescador artesanal de la comunidad',
@@ -1023,7 +1054,13 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['individual', 'parejas'],
     minPeople: 1,
     maxPeople: 4,
-    images: [heroCoatepeque, expSurf],
+    images: [expIlopango, expSurf],
+    imageCredits: [{
+      author: 'Ll1324',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lago_de_Ilopango_desde_Panamericana_2011.jpg',
+      license: 'CC0 1.0',
+      licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/'
+    }],
     includedEs: [
       'Piloto tándem profesional con licencia internacional FAI',
       'Equipo completo de vuelo homologado y paracaídas de emergencia',
@@ -1107,7 +1144,21 @@ export const DEMO_EXPERIENCES: Experience[] = [
     groupType: ['individual', 'parejas', 'grupos'],
     minPeople: 2,
     maxPeople: 10,
-    images: [expSuchitoto, heroCoatepeque],
+    images: [expPerquin, expRioSapo],
+    imageCredits: [
+      {
+        author: 'Metztli',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Perqu%C3%ADn_4036.jpg',
+        license: 'CC BY-SA 3.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+      },
+      {
+        author: 'Martin Haeusler',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:%C3%81rea_protegida_de_R%C3%ADo_Sapo,_El_Salvador_(12-2010)_-_panoramio.jpg',
+        license: 'CC BY-SA 3.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+      }
+    ],
     includedEs: [
       'Guía comunitario con memoria testimonial viva',
       'Ingreso al Museo de la Revolución y cerro El Pericón',

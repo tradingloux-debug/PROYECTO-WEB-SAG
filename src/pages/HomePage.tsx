@@ -7,6 +7,7 @@ import { HomeRoutesSection } from '../components/home/HomeRoutesSection';
 import { HomeLocalSection } from '../components/home/HomeLocalSection';
 import { ImmersiveSection } from '../components/home/ImmersiveSection';
 import { ShareGiaSection } from '../components/home/ShareGiaSection';
+import { UpcomingExperiencesSection } from '../components/home/UpcomingExperiencesSection';
 import { DEMO_EXPERIENCES } from '../data/experiences';
 import { useRouter } from '../context/RouterContext';
 import { trackEvent } from '../services/analytics';
@@ -69,6 +70,9 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Upcoming concepts: shown without unverified pricing or inclusions */}
+      <UpcomingExperiencesSection />
 
       {/* 5. Planea con GIA */}
       <HomeTripPlannerSection />
