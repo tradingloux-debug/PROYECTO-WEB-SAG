@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TourRoute } from '../../types/routes';
 import { useRouter } from '../../context/RouterContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { trackEvent } from '../../services/analytics';
-import { Calendar, MapPin, Sparkles, ArrowRight, Video } from 'lucide-react';
+import { Calendar, MapPin, Sparkles, ArrowRight, Compass } from 'lucide-react';
+import { VirtualTour360 } from '../common/VirtualTour360';
 
 interface RouteCardProps {
   route: TourRoute;
@@ -13,6 +14,7 @@ interface RouteCardProps {
 export const RouteCard: React.FC<RouteCardProps> = ({ route, onCustomize }) => {
   const { navigate } = useRouter();
   const { language } = useLanguage();
+  const [tour360Open, setTour360Open] = useState(false);
 
   const title = language === 'es' ? route.titleEs : route.titleEn;
   const description = language === 'es' ? route.descriptionEs : route.descriptionEn;
@@ -33,6 +35,7 @@ export const RouteCard: React.FC<RouteCardProps> = ({ route, onCustomize }) => {
   };
 
   return (
+    <>
     <div
       onClick={handleViewRoute}
       className="group bg-white rounded-3xl border border-neutral-200/90 overflow-hidden shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer"
@@ -55,11 +58,19 @@ export const RouteCard: React.FC<RouteCardProps> = ({ route, onCustomize }) => {
           </span>
 
           <div className="flex items-center gap-2">
-            {route.promoVideoUrl && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md text-teal-300 text-[11px] font-bold border border-teal-400/30">
-                <Video className="w-3 h-3 text-teal-400" />
-                <span>Video 20s</span>
-              </span>
+            {(route.has360 || route.virtualTour360Url) && (
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setTour360Open(true);
+                }}
+                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md text-amber-300 text-[11px] font-bold border border-amber-400/30 hover:bg-slate-900 transition-colors cursor-pointer"
+                title="Abrir imagen 360° interactiva"
+              >
+                <Compass className="w-3 h-3 text-amber-400" />
+                <span>Explorar 360°</span>
+              </button>
             )}
             <span className="px-2.5 py-0.5 rounded-full bg-teal-500 text-slate-950 text-[11px] font-bold">
               Ruta GIA
@@ -122,5 +133,13 @@ export const RouteCard: React.FC<RouteCardProps> = ({ route, onCustomize }) => {
         </div>
       </div>
     </div>
+    <VirtualTour360
+      isOpen={tour360Open}
+      onClose={() => setTour360Open(false)}
+      title={title}
+      locationName={route.destinations.join(' · ')}
+      imageSrc={route.virtualTour360Url || route.images[0]}
+    />
+    </>
   );
 };

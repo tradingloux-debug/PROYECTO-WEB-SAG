@@ -44,6 +44,7 @@ export const VirtualTour360: React.FC<VirtualTour360Props> = ({
       aria-modal="true"
       aria-label={`Visor 360 de ${title}`}
       className="fixed inset-0 z-50 bg-black/95 flex flex-col select-none animate-in fade-in duration-200"
+      onClick={(event) => event.stopPropagation()}
     >
       {/* Top Header */}
       <div className="absolute top-0 left-0 right-0 z-30 p-4 bg-gradient-to-b from-black/90 to-transparent flex items-center justify-between text-white pointer-events-auto">

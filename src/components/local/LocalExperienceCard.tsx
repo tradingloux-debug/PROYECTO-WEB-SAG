@@ -3,7 +3,8 @@ import { Experience } from '../../types/experience';
 import { useRouter } from '../../context/RouterContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { HostStoryModal } from './HostStoryModal';
-import { Users, MapPin, Clock, Heart, Sparkles, Video } from 'lucide-react';
+import { VirtualTour360 } from '../common/VirtualTour360';
+import { Users, MapPin, Clock, Heart, Sparkles, Compass } from 'lucide-react';
 
 interface LocalExperienceCardProps {
   experience: Experience;
@@ -13,6 +14,7 @@ export const LocalExperienceCard: React.FC<LocalExperienceCardProps> = ({ experi
   const { navigate } = useRouter();
   const { language } = useLanguage();
   const [modalOpen, setModalOpen] = useState(false);
+  const [tour360Open, setTour360Open] = useState(false);
 
   const title = language === 'es' ? experience.titleEs : experience.titleEn;
   const shortDesc = language === 'es' ? experience.shortDescriptionEs : experience.shortDescriptionEn;
@@ -40,11 +42,19 @@ export const LocalExperienceCard: React.FC<LocalExperienceCardProps> = ({ experi
               <span>Experiencia local</span>
             </span>
 
-            {experience.hasVideo && (
-              <span className="px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-teal-300 text-[11px] font-bold border border-teal-400/30 flex items-center gap-1">
-                <Video className="w-3 h-3 text-teal-400" />
-                <span>Video 18s (máx 30s)</span>
-              </span>
+            {(experience.has360 || experience.virtualTour360Url) && (
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setTour360Open(true);
+                }}
+                className="px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-amber-300 text-[11px] font-bold border border-amber-400/30 flex items-center gap-1 hover:bg-black/85 transition-colors cursor-pointer"
+                title="Abrir imagen 360° interactiva"
+              >
+                <Compass className="w-3 h-3 text-amber-400" />
+                <span>Explorar 360°</span>
+              </button>
             )}
           </div>
 
@@ -117,6 +127,14 @@ export const LocalExperienceCard: React.FC<LocalExperienceCardProps> = ({ experi
           experienceTitle={title}
         />
       )}
+
+      <VirtualTour360
+        isOpen={tour360Open}
+        onClose={() => setTour360Open(false)}
+        title={title}
+        locationName={experience.location}
+        imageSrc={experience.virtualTour360Url || experience.images[0]}
+      />
     </>
   );
 };

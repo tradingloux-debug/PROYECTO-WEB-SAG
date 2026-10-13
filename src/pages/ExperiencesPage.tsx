@@ -22,7 +22,6 @@ import {
   Sparkles,
   Compass,
   RotateCcw,
-  Video,
   Users,
   ArrowRight,
   Frown,
@@ -37,7 +36,6 @@ const initialFilters: ExperienceFilterState = {
   groupType: 'all',
   sortBy: 'recommended',
   onlyLocal: false,
-  onlyVideo: false,
   only360: false,
 };
 
@@ -59,22 +57,22 @@ export const ExperiencesPage: React.FC = () => {
       groupType: (query.groupType as GroupType) || 'all',
       sortBy: 'recommended',
       onlyLocal: query.local === 'true',
-      onlyVideo: false,
-      only360: false,
+      only360: query.tour360 === 'true',
     };
   });
 
   // Keep in sync when URL changes
   useEffect(() => {
-    if (query.category || query.search || query.local) {
+    if (query.category || query.search || query.local || query.tour360) {
       setFilters((prev) => ({
         ...prev,
         category: (query.category as Category) || prev.category,
         searchQuery: query.search !== undefined ? query.search : prev.searchQuery,
         onlyLocal: query.local === 'true' ? true : prev.onlyLocal,
+        only360: query.tour360 === 'true' ? true : prev.only360,
       }));
     }
-  }, [query.category, query.search, query.local]);
+  }, [query.category, query.search, query.local, query.tour360]);
 
   const handleFilterChange = (updated: Partial<ExperienceFilterState>) => {
     setFilters((prev) => {
@@ -104,7 +102,6 @@ export const ExperiencesPage: React.FC = () => {
     if (filters.durationType !== 'all') count++;
     if (filters.groupType !== 'all') count++;
     if (filters.onlyLocal) count++;
-    if (filters.onlyVideo) count++;
     if (filters.only360) count++;
     return count;
   }, [filters]);
@@ -136,11 +133,6 @@ export const ExperiencesPage: React.FC = () => {
 
       // Local experience flag
       if (filters.onlyLocal && !exp.isLocalExperience) {
-        return false;
-      }
-
-      // Video flag
-      if (filters.onlyVideo && !(exp.hasVideo || exp.promoVideoUrl || exp.shortVideoUrl)) {
         return false;
       }
 
@@ -196,13 +188,11 @@ export const ExperiencesPage: React.FC = () => {
       active:
         filters.category === 'all' &&
         !filters.onlyLocal &&
-        !filters.onlyVideo &&
         !filters.only360,
       onClick: () =>
         handleFilterChange({
           category: 'all',
           onlyLocal: false,
-          onlyVideo: false,
           only360: false,
         }),
     },
@@ -214,7 +204,6 @@ export const ExperiencesPage: React.FC = () => {
         handleFilterChange({
           category: 'cultura',
           onlyLocal: false,
-          onlyVideo: false,
           only360: false,
         }),
     },
@@ -226,7 +215,6 @@ export const ExperiencesPage: React.FC = () => {
         handleFilterChange({
           category: 'gastronomia',
           onlyLocal: false,
-          onlyVideo: false,
           only360: false,
         }),
     },
@@ -238,7 +226,6 @@ export const ExperiencesPage: React.FC = () => {
         handleFilterChange({
           category: 'naturaleza',
           onlyLocal: false,
-          onlyVideo: false,
           only360: false,
         }),
     },
@@ -250,7 +237,6 @@ export const ExperiencesPage: React.FC = () => {
         handleFilterChange({
           category: 'aventura',
           onlyLocal: false,
-          onlyVideo: false,
           only360: false,
         }),
     },
@@ -262,15 +248,6 @@ export const ExperiencesPage: React.FC = () => {
         handleFilterChange({
           onlyLocal: !filters.onlyLocal,
           category: 'all',
-        }),
-    },
-    {
-      id: 'video',
-      label: 'Video (≤30s)',
-      active: Boolean(filters.onlyVideo),
-      onClick: () =>
-        handleFilterChange({
-          onlyVideo: !filters.onlyVideo,
         }),
     },
     {

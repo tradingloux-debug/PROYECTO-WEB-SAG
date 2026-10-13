@@ -6,13 +6,13 @@ import { GiaLogo } from '../common/GiaLogo';
 import {
   Menu,
   X,
+  Home,
   Sparkles,
   User,
   ChevronDown,
   Compass,
   Route,
   Heart,
-  Video,
   BookmarkCheck,
   Share2,
   HelpCircle,
@@ -77,6 +77,20 @@ export const Navbar: React.FC = () => {
 
         {/* Center: Simplified Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold text-[#063A5B]">
+          <button
+            type="button"
+            onClick={() => handleNav('/')}
+            className={`py-2 flex items-center gap-1.5 transition-colors cursor-pointer ${
+              isActive('/')
+                ? 'text-[#00A6A6] font-bold border-b-2 border-[#00A6A6]'
+                : 'hover:text-[#00A6A6]'
+            }`}
+            aria-current={isActive('/') ? 'page' : undefined}
+          >
+            <Home className="w-4 h-4" />
+            <span>Inicio</span>
+          </button>
+
           {/* 1. Menú "Explorar" con Dropdown Organizado */}
           <div
             ref={exploreRef}
@@ -164,13 +178,13 @@ export const Navbar: React.FC = () => {
 
                   <button
                     type="button"
-                    onClick={() => handleNav('/experiencias?video=true')}
+                    onClick={() => handleNav('/experiencias?tour360=true')}
                     className="w-full text-left p-2.5 rounded-xl hover:bg-teal-50/60 flex items-center gap-2.5 transition-colors cursor-pointer group"
                   >
-                    <Video className="w-4 h-4 text-[#00A6A6]" />
+                    <Compass className="w-4 h-4 text-[#00A6A6]" />
                     <div>
                       <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#00A6A6] block">
-                        Experiencias con video / 360°
+                        Experiencias con imágenes 360°
                       </span>
                       <span className="text-[10.5px] text-neutral-500 block">
                         Exploración inmersiva
@@ -249,10 +263,10 @@ export const Navbar: React.FC = () => {
 
                 <button
                   type="button"
-                  onClick={() => handleNav('/experiencias?video=true')}
+                  onClick={() => handleNav('/experiencias?tour360=true')}
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
-                  <Video className="w-4 h-4 text-[#00A6A6]" />
+                  <Compass className="w-4 h-4 text-[#00A6A6]" />
                   <span>{language === 'es' ? 'Experiencias inmersivas' : 'Immersive experiences'}</span>
                 </button>
 
@@ -326,6 +340,17 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile controls */}
         <div className="flex lg:hidden items-center gap-2">
+          <button
+            type="button"
+            onClick={() => handleNav('/')}
+            className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
+              isActive('/') ? 'bg-teal-50 text-[#00A6A6]' : 'text-[#063A5B] hover:bg-neutral-100'
+            }`}
+            aria-current={isActive('/') ? 'page' : undefined}
+          >
+            <Home className="w-4 h-4" />
+            <span>Inicio</span>
+          </button>
           {/* Header móvil limpio con logo a la izquierda y hamburguesa a la derecha */}
           <button
             type="button"
@@ -342,6 +367,17 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-neutral-200/80 bg-white px-5 pt-4 pb-8 space-y-5 shadow-2xl animate-in slide-in-from-top-2 duration-200">
           <nav className="flex flex-col space-y-1.5 text-sm font-semibold text-[#063A5B]">
+            <button
+              type="button"
+              onClick={() => handleNav('/')}
+              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
+                isActive('/') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
+              }`}
+            >
+              <span>Inicio</span>
+              <Home className="w-4 h-4 text-[#00A6A6]" />
+            </button>
+
             <button
               type="button"
               onClick={() => handleNav('/experiencias')}

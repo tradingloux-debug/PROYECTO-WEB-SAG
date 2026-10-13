@@ -21,7 +21,7 @@ export const WhyGia: React.FC = () => {
     {
       icon: <Sparkles className="w-5 h-5 text-[#00A6A6]" />,
       title: 'INSPIRACIÓN VISUAL',
-      desc: 'Explora videos y contenido 360° antes de elegir.',
+      desc: 'Recorre imágenes 360° interactivas antes de elegir.',
     },
   ];
 

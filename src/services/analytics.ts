@@ -7,7 +7,6 @@ export type AnalyticsEventName =
   | 'booking_form_completed'
   | 'booking_confirmed'
   // New Sprint 2 Events
-  | 'video_played'
   | 'virtual_tour_opened'
   | 'route_viewed'
   | 'route_personalization_started'

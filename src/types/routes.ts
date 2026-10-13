@@ -24,7 +24,6 @@ export interface TourRoute {
   departments: string[];
   experiences: string[];
   images: string[];
-  promoVideoUrl?: string;
   virtualTour360Url?: string;
   has360?: boolean;
   price: number;

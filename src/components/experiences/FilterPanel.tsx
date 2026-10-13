@@ -8,7 +8,7 @@ import {
 } from '../../types/experience';
 import { useLanguage } from '../../context/LanguageContext';
 import { DEPARTMENTS } from '../../data/experiences';
-import { RotateCcw, SlidersHorizontal, MapPin, Video, Sparkles, Users } from 'lucide-react';
+import { RotateCcw, SlidersHorizontal, MapPin, Sparkles, Users } from 'lucide-react';
 
 interface FilterPanelProps {
   filters: ExperienceFilterState;
@@ -219,28 +219,15 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => onChange({ onlyVideo: !filters.onlyVideo })}
-            className={`flex-1 py-2 px-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-              filters.onlyVideo
-                ? 'bg-[#063A5B] text-white border-[#063A5B] shadow-2xs'
-                : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:border-neutral-300'
-            }`}
-          >
-            <Video className="w-3.5 h-3.5 text-[#20C5C7]" />
-            <span>Video (≤30s)</span>
-          </button>
-
-          <button
-            type="button"
             onClick={() => onChange({ only360: !filters.only360 })}
-            className={`flex-1 py-2 px-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+            className={`w-full py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               filters.only360
                 ? 'bg-[#063A5B] text-white border-[#063A5B] shadow-2xs'
                 : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:border-neutral-300'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#FDBA2D]" />
-            <span>360°</span>
+            <span>Imágenes 360° interactivas</span>
           </button>
         </div>
       </div>

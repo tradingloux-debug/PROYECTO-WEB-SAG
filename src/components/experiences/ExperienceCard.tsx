@@ -10,14 +10,12 @@ import {
   Heart,
   Star,
   Compass,
-  Video,
   Sparkles,
   Users,
   ArrowRight,
   BookmarkCheck,
-  X,
 } from 'lucide-react';
-import { VideoExperiencePlayer } from '../common/VideoExperiencePlayer';
+import { VirtualTour360 } from '../common/VirtualTour360';
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -33,7 +31,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
   const { isFavorite, toggleFavorite } = useBookingDraft();
   const [imageError, setImageError] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showTour360, setShowTour360] = useState(false);
 
   const title = language === 'es' ? experience.titleEs : experience.titleEn;
   const shortDesc = language === 'es' ? experience.shortDescriptionEs : experience.shortDescriptionEn;
@@ -65,7 +63,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
     }
   };
 
-  const hasVideo = Boolean(experience.hasVideo || experience.promoVideoUrl || experience.shortVideoUrl);
   const has360 = Boolean(experience.has360 || experience.virtualTour360Url);
 
   // Price formatting
@@ -86,65 +83,15 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
     </div>
   );
 
-  // Video teaser modal (18s, <= 30s)
-  const renderVideoModal = () => {
-    if (!showVideoModal) return null;
-    return (
-      <div
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-default"
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowVideoModal(false);
-        }}
-      >
-        <div
-          className="bg-slate-900 border border-neutral-700 rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl relative space-y-4"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex items-center justify-between pb-2 border-b border-neutral-800">
-            <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#20C5C7] font-bold">
-                Teaser HD · 18 segundos (máx 30s)
-              </span>
-              <h3 className="text-base sm:text-lg font-bold text-white mt-0.5">
-                {title}
-              </h3>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowVideoModal(false)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-              aria-label="Cerrar video"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          <VideoExperiencePlayer
-            videoUrl={experience.promoVideoUrl}
-            thumbnailUrl={experience.images[0]}
-            title={title}
-          />
-
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-xs text-neutral-400">
-              {experience.location}
-            </span>
-            <button
-              type="button"
-              onClick={() => {
-                setShowVideoModal(false);
-                handleCardClick();
-              }}
-              className="px-4 py-2 bg-[#00A6A6] hover:bg-[#009191] text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
-            >
-              Ver experiencia completa
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  const renderTour360 = () => (
+    <VirtualTour360
+      isOpen={showTour360}
+      onClose={() => setShowTour360(false)}
+      title={title}
+      locationName={experience.location}
+      imageSrc={experience.virtualTour360Url || experience.images[0]}
+    />
+  );
 
   // List view rendering (Desktop Horizontal)
   if (viewMode === 'list') {
@@ -189,25 +136,19 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
                 <span>Experiencia local</span>
               </span>
             )}
-            {hasVideo && (
+            {has360 && (
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowVideoModal(true);
+                  setShowTour360(true);
                 }}
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md text-[#20C5C7] text-[10.5px] font-bold border border-teal-400/40 hover:bg-slate-900 transition-all cursor-pointer shadow-xs"
-                title="Ver video teaser de 18s (máx 30s)"
+                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md text-[#FDBA2D] text-[10.5px] font-bold border border-amber-400/30 hover:bg-slate-900 transition-all cursor-pointer"
+                title="Abrir imagen 360° interactiva"
               >
-                <Video className="w-3 h-3 text-[#20C5C7]" />
-                <span>Video 18s</span>
-              </button>
-            )}
-            {has360 && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md text-[#FDBA2D] text-[10.5px] font-bold border border-amber-400/30">
                 <Sparkles className="w-3 h-3 text-[#FDBA2D]" />
-                <span>360°</span>
-              </span>
+                <span>Explorar 360°</span>
+              </button>
             )}
           </div>
 
@@ -289,7 +230,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             </button>
           </div>
         </div>
-        {renderVideoModal()}
+        {renderTour360()}
       </article>
     );
   }
@@ -340,26 +281,19 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             </span>
           )}
 
-          {hasVideo && (
+          {has360 && (
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                setShowVideoModal(true);
+                setShowTour360(true);
               }}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md text-[#20C5C7] text-[10.5px] font-bold border border-teal-400/40 hover:bg-slate-900 transition-all cursor-pointer shadow-xs"
-              title="Ver video teaser de 18s (máx 30s)"
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md text-[#FDBA2D] text-[10.5px] font-bold border border-amber-400/30 hover:bg-slate-900 transition-all cursor-pointer"
+              title="Abrir imagen 360° interactiva"
             >
-              <Video className="w-3 h-3 text-[#20C5C7]" />
-              <span>Video 18s</span>
-            </button>
-          )}
-
-          {has360 && !experience.isLocalExperience && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md text-[#FDBA2D] text-[10.5px] font-bold border border-amber-400/30">
               <Sparkles className="w-3 h-3 text-[#FDBA2D]" />
-              <span>360°</span>
-            </span>
+              <span>Explorar 360°</span>
+            </button>
           )}
         </div>
 
@@ -445,7 +379,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
         </div>
       </div>
 
-      {renderVideoModal()}
+      {renderTour360()}
     </article>
   );
 };

@@ -103,7 +103,6 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
 
     // Camera
     const camera = new THREE.PerspectiveCamera(fovRef.current, width / height, 1, 1100);
-    camera.target = new THREE.Vector3(0, 0, 0);
     cameraRef.current = camera;
 
     // Inverted Sphere for 360 panorama

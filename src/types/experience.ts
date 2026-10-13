@@ -78,11 +78,8 @@ export interface Experience {
   active: boolean;
   demoRating?: number;
   demoReviewsCount?: number;
-  // Immersive media extensions (Sprint 2)
-  promoVideoUrl?: string;
-  shortVideoUrl?: string;
+  // Interactive panoramic media
   virtualTour360Url?: string;
-  hasVideo?: boolean;
   has360?: boolean;
   // Strategic Local Experience extensions
   isLocalExperience?: boolean;
@@ -100,6 +97,5 @@ export interface ExperienceFilterState {
   groupType: GroupType | 'all';
   sortBy: 'recommended' | 'price_asc' | 'price_desc' | 'duration_asc';
   onlyLocal?: boolean;
-  onlyVideo?: boolean;
   only360?: boolean;
 }

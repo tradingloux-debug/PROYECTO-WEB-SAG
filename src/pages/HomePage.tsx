@@ -77,7 +77,7 @@ export const HomePage: React.FC = () => {
       {/* 7. Experiencias locales (comunidades y tradición) */}
       <HomeLocalSection />
 
-      {/* 8. Explora antes de viajar (video / 360) */}
+      {/* 8. Explora antes de viajar con imágenes 360° interactivas */}
       <ImmersiveSection />
 
       {/* 9. Comparte GIA (programa de invitación) */}

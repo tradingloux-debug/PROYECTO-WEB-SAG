@@ -115,9 +115,6 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.9,
     demoReviewsCount: 38,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_santa_ana.mp4',
-    shortVideoUrl: '/videos/exp_santa_ana.mp4',
     has360: true,
     virtualTour360Url: panoSantaAna,
     isLocalExperience: false
@@ -214,9 +211,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 5.0,
     demoReviewsCount: 42,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_coffee_apaneca.mp4',
-    shortVideoUrl: '/videos/exp_coffee_apaneca.mp4',
+    has360: true,
+    virtualTour360Url: panoCoatepeque,
     isLocalExperience: true,
     localCategory: 'cafe',
     hostStory: {
@@ -322,9 +318,6 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.8,
     demoReviewsCount: 29,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_surf_tunco.mp4',
-    shortVideoUrl: '/videos/exp_surf_tunco.mp4',
     has360: true,
     virtualTour360Url: panoSurfTunco
   },
@@ -420,9 +413,6 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.9,
     demoReviewsCount: 31,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_suchitoto.mp4',
-    shortVideoUrl: '/videos/exp_suchitoto.mp4',
     has360: true,
     virtualTour360Url: panoSuchitoto,
     isLocalExperience: true,
@@ -526,9 +516,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.7,
     demoReviewsCount: 24,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_coatepeque.mp4',
-    shortVideoUrl: '/videos/exp_coatepeque.mp4'
+    has360: true,
+    virtualTour360Url: panoCoatepeque
   },
   {
     id: 'exp-6',
@@ -625,9 +614,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.8,
     demoReviewsCount: 19,
-    hasVideo: true,
-    promoVideoUrl: '/videos/route_costa_volcanes.mp4',
-    shortVideoUrl: '/videos/route_costa_volcanes.mp4'
+    has360: true,
+    virtualTour360Url: panoSantaAna
   },
   {
     id: 'exp-7',
@@ -717,9 +705,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.9,
     demoReviewsCount: 35,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_maya_tazumal.mp4',
-    shortVideoUrl: '/videos/exp_maya_tazumal.mp4'
+    has360: true,
+    virtualTour360Url: panoSuchitoto
   },
   {
     id: 'exp-8',
@@ -811,9 +798,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.9,
     demoReviewsCount: 27,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_coatepeque.mp4',
-    shortVideoUrl: '/videos/exp_coatepeque.mp4'
+    has360: true,
+    virtualTour360Url: panoCoatepeque
   },
   {
     id: 'exp-9',
@@ -905,9 +891,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 5.0,
     demoReviewsCount: 21,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_sabores_olocuilta.mp4',
-    shortVideoUrl: '/videos/exp_sabores_olocuilta.mp4',
+    has360: true,
+    virtualTour360Url: panoSurfTunco,
     isLocalExperience: true,
     localCategory: 'gastronomia_local',
     hostStory: {
@@ -1009,9 +994,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.8,
     demoReviewsCount: 22,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_maya_tazumal.mp4',
-    shortVideoUrl: '/videos/exp_maya_tazumal.mp4'
+    has360: true,
+    virtualTour360Url: panoSuchitoto
   },
   {
     id: 'exp-11',
@@ -1094,9 +1078,8 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 5.0,
     demoReviewsCount: 18,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_parapente_ilopango.mp4',
-    shortVideoUrl: '/videos/exp_parapente_ilopango.mp4'
+    has360: true,
+    virtualTour360Url: panoCoatepeque
   },
   {
     id: 'exp-12',
@@ -1186,9 +1169,6 @@ export const DEMO_EXPERIENCES: Experience[] = [
     active: true,
     demoRating: 4.9,
     demoReviewsCount: 16,
-    hasVideo: true,
-    promoVideoUrl: '/videos/exp_suchitoto.mp4',
-    shortVideoUrl: '/videos/exp_suchitoto.mp4',
     has360: true,
     virtualTour360Url: panoSuchitoto,
     isLocalExperience: true,
