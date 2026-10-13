@@ -6,10 +6,10 @@ import expSuchitoto from '../assets/images/exp_culture_suchitoto_1791258103725.j
 import expCoffee from '../assets/images/exp_coffee_apaneca_1791258112096.jpg';
 import expSurf from '../assets/images/exp_adventure_surf_tunco_1791258121258.jpg';
 import expSantaAna from '../assets/images/exp_nature_santa_ana_1791258129967.jpg';
-import panoSantaAna from '../assets/images/pano360_santa_ana_1791866571488.jpg';
-import panoSurfTunco from '../assets/images/pano360_surf_tunco_1791866583987.jpg';
-import panoSuchitoto from '../assets/images/pano360_suchitoto_1791866597005.jpg';
-import panoCoatepeque from '../assets/images/pano360_coatepeque_1791866614384.jpg';
+import panoSantaAna from '../assets/images/pano360_santa_ana_v2.jpg';
+import panoSurfTunco from '../assets/images/pano360_surf_tunco_v2.jpg';
+import panoSuchitoto from '../assets/images/pano360_suchitoto_v2.jpg';
+import panoCoatepeque from '../assets/images/pano360_coatepeque_v2.jpg';
 
 export { panoSantaAna, panoSurfTunco, panoSuchitoto, panoCoatepeque };
 

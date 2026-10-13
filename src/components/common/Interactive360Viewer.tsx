@@ -35,17 +35,20 @@ export interface Interactive360ViewerProps {
   isExpanded?: boolean;
 }
 
+const EMPTY_HOTSPOTS: Hotspot360[] = [];
+
 export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
   imageSrc,
   title,
   locationName,
-  hotspots = [],
+  hotspots,
   className = 'h-[400px] w-full',
   initialFov = 75,
   autoRotateSpeed = 0.35,
   onExpand,
   isExpanded = false,
 }) => {
+  const viewerHotspots = hotspots ?? EMPTY_HOTSPOTS;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -191,11 +194,11 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
       }
 
       // Calculate Hotspots 2D screen projections
-      if (hotspots.length > 0 && containerRef.current) {
+      if (viewerHotspots.length > 0 && containerRef.current) {
         const cWidth = containerRef.current.clientWidth;
         const cHeight = containerRef.current.clientHeight;
 
-        const projected = hotspots.map((hs) => {
+        const projected = viewerHotspots.map((hs) => {
           const hPhi = THREE.MathUtils.degToRad(90 - hs.lat);
           const hTheta = THREE.MathUtils.degToRad(hs.lon);
           const pos = new THREE.Vector3(
@@ -223,7 +226,7 @@ export const Interactive360Viewer: React.FC<Interactive360ViewerProps> = ({
     };
 
     animFrameIdRef.current = requestAnimationFrame(animate);
-  }, [imageSrc, initialFov, autoRotateSpeed, hotspots]);
+  }, [imageSrc, initialFov, autoRotateSpeed, viewerHotspots]);
 
   useEffect(() => {
     setupThree();

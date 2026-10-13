@@ -3,10 +3,10 @@ import { TourRoute } from '../types/routes';
 import routeEsencial from '../assets/images/route_esencial_elsalvador_1791259912258.jpg';
 import routeCostaVolcanes from '../assets/images/route_costa_volcanes_1791259922631.jpg';
 import routeSabores from '../assets/images/route_sabores_salvador_1791259932966.jpg';
-import panoSantaAna from '../assets/images/pano360_santa_ana_1791866571488.jpg';
-import panoSurfTunco from '../assets/images/pano360_surf_tunco_1791866583987.jpg';
-import panoSuchitoto from '../assets/images/pano360_suchitoto_1791866597005.jpg';
-import panoCoatepeque from '../assets/images/pano360_coatepeque_1791866614384.jpg';
+import panoSantaAna from '../assets/images/pano360_santa_ana_v2.jpg';
+import panoSurfTunco from '../assets/images/pano360_surf_tunco_v2.jpg';
+import panoSuchitoto from '../assets/images/pano360_suchitoto_v2.jpg';
+import panoCoatepeque from '../assets/images/pano360_coatepeque_v2.jpg';
 
 export const DEMO_ROUTES: TourRoute[] = [
   {

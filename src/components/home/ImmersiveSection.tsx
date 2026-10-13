@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { DEMO_EXPERIENCES } from '../../data/experiences';
 import { useRouter } from '../../context/RouterContext';
-import { Interactive360Viewer } from '../common/Interactive360Viewer';
 import { VirtualTour360 } from '../common/VirtualTour360';
-import { Compass, Sparkles, Move, Maximize2, ArrowRight } from 'lucide-react';
+import { Compass, Sparkles, Move, Maximize2, ArrowRight, MousePointer2 } from 'lucide-react';
 
 export const ImmersiveSection: React.FC = () => {
   const { navigate } = useRouter();
@@ -82,12 +81,9 @@ export const ImmersiveSection: React.FC = () => {
               className="bg-slate-900/90 rounded-2xl border border-white/10 overflow-hidden shadow-xl flex flex-col justify-between hover:border-teal-400/50 transition-all group/card"
             >
               <div className="p-3">
-                <Interactive360Viewer
-                  imageSrc={exp.virtualTour360Url || exp.images[0]}
-                  title={exp.titleEs}
-                  locationName={exp.location}
-                  className="h-[260px] w-full rounded-xl"
-                  onExpand={() =>
+                <button
+                  type="button"
+                  onClick={() =>
                     setActiveTourModal({
                       isOpen: true,
                       title: exp.titleEs,
@@ -95,7 +91,31 @@ export const ImmersiveSection: React.FC = () => {
                       image: exp.virtualTour360Url || exp.images[0],
                     })
                   }
-                />
+                  className="relative h-[260px] w-full rounded-xl overflow-hidden bg-slate-950 border border-white/10 cursor-pointer group/preview text-left"
+                  aria-label={`Abrir imagen 360° interactiva de ${exp.titleEs}`}
+                >
+                  <img
+                    src={exp.virtualTour360Url || exp.images[0]}
+                    alt={`Vista panorámica 360° de ${exp.titleEs}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/preview:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/45" />
+                  <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-500/90 text-white text-[10px] font-bold tracking-wide shadow-lg">
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>IMAGEN 360°</span>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold border border-white/20 shadow-xl transition-transform group-hover/preview:scale-105">
+                      <MousePointer2 className="w-4 h-4 text-teal-300" />
+                      Abrir y mover en 360°
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <p className="text-sm font-bold text-white drop-shadow-md line-clamp-2">{exp.titleEs}</p>
+                    <p className="text-[11px] text-slate-200 mt-0.5">{exp.location}</p>
+                  </div>
+                </button>
               </div>
 
               <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
