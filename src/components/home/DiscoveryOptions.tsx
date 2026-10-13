@@ -4,43 +4,45 @@ import { Compass, Route, Sparkles, ArrowRight } from 'lucide-react';
 import expSurf from '../../assets/images/exp_adventure_surf_tunco_1791258121258.jpg';
 import routeEsencial from '../../assets/images/route_esencial_elsalvador_1791259912258.jpg';
 import heroCoatepeque from '../../assets/images/hero_coatepeque_el_salvador_1791258093926.jpg';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const DiscoveryOptions: React.FC = () => {
   const { navigate } = useRouter();
+  const { language } = useLanguage();
 
   // Exactly 3 core paths responding to the traveler's 3 questions
   const threePaths = [
     {
       id: 'experiencias',
       title: 'EXPERIENCIAS',
-      description: 'Encuentra actividades para unas horas o un día.',
-      cta: 'Explorar',
+      description: language === 'es' ? 'Encuentra actividades para unas horas o un día.' : 'Find activities for a few hours or a full day.',
+      cta: language === 'es' ? 'Explorar' : 'Explore',
       link: '/experiencias',
       image: expSurf,
       icon: Compass,
-      badge: 'Actividades por día',
+      badge: language === 'es' ? 'Actividades por día' : 'Day activities',
       btnStyle: 'bg-[#00A6A6] hover:bg-[#009191] text-white',
     },
     {
       id: 'rutas',
       title: 'RUTAS GIA',
-      description: 'Recorre distintos destinos en viajes de varios días.',
-      cta: 'Ver rutas',
+      description: language === 'es' ? 'Recorre distintos destinos en viajes de varios días.' : 'Visit several destinations on multi-day trips.',
+      cta: language === 'es' ? 'Ver rutas' : 'View routes',
       link: '/rutas',
       image: routeEsencial,
       icon: Route,
-      badge: 'Itinerarios multidía',
+      badge: language === 'es' ? 'Itinerarios multidía' : 'Multi-day itineraries',
       btnStyle: 'bg-[#063A5B] hover:bg-[#04283f] text-white',
     },
     {
       id: 'planea',
       title: 'PLANEA CON GIA',
-      description: 'Dinos lo que quieres vivir y crea un viaje personalizado.',
-      cta: 'Crear mi viaje',
+      description: language === 'es' ? 'Dinos lo que quieres vivir y crea un viaje personalizado.' : 'Tell us what you want to experience and create a custom trip.',
+      cta: language === 'es' ? 'Crear mi viaje' : 'Create my trip',
       link: '/planea-con-gia',
       image: heroCoatepeque,
       icon: Sparkles,
-      badge: 'Travel Designer Inteligente',
+      badge: language === 'es' ? 'Diseñador de viaje inteligente' : 'Smart Travel Designer',
       btnStyle: 'bg-[#00A6A6] hover:bg-[#009191] text-white ring-2 ring-[#00A6A6]/30',
     },
   ];
@@ -52,15 +54,15 @@ export const DiscoveryOptions: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-neutral-200/90 text-[#063A5B] text-xs font-bold font-mono uppercase shadow-2xs">
             <Compass className="w-3.5 h-3.5 text-[#00A6A6]" />
-            <span>Tres Formas de Descubrir</span>
+            <span>{language === 'es' ? 'Tres formas de descubrir' : 'Three ways to discover'}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black text-[#063A5B] tracking-tight font-display">
-            ¿Cómo quieres viajar?
+            {language === 'es' ? '¿Cómo quieres viajar?' : 'How would you like to travel?'}
           </h2>
 
           <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
-            Tres caminos diseñados para vivir El Salvador exactamente a tu medida.
+            {language === 'es' ? 'Tres caminos diseñados para vivir El Salvador exactamente a tu medida.' : 'Three paths designed to experience El Salvador your way.'}
           </p>
         </div>
 

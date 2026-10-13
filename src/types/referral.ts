@@ -32,7 +32,7 @@ export interface CreditTransaction {
 }
 
 export interface ReferralProgramState {
-  currentCode: ReferralCode;
+  currentCode: ReferralCode | null;
   invitedCount: number;
   completedBookingsCount: number;
   creditsBalance: number;

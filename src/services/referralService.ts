@@ -1,137 +1,109 @@
-import { ReferralCode, CreditTransaction, ReferralProgramState } from '../types/referral';
+import { Booking } from '../types/booking';
+import { ReferralProgramState } from '../types/referral';
+import { UserProfile } from '../types/account';
 
-const REFERRAL_STORAGE_KEY = 'gia_referral_program_v1';
+const REFERRAL_STORAGE_KEY = 'gia_referral_program_v2';
 
-const DEFAULT_STATE: ReferralProgramState = {
-  currentCode: {
-    id: 'code-andrea-10',
-    userId: 'user-current-session',
-    code: 'ANDREA10',
-    discountType: 'percentage',
-    discountValue: 10, // 10% de descuento
-    rewardType: 'credits',
-    rewardValue: 15, // $15 USD en créditos GIA por reserva completada
-    active: true,
-    createdAt: new Date().toISOString(),
-  },
-  invitedCount: 3,
-  completedBookingsCount: 2,
-  creditsBalance: 30, // $30 USD disponibles
-  transactions: [
-    {
-      id: 'tx-1',
-      userId: 'user-current-session',
-      amount: 15,
-      type: 'EARNED',
-      source: 'Reserva completada por invitado (Carlos M.)',
-      bookingId: 'GIA-891244',
-      createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
-    },
-    {
-      id: 'tx-2',
-      userId: 'user-current-session',
-      amount: 15,
-      type: 'EARNED',
-      source: 'Reserva completada por invitado (Elena P.)',
-      bookingId: 'GIA-642109',
-      createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-    },
-  ],
+const EMPTY_STATE: ReferralProgramState = {
+  currentCode: null,
+  invitedCount: 0,
+  completedBookingsCount: 0,
+  creditsBalance: 0,
+  transactions: [],
+};
+
+const cleanCodePart = (value: string) =>
+  value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+
+const createReferralCode = (profile: UserProfile) => {
+  const name = cleanCodePart(profile.firstName).slice(0, 7) || 'GIA';
+  return `${name}${String(Date.now()).slice(-4)}`;
 };
 
 export const referralService = {
   getState(): ReferralProgramState {
     try {
       const raw = localStorage.getItem(REFERRAL_STORAGE_KEY);
-      if (!raw) {
-        localStorage.setItem(REFERRAL_STORAGE_KEY, JSON.stringify(DEFAULT_STATE));
-        return DEFAULT_STATE;
-      }
-      return JSON.parse(raw);
-    } catch (e) {
-      return DEFAULT_STATE;
+      return raw ? { ...EMPTY_STATE, ...JSON.parse(raw) } : EMPTY_STATE;
+    } catch {
+      return EMPTY_STATE;
     }
   },
 
   saveState(state: ReferralProgramState): void {
-    try {
-      localStorage.setItem(REFERRAL_STORAGE_KEY, JSON.stringify(state));
-    } catch (e) {
-      console.error('Error saving referral state', e);
-    }
+    localStorage.setItem(REFERRAL_STORAGE_KEY, JSON.stringify(state));
   },
 
-  validateCode(
-    code: string,
-    currentUserCode?: string
-  ): { valid: boolean; discountType?: 'percentage' | 'fixed'; discountValue?: number; message?: string } {
-    const clean = code.trim().toUpperCase();
-
-    if (!clean) {
-      return { valid: false, message: 'Ingresa un código' };
-    }
-
-    // Rule: User cannot use their own referral code
+  unlockAfterFirstBooking(profile: UserProfile, bookings: Booking[]): ReferralProgramState {
     const state = this.getState();
-    const ownCode = currentUserCode || state.currentCode.code;
-    if (clean === ownCode.toUpperCase()) {
-      return {
-        valid: false,
-        message: 'No puedes utilizar tu propio código de recomendación.',
-      };
+    if (state.currentCode) return state;
+    const hasBooking = bookings.some(
+      booking => booking.email.trim().toLowerCase() === profile.email.trim().toLowerCase()
+    );
+    if (!hasBooking) return state;
+
+    const next: ReferralProgramState = {
+      ...state,
+      currentCode: {
+        id: `ref_${Date.now()}`,
+        userId: profile.id,
+        code: createReferralCode(profile),
+        discountType: 'percentage',
+        discountValue: 5,
+        rewardType: 'credits',
+        rewardValue: 10,
+        active: true,
+        createdAt: new Date().toISOString(),
+      },
+    };
+    this.saveState(next);
+    return next;
+  },
+
+  validateCode(code: string, currentUserCode?: string, language: 'es' | 'en' = 'es') {
+    const clean = code.trim().toUpperCase();
+    if (!clean) return { valid: false, message: language === 'es' ? 'Ingresa un código.' : 'Enter a code.' };
+
+    const ownCode = currentUserCode || this.getState().currentCode?.code;
+    if (ownCode && clean === ownCode.toUpperCase()) {
+      return { valid: false, message: language === 'es' ? 'No puedes utilizar tu propio código de recomendación.' : 'You cannot use your own referral code.' };
     }
 
-    // Accepted active promo and referral codes
-    const validCodes: Record<string, { type: 'percentage' | 'fixed'; value: number }> = {
-      ANDREA10: { type: 'percentage', value: 10 },
+    const publicPromos: Record<string, { type: 'percentage' | 'fixed'; value: number }> = {
       BIENVENIDO5: { type: 'percentage', value: 5 },
       SURFCITY15: { type: 'fixed', value: 15 },
       EXPLORAGIA: { type: 'percentage', value: 8 },
     };
-
-    if (validCodes[clean]) {
-      const promo = validCodes[clean];
+    const promo = publicPromos[clean];
+    if (promo) {
       return {
         valid: true,
         discountType: promo.type,
         discountValue: promo.value,
-        message:
-          promo.type === 'percentage'
-            ? `¡Código aplicado! ${promo.value}% de descuento.`
-            : `¡Código aplicado! $${promo.value} USD de descuento.`,
+        message: promo.type === 'percentage'
+          ? (language === 'es' ? `¡Código aplicado! ${promo.value}% de descuento.` : `Code applied! ${promo.value}% off.`)
+          : (language === 'es' ? `¡Código aplicado! $${promo.value} USD de descuento.` : `Code applied! $${promo.value} USD off.`),
       };
     }
-
-    return {
-      valid: false,
-      message: 'Código inválido o no reconocido. Verifica el código e intenta nuevamente.',
-    };
+    return { valid: false, message: language === 'es' ? 'Código inválido o no reconocido. Verifica el código e intenta nuevamente.' : 'Invalid or unrecognized code. Check it and try again.' };
   },
 
-  redeemCredits(amountToRedeem: number, bookingId?: string): boolean {
+  redeemCredits(amountToRedeem: number, bookingId?: string, language: 'es' | 'en' = 'es'): boolean {
     const state = this.getState();
-    if (amountToRedeem <= 0 || amountToRedeem > state.creditsBalance) {
-      return false;
-    }
-
-    const nextState: ReferralProgramState = {
+    if (amountToRedeem <= 0 || amountToRedeem > state.creditsBalance) return false;
+    this.saveState({
       ...state,
       creditsBalance: state.creditsBalance - amountToRedeem,
-      transactions: [
-        {
-          id: 'tx_' + Date.now(),
-          userId: state.currentCode.userId,
-          amount: amountToRedeem,
-          type: 'REDEEMED',
-          source: 'Descuento aplicado en reserva',
-          bookingId,
-          createdAt: new Date().toISOString(),
-        },
-        ...state.transactions,
-      ],
-    };
-
-    this.saveState(nextState);
+      transactions: [{
+        id: `tx_${Date.now()}`,
+        userId: state.currentCode?.userId || 'local-user',
+        amount: amountToRedeem,
+        type: 'REDEEMED',
+        source: language === 'es' ? 'Descuento aplicado en reserva' : 'Booking discount applied',
+        bookingId,
+        createdAt: new Date().toISOString(),
+      }, ...state.transactions],
+    });
     return true;
   },
 };

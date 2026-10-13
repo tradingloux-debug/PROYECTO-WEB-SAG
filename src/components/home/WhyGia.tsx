@@ -1,27 +1,29 @@
 import React from 'react';
 import { Layers, Compass, Users, Sparkles } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const WhyGia: React.FC = () => {
+  const { language } = useLanguage();
   const benefits = [
     {
       icon: <Layers className="w-5 h-5 text-[#00A6A6]" />,
-      title: 'TODO EN UN SOLO LUGAR',
-      desc: 'Descubre y compara diferentes experiencias.',
+      title: language === 'es' ? 'TODO EN UN SOLO LUGAR' : 'EVERYTHING IN ONE PLACE',
+      desc: language === 'es' ? 'Descubre y compara diferentes experiencias.' : 'Discover and compare different experiences.',
     },
     {
       icon: <Compass className="w-5 h-5 text-[#00A6A6]" />,
-      title: 'VIAJES PERSONALIZADOS',
-      desc: 'Crea rutas adaptadas a tus intereses.',
+      title: language === 'es' ? 'VIAJES PERSONALIZADOS' : 'PERSONALIZED TRIPS',
+      desc: language === 'es' ? 'Crea rutas adaptadas a tus intereses.' : 'Create routes tailored to your interests.',
     },
     {
       icon: <Users className="w-5 h-5 text-[#00A6A6]" />,
-      title: 'CONEXIÓN LOCAL',
-      desc: 'Encuentra experiencias vinculadas con la cultura y las personas del destino.',
+      title: language === 'es' ? 'CONEXIÓN LOCAL' : 'LOCAL CONNECTION',
+      desc: language === 'es' ? 'Encuentra experiencias vinculadas con la cultura y las personas del destino.' : 'Find experiences connected to local culture and people.',
     },
     {
       icon: <Sparkles className="w-5 h-5 text-[#00A6A6]" />,
-      title: 'INSPIRACIÓN VISUAL',
-      desc: 'Recorre imágenes 360° interactivas antes de elegir.',
+      title: language === 'es' ? 'INSPIRACIÓN VISUAL' : 'VISUAL INSPIRATION',
+      desc: language === 'es' ? 'Recorre imágenes 360° interactivas antes de elegir.' : 'Explore interactive 360° images before choosing.',
     },
   ];
 
@@ -30,13 +32,13 @@ export const WhyGia: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="text-xs font-bold uppercase tracking-wider text-[#00A6A6] font-mono">
-            La Propuesta GIA
+            {language === 'es' ? 'La propuesta GIA' : 'The GIA approach'}
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#063A5B] mt-2 font-display">
-            Por qué GIA Experiences
+            {language === 'es' ? 'Por qué GIA Experiences' : 'Why GIA Experiences'}
           </h2>
           <p className="text-sm sm:text-base text-neutral-600 mt-2.5 leading-relaxed">
-            Una plataforma digital diseñada para que tu viaje por El Salvador sea claro, memorable y auténtico.
+            {language === 'es' ? 'Una plataforma digital diseñada para que tu viaje por El Salvador sea claro, memorable y auténtico.' : 'A digital platform designed to make your El Salvador trip clear, memorable, and authentic.'}
           </p>
         </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import { RouterProvider, useRouter } from './context/RouterContext';
 import { BookingDraftProvider } from './context/BookingDraftContext';
+import { AccountProvider } from './context/AccountContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './pages/HomePage';
@@ -101,9 +102,11 @@ export default function App() {
   return (
     <LanguageProvider>
       <RouterProvider>
-        <BookingDraftProvider>
-          <AppContent />
-        </BookingDraftProvider>
+        <AccountProvider>
+          <BookingDraftProvider>
+            <AppContent />
+          </BookingDraftProvider>
+        </AccountProvider>
       </RouterProvider>
     </LanguageProvider>
   );

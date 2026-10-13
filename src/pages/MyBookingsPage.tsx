@@ -18,7 +18,7 @@ import {
 
 export const MyBookingsPage: React.FC = () => {
   const { navigate } = useRouter();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const [searchCode, setSearchCode] = useState('');
   const [searchEmail, setSearchEmail] = useState('');
@@ -78,7 +78,7 @@ export const MyBookingsPage: React.FC = () => {
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-neutral-100">
         <div>
-          <span className="text-[11px] text-neutral-400 font-mono uppercase block">Código</span>
+          <span className="text-[11px] text-neutral-400 font-mono uppercase block">{language === 'es' ? 'Código' : 'Code'}</span>
           <span className="text-lg font-bold font-mono text-neutral-900 tracking-wider">
             {b.bookingCode}
           </span>
@@ -109,7 +109,7 @@ export const MyBookingsPage: React.FC = () => {
           <span className="text-[11px] text-neutral-400 block">{t.myBookings.guests}</span>
           <span className="font-semibold text-neutral-900 flex items-center gap-1 mt-0.5">
             <Users className="w-3.5 h-3.5 text-teal-700" />
-            {b.adults + b.children} personas
+            {b.adults + b.children} {language === 'es' ? 'personas' : 'people'}
           </span>
         </div>
 
@@ -122,13 +122,13 @@ export const MyBookingsPage: React.FC = () => {
       </div>
 
       <div className="pt-2 text-xs text-neutral-500 flex items-center justify-between border-t border-neutral-100">
-        <span>Contacto: {b.customerFirstName} {b.customerLastName} ({b.email})</span>
+        <span>{language === 'es' ? 'Contacto' : 'Contact'}: {b.customerFirstName} {b.customerLastName} ({b.email})</span>
         <button
           type="button"
           onClick={() => navigate(`/experiencias/${b.experienceSlug}`)}
           className="text-xs font-semibold text-teal-800 hover:text-teal-950 flex items-center gap-1"
         >
-          <span>Ver experiencia</span>
+          <span>{language === 'es' ? 'Ver experiencia' : 'View experience'}</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
@@ -158,7 +158,7 @@ export const MyBookingsPage: React.FC = () => {
           <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label className="text-[11px] font-semibold text-neutral-600 block mb-1">
-                Código de reserva *
+                {language === 'es' ? 'Código de reserva' : 'Booking code'} *
               </label>
               <input
                 type="text"
@@ -171,7 +171,7 @@ export const MyBookingsPage: React.FC = () => {
 
             <div>
               <label className="text-[11px] font-semibold text-neutral-600 block mb-1">
-                Correo electrónico (opcional)
+                {language === 'es' ? 'Correo electrónico (opcional)' : 'Email address (optional)'}
               </label>
               <input
                 type="email"
@@ -201,7 +201,7 @@ export const MyBookingsPage: React.FC = () => {
                 <p className="font-bold">{t.myBookings.noBookingsFoundTitle}</p>
                 <p className="text-amber-800">{t.myBookings.noBookingsFoundDesc}</p>
                 <p className="pt-1 text-[11px] text-amber-900">
-                  ¿Dudas con tu código? Contáctanos a{' '}
+                  {language === 'es' ? '¿Dudas con tu código? Contáctanos a ' : 'Questions about your code? Contact us at '}
                   <a href="mailto:guiaexperiencessv@gmail.com" className="font-bold underline text-[#00A6A6]">
                     guiaexperiencessv@gmail.com
                   </a>
@@ -213,7 +213,7 @@ export const MyBookingsPage: React.FC = () => {
           {searchedBooking && searchedBooking !== 'not_found' && (
             <div className="mt-4 pt-4 border-t border-neutral-100">
               <h3 className="text-xs font-bold uppercase tracking-wider text-teal-800 mb-3">
-                Resultado de búsqueda
+                {language === 'es' ? 'Resultado de búsqueda' : 'Search result'}
               </h3>
               {renderBookingCard(searchedBooking)}
             </div>
@@ -233,13 +233,13 @@ export const MyBookingsPage: React.FC = () => {
             </div>
           ) : (
             <div className="bg-white rounded-2xl border border-neutral-200/80 p-8 text-center text-xs text-neutral-500">
-              <p>Aún no has registrado ninguna solicitud de reserva en este navegador.</p>
+              <p>{language === 'es' ? 'Aún no has registrado ninguna solicitud de reserva en este navegador.' : 'You have not registered any booking requests in this browser yet.'}</p>
               <button
                 type="button"
                 onClick={() => navigate('/experiencias')}
                 className="mt-3 px-4 py-2 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors inline-block"
               >
-                Explorar experiencias disponibles
+                {language === 'es' ? 'Explorar experiencias disponibles' : 'Explore available experiences'}
               </button>
             </div>
           )}

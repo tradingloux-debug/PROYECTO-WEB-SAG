@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useBookingDraft } from '../context/BookingDraftContext';
+import { useAccount } from '../context/AccountContext';
+import { referralService } from '../services/referralService';
 import { GiaLogo } from '../components/common/GiaLogo';
 import {
   CheckCircle2,
@@ -14,13 +16,18 @@ import {
   BookmarkCheck,
   Info,
   Mail,
+  Gift,
 } from 'lucide-react';
 
 export const ConfirmationPage: React.FC = () => {
   const { navigate } = useRouter();
   const { t, language } = useLanguage();
   const { lastConfirmedBooking } = useBookingDraft();
+  const { profile } = useAccount();
   const [copied, setCopied] = useState(false);
+  const referralCode = profile && lastConfirmedBooking && profile.email.toLowerCase() === lastConfirmedBooking.email.toLowerCase()
+    ? referralService.getState().currentCode?.code
+    : null;
 
   // Fallback demo booking if user accessed directly
   const booking = lastConfirmedBooking || {
@@ -56,6 +63,17 @@ export const ConfirmationPage: React.FC = () => {
               <CheckCircle2 className="w-9 h-9" />
             </div>
           </div>
+
+          {referralCode && (
+            <div className="max-w-md mx-auto p-4 rounded-2xl bg-amber-50 border border-amber-200 text-left flex items-start gap-3">
+              <Gift className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-bold text-slate-900">{language === 'es' ? '¡Tu código de recomendación ya está activo!' : 'Your referral code is now active!'}</p>
+                <p className="text-[11px] text-neutral-600 mt-1">{language === 'es' ? 'Lo recibes ahora porque registraste tu primera reserva. Puedes verlo y compartirlo desde Mi cuenta.' : 'You receive it now because you registered your first booking. View and share it from My Account.'}</p>
+                <button type="button" onClick={() => navigate('/mi-cuenta')} className="mt-2 text-xs font-black text-teal-800 hover:text-teal-950">{language === 'es' ? `Ver código ${referralCode}` : `View code ${referralCode}`}</button>
+              </div>
+            </div>
+          )}
 
           {/* Heading */}
           <div className="space-y-2">

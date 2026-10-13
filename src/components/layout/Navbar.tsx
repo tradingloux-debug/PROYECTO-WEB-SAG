@@ -70,7 +70,7 @@ export const Navbar: React.FC = () => {
           type="button"
           onClick={() => handleNav('/')}
           className="flex items-center text-left focus-visible:outline-teal-600 rounded-md cursor-pointer transition-opacity hover:opacity-95 shrink-0"
-          aria-label="GIA Experiences â€” Inicio"
+          aria-label={`GIA Experiences â€” ${language === 'es' ? 'Inicio' : 'Home'}`}
         >
           <GiaLogo size="navbar" />
         </button>
@@ -88,7 +88,7 @@ export const Navbar: React.FC = () => {
             aria-current={isActive('/') ? 'page' : undefined}
           >
             <Home className="w-4 h-4" />
-            <span>Inicio</span>
+            <span>{language === 'es' ? 'Inicio' : 'Home'}</span>
           </button>
 
           {/* 1. MenÃº "Explorar" con Dropdown Organizado */}
@@ -107,7 +107,7 @@ export const Navbar: React.FC = () => {
                   : 'hover:text-[#00A6A6]'
               }`}
             >
-              <span>Explorar</span>
+              <span>{language === 'es' ? 'Explorar' : 'Explore'}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
                   exploreDropdownOpen ? 'rotate-180 text-[#00A6A6]' : 'text-neutral-400'
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
             {exploreDropdownOpen && (
               <div className="absolute top-full -left-4 w-72 bg-white rounded-2xl border border-neutral-200/90 shadow-xl p-3 space-y-1 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-3 py-1.5 text-[10.5px] font-mono font-bold text-neutral-400 uppercase tracking-wider">
-                  Experiencias
+                  {language === 'es' ? 'Experiencias' : 'Experiences'}
                 </div>
 
                 <button
@@ -130,22 +130,22 @@ export const Navbar: React.FC = () => {
                   <div className="flex items-center gap-2.5">
                     <Compass className="w-4 h-4 text-[#00A6A6]" />
                     <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#00A6A6]">
-                      Todas las experiencias
+                      {language === 'es' ? 'Todas las experiencias' : 'All experiences'}
                     </span>
                   </div>
-                  <span className="text-[10px] text-neutral-400 font-mono">24 activas</span>
+                  <span className="text-[10px] text-neutral-400 font-mono">24 {language === 'es' ? 'activas' : 'active'}</span>
                 </button>
 
                 <div className="px-3 pt-2 pb-1 text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider border-t border-neutral-100">
-                  CategorÃ­as principales
+                  {language === 'es' ? 'CategorÃ­as principales' : 'Main categories'}
                 </div>
 
                 <div className="grid grid-cols-2 gap-1 px-1">
                   {[
-                    { id: 'cultura', label: 'Cultura', icon: 'ğŸ¨' },
-                    { id: 'gastronomia', label: 'GastronomÃ­a', icon: 'ğŸ½' },
-                    { id: 'naturaleza', label: 'Naturaleza', icon: 'ğŸŒ¿' },
-                    { id: 'aventura', label: 'Aventura', icon: 'ğŸ§—' },
+                    { id: 'cultura', label: language === 'es' ? 'Cultura' : 'Culture', icon: 'ğŸ¨' },
+                    { id: 'gastronomia', label: language === 'es' ? 'GastronomÃ­a' : 'Food', icon: 'ğŸ½' },
+                    { id: 'naturaleza', label: language === 'es' ? 'Naturaleza' : 'Nature', icon: 'ğŸŒ¿' },
+                    { id: 'aventura', label: language === 'es' ? 'Aventura' : 'Adventure', icon: 'ğŸ§—' },
                   ].map((cat) => (
                     <button
                       key={cat.id}
@@ -168,10 +168,10 @@ export const Navbar: React.FC = () => {
                     <Heart className="w-4 h-4 text-[#55A94B]" />
                     <div>
                       <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#55A94B] block">
-                        Experiencias locales
+                        {language === 'es' ? 'Experiencias locales' : 'Local experiences'}
                       </span>
                       <span className="text-[10.5px] text-neutral-500 block">
-                        Comunidades y tradiciones
+                        {language === 'es' ? 'Comunidades y tradiciones' : 'Communities and traditions'}
                       </span>
                     </div>
                   </button>
@@ -184,10 +184,10 @@ export const Navbar: React.FC = () => {
                     <Compass className="w-4 h-4 text-[#00A6A6]" />
                     <div>
                       <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#00A6A6] block">
-                        Experiencias con imÃ¡genes 360Â°
+                        {language === 'es' ? 'Experiencias con imÃ¡genes 360Â°' : 'Experiences with 360Â° images'}
                       </span>
                       <span className="text-[10.5px] text-neutral-500 block">
-                        ExploraciÃ³n inmersiva
+                        {language === 'es' ? 'ExploraciÃ³n inmersiva' : 'Immersive exploration'}
                       </span>
                     </div>
                   </button>
@@ -204,7 +204,7 @@ export const Navbar: React.FC = () => {
               isActive('/rutas') ? 'text-[#00A6A6] font-bold border-b-2 border-[#00A6A6]' : 'hover:text-[#00A6A6]'
             }`}
           >
-            Rutas GIA
+            {language === 'es' ? 'Rutas GIA' : 'GIA Routes'}
           </button>
 
           {/* 3. Planea con GIA */}
@@ -218,7 +218,7 @@ export const Navbar: React.FC = () => {
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#FDBA2D]" />
-            <span>Planea con GIA</span>
+            <span>{language === 'es' ? 'Planea con GIA' : 'Plan with GIA'}</span>
           </button>
 
           {/* 4. MenÃº "MÃ¡s" */}
@@ -232,7 +232,7 @@ export const Navbar: React.FC = () => {
               type="button"
               className="flex items-center gap-1 py-2 text-neutral-600 hover:text-[#063A5B] transition-colors cursor-pointer"
             >
-              <span>MÃ¡s</span>
+              <span>{language === 'es' ? 'MÃ¡s' : 'More'}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
                   moreDropdownOpen ? 'rotate-180 text-[#00A6A6]' : 'text-neutral-400'
@@ -320,284 +320,68 @@ export const Navbar: React.FC = () => {
             className={`text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer py-1.5 px-2.5 rounded-lg ${
               isActive('/mi-cuenta')
                 ? 'text-[#00A6A6] bg-teal-50'
-                : 'text-[#063A5B] hover:text-[#00A6A6] hover:bg-neutral-50'
-            }`}
-          >
-            <User className="w-4 h-4" />
-            <span>Cuenta</span>
-          </button>
+                : 'text-[#]<ßËh‘éì¶»§q«^uø¡¤˜XÚÈÈ^\šY[˜ÙH]Z[ÉßOÜÜ[‚ˆØ]Û‚‚ˆHÛ\ÜÓ˜[YOH^LÛN^LŞ›ÛY^˜X›Û^[™]]˜[NL˜XÚÚ[™Ë]YÚ›ÛY\Ü^HX‹N‚ˆİ˜ÚXÚÛİ]]_BˆÚO‚‚ˆËÊˆİX\˜[YY›ÛÚÚ[™È›İXÙH›Ş
+‹ßBˆ]ˆÛ\ÜÓ˜[YOH›X‹NM™Ë]X[MLÎ›Ü™\ˆ›Ü™\‹]X[LŒÎ›İ[™YL›^][\Ë\İ\Ø\LÈ‚ˆÚY[ÚXÚÈÛ\ÜÓ˜[YOHËMHMH^]X[MÌÚš[šËL]LHˆÏ‚ˆ]ˆÛ\ÜÓ˜[YOH^^È^]X[NML‚ˆÛ\ÜÓ˜[YOH™›ÛX›Û‚ˆÛ[™İXYÙHOOH	Ù\ÉÈÈ	Ô™\Ù\˜HØ\˜[^˜YHÜˆÒPH^\šY[˜Ù\ÉÈˆ	ÑİX\˜[YY›ÛÚÚ[™ÈHÒPH^\šY[˜Ù\ÉßBˆÜ‚ˆÛ\ÜÓ˜[YOH›]LHXY[™Ë\™[^Y^]X[NLÎL‚ˆÛ[™İXYÙHOOH	Ù\ÉÂˆÈ	ÕHÛÛXÚ]YÙ\°èH›ØÙ\ØYHHÛÛ™š\›XYH›Ü›X[Y[H˜\ÈH™\šYšXØXÚpìÛˆH\ÜÛšXš[YYˆÙ°è\ÈÛÛœİ[\ˆ[\İYÈHH^\šY[˜ÚXH[ˆÙÈ[ÛY[ÈÛÛˆHğìÙYÛÈH™\Ù\˜K‰Âˆˆ	Ö[İ\ˆ›ÛÚÚ[™È™\]Y\İÚ[™H›ØÙ\ÜÙY[™›Ü›X[HÛÛ™š\›YY\Ûˆ]˜Z[Xš[]H™\šYšXØ][Û‹ˆ[İHØ[ˆ˜XÚÈ[İ\ˆ^\šY[˜ÙH[][YHÚ][İ\ˆ›ÛÚÚ[™ÈÛÙK‰ßBˆÜ‚ˆÙ]‚ˆÙ]‚‚ˆ›Ü›HÛ”İX›Z]^Ú[™TİX›Z]HÛ\ÜÓ˜[YOHœÜXÙK^KN‚ˆËÊˆÕTNˆ]ÜÈH™\Ù\˜H
+‹ßBˆ]ˆÛ\ÜÓ˜[YOH˜™Ë]Ú]H›İ[™YL›Ü™\ˆ›Ü™\‹[™]]˜[LŒÎLMˆÚYİËLÈ‚ˆˆÛ\ÜÓ˜[YOH^X˜\ÙH›ÛX›Û^[™]]˜[NLX‹M‹LÈ›Ü™\‹Xˆ›Ü™\‹[™]]˜[LL›ÛY\Ü^H‚ˆİ˜ÚXÚÛİ]œİ\U]_BˆÚ‚‚ˆ]ˆÛ\ÜÓ˜[YOH™ÜšYÜšYXÛÛËLHÛN™ÜšYXÛÛËLÈØ\M‚ˆ]‚ˆÜ[ˆÛ\ÜÓ˜[YOH^VÌL\H^[™]]˜[M›ØÚÈX‹LHÛ[™İXYÙHOOH	Ù\ÉÈÈ	Ñ^\šY[˜ÚXIÈˆ	Ñ^\šY[˜ÙIßOÜÜ[‚ˆÛ\ÜÓ˜[YOH^^È›ÛX›Û^[™]]˜[NLXY[™Ë\ÛYÈ‚ˆÙ˜Y™^\šY[˜ÙU]_BˆÜ‚ˆÛ\ÜÓ˜[YOH^VÌL\H^[™]]˜[ML]LH›^][\ËXÙ[\ˆØ\LH‚ˆX\[ˆÛ\ÜÓ˜[YOHËLÈLÈ^[™]]˜[MˆÏ‚ˆÙ˜Y™^\šY[˜ÙSØØ][ÛŸBˆÜ‚ˆÙ]‚‚ˆ]‚ˆÜ[ˆÛ\ÜÓ˜[YOH^VÌL\H^[™]]˜[M›ØÚÈX‹LHİ˜ÚXÚÛİ]™]SX™[OÜÜ[‚ˆÛ\ÜÓ˜[YOH^^È›ÛX›Û^[™]]˜[NL›^][\ËXÙ[\ˆØ\LKH›Û[[Û›È‚ˆØ[[™\ˆÛ\ÜÓ˜[YOHËLËHLËH^]X[MÌˆÏ‚ˆÙ˜Y™]_BˆÜ‚ˆÙ]‚‚ˆ]‚ˆÜ[ˆÛ\ÜÓ˜[YOH^VÌL\H^[™]]˜[M›ØÚÈX‹LHİ˜ÚXÚÛİ]™İY\İÓX™[OÜÜ[‚ˆÛ\ÜÓ˜[YOH^^È›ÛX›Û^[™]]˜[NL›^][\ËXÙ[\ˆØ\LKH‚ˆ\Ù\œÈÛ\ÜÓ˜[YOHËLËHLËH^]X[MÌˆÏ‚ˆÜ[‚ˆÙ˜Y˜Y[ßHÛ[™İXYÙHOOH	Ù\ÉÈÈ	ØY[ÜÉÈˆ	ØY[ÉßHÙ˜Y˜Ú[™[ˆˆ	‰ˆ0­È	Ù˜Y˜Ú[™[ŸH	Û[™İXYÙHOOH	Ù\ÉÈÈ	Ûšpì[ÜÉÈˆ	ØÚ[™[‰ßXBˆÜÜ[‚ˆÜ‚ˆÙ]‚ˆÙ]‚ˆÙ]‚‚ˆËÊˆÕTˆ[™›Ü›XXÚpìÛˆ[šXZ™\›È
+‹ßBˆ]ˆÛ\ÜÓ˜[YOH˜™Ë]Ú]H›İ[™YL›Ü™\ˆ›Ü™\‹[™]]˜[LŒÎLMˆÚYİËLÈÜXÙK^KM‚ˆˆÛ\ÜÓ˜[YOH^X˜\ÙH›ÛX›Û^[™]]˜[NL‹LÈ›Ü™\‹Xˆ›Ü™\‹[™]]˜[LL›ÛY\Ü^H‚ˆİ˜ÚXÚÛİ]œİ\•]_BˆÚ‚‚ˆ]ˆÛ\ÜÓ˜[YOH™ÜšYÜšYXÛÛËLHÛN™ÜšYXÛÛËLˆØ\M‚ˆËÊˆš\œİ˜[YH
+‹ßBˆ]‚ˆX™[Û\ÜÓ˜[YOH^^È›Û\Ù[ZX›Û^[™]]˜[MÌ›ØÚÈX‹LH‚ˆİ˜ÚXÚÛİ]™š\œİ˜[Y_H
+‚ˆÛX™[‚ˆ[œ]ˆ\OH^‚ˆ˜[YO^Ù›Ü›Q]K™š\œİ˜[Y_BˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]Kš\œİ˜[YNˆK\™Ù]˜[YHJ_BˆXÙZÛ\^Û[™İXYÙHOOH	Ù\ÉÈÈ	ÑZ‹ˆÛÙ°ëXIÈˆ	ÑK™ËˆÛÜXIßBˆÛ\ÜÓ˜[YO^ØËY[LËHKLˆ^^È›İ[™Y^›Ü™\ˆ™Ë[™]]˜[MLÍL›Øİ\Î˜™Ë]Ú]H›Øİ\Î›İ][™KZY[ˆ›Øİ\Îœš[™ËLˆ	Âˆ\œ›ÜœË™š\œİ˜[YHÈ	Ø›Ü™\‹\™YM›Øİ\Îœš[™Ë\™YLÌ	Èˆ	Ø›Ü™\‹[™]]˜[LŒ›Øİ\Îœš[™Ë]X[MÌ	ÂˆXBˆÏ‚ˆÙ\œ›ÜœË™š\œİ˜[YH	‰ˆÛ\ÜÓ˜[YOH^VÌL\H^\™YML]LHÙ\œ›ÜœË™š\œİ˜[Y_OÜŸBˆÙ]‚‚ˆËÊˆ\İ˜[YH
+‹ßBˆ]‚ˆX™[Û\ÜÓ˜[YOH^^È›Û\Ù[ZX›Û^[™]]˜[MÌ›ØÚÈX‹LH‚ˆİ˜ÚXÚÛİ]›\İ˜[Y_H
+‚ˆÛX™[‚ˆ[œ]ˆ\OH^‚ˆ˜[YO^Ù›Ü›Q]K›\İ˜[Y_BˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]K\İ˜[YNˆK\™Ù]˜[YHJ_BˆXÙZÛ\^Û[™İXYÙHOOH	Ù\ÉÈÈ	ÑZ‹ˆX\0ë[™^‰Èˆ	ÑK™ËˆX\[™^‰ßBˆÛ\ÜÓ˜[YO^ØËY[LËHKLˆ^^È›İ[™Y^›Ü™\ˆ™Ë[™]]˜[MLÍL›Øİ\Î˜™Ë]Ú]H›Øİ\Î›İ][™KZY[ˆ›Øİ\Îœš[™ËLˆ	Âˆ\œ›ÜœË›\İ˜[YHÈ	Ø›Ü™\‹\™YM›Øİ\Îœš[™Ë\™YLÌ	Èˆ	Ø›Ü™\‹[™]]˜[LŒ›Øİ\Îœš[™Ë]X[MÌ	ÂˆXBˆÏ‚ˆÙ\œ›ÜœË›\İ˜[YH	‰ˆÛ\ÜÓ˜[YOH^VÌL\H^\™YML]LHÙ\œ›ÜœË›\İ˜[Y_OÜŸBˆÙ]‚‚ˆËÊˆ[XZ[
+‹ßBˆ]‚ˆX™[Û\ÜÓ˜[YOH^^È›Û\Ù[ZX›Û^[™]]˜[MÌ›ØÚÈX‹LH‚ˆİ˜ÚXÚÛİ]™[XZ[H
+‚ˆÛX™[‚ˆ[œ]ˆ\OH™[XZ[‚ˆ˜[YO^Ù›Ü›Q]K™[XZ[BˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]K[XZ[ˆK\™Ù]˜[YHJ_BˆXÙZÛ\HœÛÙšXPZ™[\Ë˜ÛÛH‚ˆÛ\ÜÓ˜[YO^ØËY[LËHKLˆ^^È›İ[™Y^›Ü™\ˆ™Ë[™]]˜[MLÍL›Øİ\Î˜™Ë]Ú]H›Øİ\Î›İ][™KZY[ˆ›Øİ\Îœš[™ËLˆ	Âˆ\œ›ÜœË™[XZ[È	Ø›Ü™\‹\™YM›Øİ\Îœš[™Ë\™YLÌ	Èˆ	Ø›Ü™\‹[™]]˜[LŒ›Øİ\Îœš[™Ë]X[MÌ	ÂˆXBˆÏ‚ˆÙ\œ›ÜœË™[XZ[	‰ˆÛ\ÜÓ˜[YOH^VÌL\H^\™YML]LHÙ\œ›ÜœË™[XZ[OÜŸBˆÙ]‚‚ˆËÊˆÛ™H
+‹ßBˆ]‚ˆX™[Û\ÜÓ˜[YOH^^È›Û\Ù[ZX›Û^[™]]˜[MÌ›ØÚÈX‹LH‚ˆİ˜ÚXÚÛİ]œÛ™_H
+‚ˆÛX™[‚ˆ[œ]ˆ\OH[‚ˆ˜[YO^Ù›Ü›Q]KœÛ™_BˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]KÛ™NˆK\™Ù]˜[YHJ_BˆXÙZÛ\HŠÌH
+MMJHLÈ
+ÍLÈ‹‹ˆ‚ˆÛ\ÜÓ˜[YO^ØËY[LËHKLˆ^^È›İ[™Y^›Ü™\ˆ™Ë[™]]˜[MLÍL›Øİ\Î˜™Ë]Ú]H›Øİ\Î›İ][™KZY[ˆ›Øİ\Îœš[™ËLˆ	Âˆ\œ›ÜœËœÛ™HÈ	Ø›Ü™\‹\™YM›Øİ\Îœš[™Ë\™YLÌ	Èˆ	Ø›Ü™\‹[™]]˜[LŒ›Øİ\Îœš[™Ë]X[MÌ	ÂˆXBˆÏ‚ˆÙ\œ›ÜœËœÛ™H	‰ˆÛ\ÜÓ˜[YOH^VÌL\H^\™YML]LHÙ\œ›ÜœËœÛ™_OÜŸBˆÙ]‚‚ˆËÊˆÛİ[H
+‹ßBˆ]ˆÛ\ÜÓ˜[YOHœÛN˜ÛÛ\Ü[‹Lˆ‚ˆX™[Û\ÜÓ˜[YOH^^È›Û\Ù[ZX›Û^[™]]˜[MÌ›ØÚÈX‹LH‚ˆİ˜ÚXÚÛİ]˜Ûİ[_H
+‚ˆÛX™[‚ˆ[œ]ˆ\OH^‚ˆ˜[YO^Ù›Ü›Q]K˜Ûİ[_BˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]KÛİ[NˆK\™Ù]˜[YHJ_BˆXÙZÛ\^Û[™İXYÙHOOH	Ù\ÉÈÈ	ÑZ‹ˆ\İYÜÈ[šYÜËØ[˜Y0èK\ÜpìXK[Ø[˜YÜ‹‹‹‰Èˆ	ÑK™Ëˆ[š]Yİ]\ËØ[˜YKÜZ[‹[Ø[˜YÜ‹‹‹‰ßBˆÛ\ÜÓ˜[YO^ØËY[LËHKLˆ^^È›İ[™Y^›Ü™\ˆ™Ë[™]]˜[MLÍL›Øİ\Î˜™Ë]Ú]H›Øİ\Î›İ][™KZY[ˆ›Øİ\Îœš[™ËLˆ	Âˆ\œ›ÜœË˜Ûİ[HÈ	Ø›Ü™\‹\™YM›Øİ\Îœš[™Ë\™YLÌ	Èˆ	Ø›Ü™\‹[™]]˜[LŒ›Øİ\Îœš[™Ë]X[MÌ	ÂˆXBˆÏ‚ˆÙ\œ›ÜœË˜Ûİ[H	‰ˆÛ\ÜÓ˜[YOH^VÌL\H^\™YML]LHÙ\œ›ÜœË˜Ûİ[_OÜŸBˆÙ]‚‚ˆËÊˆÜXÚX[›İ\È
+‹ßBˆ]ˆÛ\ÜÓ˜[YOHœÛN˜ÛÛ\Ü[‹Lˆ‚ˆX™[Û\ÜÓ˜[YOH^^È›Û\Ù[ZX›Û^[™]]˜[MÌ›ØÚÈX‹LH‚ˆİ˜ÚXÚÛİ]œÜXÚX[›İ\ßBˆÛX™[‚ˆ^\™XBˆ›İÜÏ^ÌŸBˆ˜[YO^Ù›Ü›Q]K››İ\ßBˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]K›İ\ÎˆK\™Ù]˜[YHJ_BˆXÙZÛ\^İ˜ÚXÚÛİ]œÜXÚX[›İ\ÔXÙZÛ\ŸBˆÛ\ÜÓ˜[YOHËY[LËHKLˆ^^È›İ[™Y^›Ü™\ˆ›Ü™\‹[™]]˜[LŒ™Ë[™]]˜[MLÍL›Øİ\Î˜™Ë]Ú]H›Øİ\Î›İ][™KZY[ˆ›Øİ\Îœš[™ËLˆ›Øİ\Îœš[™Ë]X[MÌ‚ˆÏ‚ˆÙ]‚ˆÙ]‚ˆÙ]‚‚ˆËÊˆÕTÎˆ™\İ[Y[ˆHÛÛ™š\›XXÚpìÛˆ
+‹ßBˆ]ˆÛ\ÜÓ˜[YOH˜™Ë]Ú]H›İ[™YL›Ü™\ˆ›Ü™\‹[™]]˜[LŒÎLMˆÚYİËLÈÜXÙK^KMH‚ˆˆÛ\ÜÓ˜[YOH^X˜\ÙH›ÛX›Û^[™]]˜[NL‹LÈ›Ü™\‹Xˆ›Ü™\‹[™]]˜[LL›ÛY\Ü^H‚ˆİ˜ÚXÚÛİ]œİ\Õ]_BˆÚ‚‚ˆËÊˆ›Û[ÈÛÙH	ˆ™Y™\œ˜[šY[
+‹ßBˆ]ˆÛ\ÜÓ˜[YOHœM›İ[™Y^™Ë[™]]˜[ML›Ü™\ˆ›Ü™\‹[™]]˜[LŒÎÜXÙK^KLˆ‚ˆX™[Û\ÜÓ˜[YOH^^È›ÛX›Û^\Û]KN›^][\ËXÙ[\ˆØ\LKH‚ˆYÈÛ\ÜÓ˜[YOHËLËHLËH^]X[MÌˆÏ‚ˆÜ[Û[™İXYÙHOOH	Ù\ÉÈÈ	ğ¯ÕY[™\È[ˆğìÙYÛÈÒPHÈH™XÛÛY[™XÚpìÛÉÈˆ	ÑÈ[İH]™HHÒPHÜˆ™Y™\œ˜[ÛÙOÉßOÜÜ[‚ˆÛX™[‚ˆ]ˆÛ\ÜÓ˜[YOH™›^Ø\Lˆ‚ˆ[œ]ˆ\OH^‚ˆ˜[YO^Ü›Û[ĞÛÙR[œ]BˆÛÚ[™ÙO^ÙHOˆÙ]›Û[ĞÛÙR[œ]
+K\™Ù]˜[YKÕ\\Ø\ÙJ
+J_BˆXÙZÛ\^Û[™İXYÙHOOH	Ù\ÉÈÈ	ÑZ‹ˆ’QS•‘S’QÍIÈˆ	ÑK™Ëˆ’QS•‘S’QÍIßBˆÛ\ÜÓ˜[YOH™›^LHLËHKLˆ^^È›İ[™Y^›Ü™\ˆ›Ü™\‹[™]]˜[LŒ™Ë]Ú]H›Û[[Û›È\\˜Ø\ÙH›Øİ\Îœš[™ËLˆ›Øİ\Îœš[™Ë]X[MÌ‚ˆÏ‚ˆ]Û‚ˆ\OH˜]Ûˆ‚ˆÛÛXÚÏ^Ú[™P\T›Û[ßBˆÛ\ÜÓ˜[YOHœMKLˆ™Ë\Û]KNLİ™\˜™Ë\Û]KN^]Ú]H^^È›ÛX›Û›İ[™Y^˜[œÚ][Û‹XÛÛÜœÈÚš[šËL‚ˆ‚ˆÛ[™İXYÙHOOH	Ù\ÉÈÈ	Ğ\XØ\‰Èˆ	Ğ\IßBˆØ]Û‚ˆÙ]‚‚ˆÜ›Û[ÓY\ÜØYÙH	‰ˆ
+ˆˆÛ\ÜÓ˜[YO^Ø^VÌL\H›Û[YY][H›^][\ËXÙ[\ˆØ\LH	Âˆ›Û[ÓY\ÜØYÙK\HOOH	ÜİXØÙ\ÜÉÈÈ	İ^Y[Y\˜[MÌ	Èˆ	İ^\›ÜÙKMŒ	ÂˆXBˆ‚ˆÜ›Û[ÓY\ÜØYÙK\HOOH	ÜİXØÙ\ÜÉÈÈ
+ˆÚXÚÈÛ\ÜÓ˜[YOHËLÈLÈ^Y[Y\˜[MŒˆÏ‚ˆ
+Hˆ
+ˆ[\Ú\˜ÛHÛ\ÜÓ˜[YOHËLÈLÈ^\›ÜÙKMŒˆÏ‚ˆ
+_BˆÜ[Ü›Û[ÓY\ÜØYÙK^OÜÜ[‚ˆÜ‚ˆ
+_B‚ˆËÊˆ\ÙHÒPHÜ™Y]ÈÚXÚØ›ŞYˆ\Ù\ˆ\È˜[[˜ÙH
+‹ßBˆØ]˜Z[X›PÜ™Y]Èˆ	‰ˆ
+ˆ]ˆÛ\ÜÓ˜[YOHœLˆ]Lˆ›Ü™\‹]›Ü™\‹[™]]˜[LŒÍŒ›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ‚ˆX™[Û\ÜÓ˜[YOH™›^][\ËXÙ[\ˆØ\Lˆİ\œÛÜ‹\Ú[\ˆ^^È^\Û]KN‚ˆ[œ]ˆ\OH˜ÚXÚØ›Ş‚ˆÚXÚÙY^İ\ÙPÜ™Y]ßBˆÛÚ[™ÙO^ÙHOˆÙ]\ÙPÜ™Y]ÊK\™Ù]˜ÚXÚÙY
+_BˆÛ\ÜÓ˜[YOHœ›İ[™Y^]X[N›Øİ\Îœš[™Ë]X[MÌ‚ˆÏ‚ˆÛÚ[œÈÛ\ÜÓ˜[YOHËLËHLËH^X[X™\‹MLˆÏ‚ˆÜ[Û[™İXYÙHOOH	Ù\ÉÈÈ\Ø\ˆZ\ÈÜ°êY]ÜÈÒPH
+		Ø]˜Z[X›PÜ™Y]ßHTÑ\ÜÛšX›\ÊXˆ\ÙH^HÒPHÜ™Y]È
+		Ø]˜Z[X›PÜ™Y]ßHTÑ]˜Z[X›JXOÜÜ[‚ˆÛX™[‚ˆİ\ÙPÜ™Y]È	‰ˆ
+ˆÜ[ˆÛ\ÜÓ˜[YOH^^È›Û[[Û›È›ÛX›Û^Y[Y\˜[MÌ‚ˆIØÜ™Y]Ğ[[İ[HTÑˆÜÜ[‚ˆ
+_BˆÙ]‚ˆ
+_BˆÙ]‚‚ˆËÊˆšXÙHœ™XZÙİÛˆ
+‹ßBˆ]ˆÛ\ÜÓ˜[YOHœÜXÙK^KLˆ^^È‚ˆ]ˆÛ\ÜÓ˜[YOH™›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ^[™]]˜[MŒ‚ˆÜ[İ˜ÚXÚÛİ]œšXÙT\”\œÛÛŸOÜÜ[‚ˆÜ[ˆÛ\ÜÓ˜[YOH™›Û[[Û›È‰Ù˜YœšXÙT\”\œÛÛŸHTÑÜÜ[‚ˆÙ]‚ˆ]ˆÛ\ÜÓ˜[YOH™›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ^[™]]˜[MŒ‚ˆÜ[Û[™İXYÙHOOH	Ù\ÉÈÈ	Õİ[HšXZ™\›ÜÉÈˆ	Õİ[˜]™[\œÉßOÜÜ[‚ˆÜ[ˆÛ\ÜÓ˜[YOH™›Û[[Û›Èİİ[[Ü_OÜÜ[‚ˆÙ]‚ˆ]ˆÛ\ÜÓ˜[YOH™›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ^[™]]˜[MŒ‚ˆÜ[İ˜ÚXÚÛİ]œİXİ[OÜÜ[‚ˆÜ[ˆÛ\ÜÓ˜[YOH™›Û[[Û›È‰ÜİXİ[HTÑÜÜ[‚ˆÙ]‚‚ˆÙ\ØÛİ[[[İ[ˆ	‰ˆ
+ˆ]ˆÛ\ÜÓ˜[YOH™›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ^Y[Y\˜[MÌ›Û\Ù[ZX›Û‚ˆÜ[Û[™İXYÙHOOH	Ù\ÉÈÈ	Ñ\ØİY[ÉÈˆ	Ñ\ØÛİ[	ßH
+Ø\YY›Û[ÏË˜ÛÙ_JOÜÜ[‚ˆÜ[ˆÛ\ÜÓ˜[YOH™›Û[[Û›È‹IÙ\ØÛİ[[[İ[HTÑÜÜ[‚ˆÙ]‚ˆ
+_B‚ˆØÜ™Y]Ğ[[İ[ˆ	‰ˆ
+ˆ]ˆÛ\ÜÓ˜[YOH™›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ^Y[Y\˜[MÌ›Û\Ù[ZX›Û‚ˆÜ[Û[™İXYÙHOOH	Ù\ÉÈÈ	ĞÜ°êY]ÜÈÒPH\XØYÜÉÈˆ	ÑÒPHÜ™Y]È\YY	ßOÜÜ[‚ˆÜ[ˆÛ\ÜÓ˜[YOH™›Û[[Û›È‹IØÜ™Y]Ğ[[İ[HTÑÜÜ[‚ˆÙ]‚ˆ
+_B‚ˆ]ˆÛ\ÜÓ˜[YOH™›^][\ËXÙ[\ˆ\İYKX™]ÙY[ˆ^X˜\ÙH›ÛY^˜X›Û^[™]]˜[NLLÈ›Ü™\‹]›Ü™\‹[™]]˜[LŒ‚ˆÜ[İ˜ÚXÚÛİ]İ[OÜÜ[‚ˆÜ[ˆÛ\ÜÓ˜[YOH™›Û[[Û›È^^^]X[NL‰İİ[HTÑÜÜ[‚ˆÙ]‚ˆÙ]‚‚‚ˆËÊˆ\›\È	ˆš]˜XŞHÚXÚØ›ŞX[™]ÜH
+‹ßBˆ]ˆÛ\ÜÓ˜[YOHœLˆ‚ˆX™[Û\ÜÓ˜[YOH™›^][\Ë\İ\Ø\L‹Hİ\œÛÜ‹\Ú[\ˆ‚ˆ[œ]ˆ\OH˜ÚXÚØ›Ş‚ˆÚXÚÙY^Ù›Ü›Q]K˜YÜ™YU\›\ßBˆÛÚ[™ÙO^ÙHOˆÙ]›Ü›Q]JÈ‹‹™›Ü›Q]KYÜ™YU\›\ÎˆK\™Ù]˜ÚXÚÙYJ_BˆÛ\ÜÓ˜[YOH›]LH›İ[™Y›Ü™\‹[™]]˜[LÌ^]X[N›Øİ\Îœš[™Ë]X[MÌİ\œÛÜ‹\Ú[\ˆÚš[šËL‚ˆÏ‚ˆÜ[ˆÛ\ÜÓ˜[YOH^^È^[™]]˜[MŒÙ[Xİ[›Û™HXY[™Ë\™[^Y‚ˆÛ[™İXYÙHOOH	Ù\ÉÈÈ
+ˆ‚ˆHpëYÈHXÙ\ÈÜŞÉÈ	ßBˆ]Û‚ˆ\OH˜]Ûˆ‚ˆÛÛXÚÏ^ÊJHOˆÂˆKœ™]™[Y˜][
 
-          {/* CTA Destacado: PRIMARY Turquesa #00A6A6 */}
-          <button
-            type="button"
-            onClick={() => handleNav('/planea-con-gia')}
-            className="px-5 py-2.5 bg-[#00A6A6] hover:bg-[#009191] active:scale-98 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-xs transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer hover:shadow-md"
-          >
-            <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
-            <span>Crear mi viaje</span>
-          </button>
-        </div>
+NÂˆKœİÜ›ÜYØ][ÛŠ
+NÂˆ˜]šYØ]J	Ëİ\›Z[›ÜË^KXÛÛ™XÚ[Û™\ÉÊNÂˆ_BˆÛ\ÜÓ˜[YOH^VÈÌMM—H›ÛX›Û[™\›[™Hİ™\^VÈÌŒĞMP—Hİ\œÛÜ‹\Ú[\ˆ‚ˆ‚ˆ0ê\›Z[›ÜÈHÛÛ™XÚ[Û™\ÂˆØ]ÛÉÈ	ßBˆH^ÉÈ	ßBˆ]Û‚ˆ\OH˜]Ûˆ‚ˆÛÛXÚÏ^ÊJHOˆÂˆKœ™]™[Y˜][
 
-        {/* Mobile controls */}
-        <div className="flex lg:hidden items-center gap-2">
-          <button
-            type="button"
-            onClick={() => handleNav('/')}
-            className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-              isActive('/') ? 'bg-teal-50 text-[#00A6A6]' : 'text-[#063A5B] hover:bg-neutral-100'
-            }`}
-            aria-current={isActive('/') ? 'page' : undefined}
-          >
-            <Home className="w-4 h-4" />
-            <span>Inicio</span>
-          </button>
-          {/* Header mÃ³vil limpio con logo a la izquierda y hamburguesa a la derecha */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 text-[#063A5B] hover:bg-neutral-100 rounded-xl transition-colors cursor-pointer"
-            aria-label={mobileMenuOpen ? 'Cerrar menÃº' : 'Abrir menÃº'}
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
+NÂˆKœİÜ›ÜYØ][ÛŠ
+NÂˆ˜]šYØ]J	ËÜÛ]XØKYK\š]˜XÚYY	ÊNÂˆ_BˆÛ\ÜÓ˜[YOH^VÈÌMM—H›ÛX›Û[™\›[™Hİ™\^VÈÌŒĞMP—Hİ\œÛÜ‹\Ú[\ˆ‚ˆ‚ˆÛ0ë]XØHHš]˜XÚYYˆØ]Û‚ˆ‚ˆÏ‚ˆ
+Hˆ
+ˆ‚ˆH]™H™XY[™XØÙ\^ÉÈ	ßBˆ]Û‚ˆ\OH˜]Ûˆ‚ˆÛÛXÚÏ^ÊJHOˆÂˆKœ™]™[Y˜][
 
-      {/* 4. MOBILE NAVIGATION DRAWER */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-neutral-200/80 bg-white px-5 pt-4 pb-8 space-y-5 shadow-2xl animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col space-y-1.5 text-sm font-semibold text-[#063A5B]">
-            <button
-              type="button"
-              onClick={() => handleNav('/')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>Inicio</span>
-              <Home className="w-4 h-4 text-[#00A6A6]" />
-            </button>
+NÂˆKœİÜ›ÜYØ][ÛŠ
+NÂˆ˜]šYØ]J	Ëİ\›\ËX[™XÛÛ™][ÛœÉÊNÂˆ_BˆÛ\ÜÓ˜[YOH^VÈÌMM—H›ÛX›Û[™\›[™Hİ™\^VÈÌŒĞMP—Hİ\œÛÜ‹\Ú[\ˆ‚ˆ‚ˆ\›\È[™ÛÛ™][ÛœÂˆØ]ÛÉÈ	ßBˆ[™^ÉÈ	ßBˆ]Û‚ˆ\OH˜]Ûˆ‚ˆÛÛXÚÏ^ÊJHOˆÂˆKœ™]™[Y˜][
 
-            <button
-              type="button"
-              onClick={() => handleNav('/experiencias')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/experiencias') && !isActive('/experiencias-locales')
-                  ? 'bg-teal-50 text-[#00A6A6] font-bold'
-                  : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>Explorar experiencias</span>
-              <Compass className="w-4 h-4 text-[#00A6A6]" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/rutas')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/rutas') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>Rutas GIA</span>
-              <Route className="w-4 h-4 text-[#063A5B]" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/planea-con-gia')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/planea-con-gia') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>Planea con GIA</span>
-              <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/experiencias-locales')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/experiencias-locales') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>Experiencias locales</span>
-              <Heart className="w-4 h-4 text-[#55A94B]" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/quienes-somos')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/quienes-somos') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>{language === 'es' ? 'QuiÃ©nes somos' : 'About us'}</span>
-              <Compass className="w-4 h-4 text-neutral-400" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/mis-reservas')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/mis-reservas') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>{language === 'es' ? 'Mis reservas' : 'My bookings'}</span>
-              <BookmarkCheck className="w-4 h-4 text-neutral-400" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/mi-cuenta/referidos')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/mi-cuenta') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <span>{language === 'es' ? 'Comparte GIA' : 'Share GIA'}</span>
-              <Share2 className="w-4 h-4 text-neutral-400" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/contacto')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/contacto') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#00A6A6]" />
-                <span>{language === 'es' ? 'Contacto (+503 7011-9564)' : 'Contact (+503 7011-9564)'}</span>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav('/ayuda')}
-              className={`text-left py-3 px-3.5 rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                isActive('/ayuda') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-[#00A6A6]" />
-                <span>{language === 'es' ? 'Centro de Ayuda & FAQ' : 'Help Center & FAQ'}</span>
-              </div>
-            </button>
-          </nav>
-
-          <div className="pt-2 border-t border-neutral-100 flex items-center justify-between px-1">
-            <span className="text-xs font-semibold text-neutral-500">Idioma:</span>
-            <LanguageSelector />
-          </div>
-
-          <div className="flex items-center justify-between px-1">
-            <button
-              type="button"
-              onClick={() => handleNav('/mi-cuenta/referidos')}
-              className="text-xs font-bold text-[#063A5B] flex items-center gap-1.5 hover:text-[#00A6A6]"
-            >
-              <User className="w-4 h-4" />
-              <span>Mi cuenta</span>
-            </button>
-          </div>
-
-          {/* BotÃ³n grande al final: "Crear mi viaje" */}
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={() => handleNav('/planea-con-gia')}
-              className="w-full py-4 text-center text-xs font-extrabold uppercase tracking-wider text-white bg-[#00A6A6] hover:bg-[#009191] rounded-2xl shadow-md flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
-              <span>Crear mi viaje</span>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Modal Ayuda y Contacto */}
-      {helpModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-4 animate-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5 text-[#063A5B]">
-                <HelpCircle className="w-5 h-5 text-[#00A6A6]" />
-                <h3 className="text-base font-bold font-display">Centro de Ayuda y Contacto GIA</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setHelpModalOpen(false)}
-                className="p-1 text-neutral-400 hover:text-neutral-600 rounded-lg cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <p className="text-xs text-neutral-600 leading-relaxed">
-              Â¿Tienes preguntas sobre cÃ³mo diseÃ±ar tu viaje, personalizar itinerarios o reservar experiencias en El Salvador? Nuestro equipo estÃ¡ listo para ayudarte.
-            </p>
-
-            <div className="p-3.5 rounded-2xl bg-teal-50/70 border border-teal-100 text-xs text-neutral-700 space-y-2.5">
-              <span className="font-bold text-[#063A5B] block font-mono text-[11px] uppercase tracking-wider">
-                Contacto Directo
-              </span>
-
-              <div className="flex items-center justify-between gap-2 bg-white px-3 py-2 rounded-xl border border-teal-200/60 shadow-2xs">
-                <a
-                  href="mailto:guiaexperiencessv@gmail.com"
-                  className="text-xs font-semibold text-[#00A6A6] hover:underline flex items-center gap-1.5 truncate"
-                >
-                  <Mail className="w-3.5 h-3.5 shrink-0 text-[#00A6A6]" />
-                  <span className="truncate">guiaexperiencessv@gmail.com</span>
-                </a>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText('guiaexperiencessv@gmail.com');
-                    setCopiedEmail(true);
-                    setTimeout(() => setCopiedEmail(false), 2000);
-                  }}
-                  className="px-2 py-1 text-[11px] font-bold text-neutral-600 hover:text-[#063A5B] bg-neutral-100 hover:bg-neutral-200 rounded-lg flex items-center gap-1 cursor-pointer transition-colors shrink-0"
-                  title="Copiar correo"
-                >
-                  {copiedEmail ? (
-                    <>
-                      <Check className="w-3 h-3 text-emerald-600" />
-                      <span className="text-emerald-700">Copiado</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>Copiar</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              <p className="text-[11px] text-neutral-500">
-                Horario de atenciÃ³n: Lunes a Domingo, 08:00 - 18:00 (GMT-6)
-              </p>
-            </div>
-
-            <div className="flex gap-2.5 pt-2">
-              <a
-                href="mailto:guiaexperiencessv@gmail.com"
-                className="flex-1 py-2.5 bg-[#00A6A6] hover:bg-[#009191] text-white text-xs font-bold rounded-xl text-center cursor-pointer transition-colors flex items-center justify-center gap-1.5"
-              >
-                <Mail className="w-3.5 h-3.5" />
-                <span>Enviar correo</span>
-              </a>
-              <button
-                type="button"
-                onClick={() => setHelpModalOpen(false)}
-                className="px-5 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-bold rounded-xl cursor-pointer transition-colors"
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-};
+NÂˆKœİÜ›ÜYØ][ÛŠ
+NÂˆ˜]šYØ]J	ËÜš]˜XŞK\ÛXŞIÊNÂˆ_BˆÛ\ÜÓ˜[YOH^VÈÌMM—H›ÛX›Û[™\›[™Hİ™\^VÈÌŒĞMP—Hİ\œÛÜ‹\Ú[\ˆ‚ˆ‚ˆš]˜XŞHÛXŞBˆØ]Û‚ˆ‚ˆÏ‚ˆ
+_BˆÜÜ[‚ˆÛX™[‚ˆÙ\œ›ÜœË˜YÜ™YU\›\È	‰ˆ
+ˆÛ\ÜÓ˜[YOH^VÌL\H^\™YML]LHÙ\œ›ÜœË˜YÜ™YU\›\ßOÜ‚ˆ
+_BˆÙ]‚‚ˆËÊˆÙ[™\˜[›Ü›H\œ›ÜˆYˆ[H
+‹ßBˆÙ\œ›ÜœË™›Ü›H	‰ˆ
+ˆ]ˆÛ\ÜÓ˜[YOHœLÈ™Ë\™YML^\™YMÌ^^È›İ[™Y^›Ü™\ˆ›Ü™\‹\™YLŒ›^][\ËXÙ[\ˆØ\Lˆ‚ˆ[\Ú\˜ÛHÛ\ÜÓ˜[YOHËMMÚš[šËLˆÏ‚ˆÜ[Ù\œ›ÜœË™›Ü›_OÜÜ[‚ˆÙ]‚ˆ
+_B‚ˆËÊˆİX›Z]ÕH
+‹ßBˆ]Û‚ˆ\OHœİX›Z]‚ˆ\ØX›Y^Ú\ÔİX›Z][™ßBˆÛ\ÜÓ˜[YOHËY[KM™Ë\Û]KNLİ™\˜™Ë\Û]KN\ØX›Y˜™Ë[™]]˜[M^]Ú]H›ÛX›Û^^È\\˜Ø\ÙH˜XÚÚ[™Ë]ÚY\ˆ›İ[™Y^ÚYİË[Y˜[œÚ][Û‹XÛÛÜœÈ›^][\ËXÙ[\ˆ\İYKXÙ[\ˆØ\Lˆİ\œÛÜ‹\Ú[\ˆ‚ˆ‚ˆØÚÈÛ\ÜÓ˜[YOHËMMˆÏ‚ˆÜ[‚ˆÚ\ÔİX›Z][™ÈÈ˜ÚXÚÛİ]˜›ÛÚÚ[™Ô›ØÙ\ÜÚ[™Èˆ˜ÚXÚÛİ]˜ÛÛ™š\›P›ÛÚÚ[™ĞŸBˆÜÜ[‚ˆØ]Û‚ˆÙ]‚ˆÙ›Ü›O‚ˆÙ]‚ˆÙ]‚ˆ
+NÂŸNÂ
