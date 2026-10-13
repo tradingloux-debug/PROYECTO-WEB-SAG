@@ -3,6 +3,8 @@ import { Booking } from '../types/booking';
 
 const PROFILE_STORAGE_KEY = 'gia_user_profile_v1';
 
+// Centralizes local profile persistence so the UI never stores passwords.
+
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
 export const accountService = {

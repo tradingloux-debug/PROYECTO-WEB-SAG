@@ -9,4 +9,5 @@ export interface UserProfile {
   updatedAt: string;
 }
 
+// Fields accepted by both profile creation and profile editing.
 export type ProfileInput = Omit<UserProfile, 'id' | 'createdAt' | 'updatedAt'>;
