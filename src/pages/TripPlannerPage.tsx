@@ -268,7 +268,7 @@ export const TripPlannerPage: React.FC = () => {
               }`}
             >
               <BookmarkCheck className="w-4 h-4" />
-              <span>{isSaved ? '{chooseLocale(language, "¡Guardado!", "Saved!")}' : '{chooseLocale(language, "Guardar mi viaje", "Save my trip")}'}</span>
+              <span>{isSaved ? chooseLocale(language, '¡Guardado!', 'Saved!') : chooseLocale(language, 'Guardar mi viaje', 'Save my trip')}</span>
             </button>
           </div>
         </div>
