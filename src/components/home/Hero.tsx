@@ -1,3 +1,4 @@
+import { chooseLocale } from '../../data/ptPhrases';
 import React from 'react';
 import { useRouter } from '../../context/RouterContext';
 import { SearchBar } from './SearchBar';
@@ -15,7 +16,7 @@ export const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={heroImage}
-          alt={language === 'es' ? 'El Salvador: volcanes, Lago de Coatepeque y paisajes tropicales' : 'El Salvador: volcanoes, Lake Coatepeque and tropical landscapes'}
+          alt={chooseLocale(language, 'El Salvador: volcanes, Lago de Coatepeque y paisajes tropicales', 'El Salvador: volcanoes, Lake Coatepeque and tropical landscapes')}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center transform scale-102 filter brightness-90 saturate-110"
         />
@@ -32,12 +33,12 @@ export const Hero: React.FC = () => {
 
         {/* Hero Title */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white max-w-3xl mx-auto leading-[1.12] text-balance font-display mb-5 drop-shadow-md">
-          {language === 'es' ? 'El Salvador diseñado para ti.' : 'El Salvador, designed for you.'}
+          {chooseLocale(language, 'El Salvador diseñado para ti.', 'El Salvador, designed for you.')}
         </h1>
 
         {/* Hero Subtitle */}
         <p className="text-base sm:text-lg text-slate-100 max-w-2xl mx-auto font-normal leading-relaxed text-balance mb-9 drop-shadow-xs">
-          {language === 'es' ? 'Descubre experiencias, recorre el país o crea un viaje hecho alrededor de ti.' : 'Discover experiences, travel the country, or create a trip designed around you.'}
+          {chooseLocale(language, 'Descubre experiencias, recorre el país o crea un viaje hecho alrededor de ti.', 'Discover experiences, travel the country, or create a trip designed around you.')}
         </p>
 
         {/* 3 Clear Action Levels: Primary, Secondary, and Discrete Tertiary */}
@@ -49,7 +50,7 @@ export const Hero: React.FC = () => {
             className="w-full sm:w-auto px-7 py-3.5 bg-[#00A6A6] hover:bg-[#009191] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
           >
             <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
-            <span>{language === 'es' ? 'Crear mi viaje' : 'Create my trip'}</span>
+            <span>{chooseLocale(language, 'Crear mi viaje', 'Create my trip')}</span>
           </button>
 
           {/* SECONDARY: Outline */}
@@ -58,7 +59,7 @@ export const Hero: React.FC = () => {
             onClick={() => navigate('/experiencias')}
             className="w-full sm:w-auto px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white border-2 border-white/80 hover:border-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer active:scale-98 backdrop-blur-xs"
           >
-            <span>{language === 'es' ? 'Explorar experiencias' : 'Explore experiences'}</span>
+            <span>{chooseLocale(language, 'Explorar experiencias', 'Explore experiences')}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -71,7 +72,7 @@ export const Hero: React.FC = () => {
             className="inline-flex items-center gap-1.5 text-xs text-slate-200 hover:text-[#20C5C7] font-semibold transition-colors cursor-pointer group"
           >
             <Route className="w-3.5 h-3.5 text-[#20C5C7]" />
-            <span>{language === 'es' ? 'Ver Rutas GIA (viajes de varios días)' : 'View GIA Routes (multi-day trips)'}</span>
+            <span>{chooseLocale(language, 'Ver Rutas GIA (viajes de varios días)', 'View GIA Routes (multi-day trips)')}</span>
             <span className="transition-transform group-hover:translate-x-1">→</span>
           </button>
         </div>
