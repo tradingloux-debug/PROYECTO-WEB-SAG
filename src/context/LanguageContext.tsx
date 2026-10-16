@@ -14,7 +14,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<SupportedLanguage>(() => {
     try {
       const saved = localStorage.getItem('gia_language_pref');
-      if (saved === 'es' || saved === 'en') return saved;
+      if (saved === 'es' || saved === 'en' || saved === 'pt') return saved;
     } catch (e) {
       // Fallback
     }
@@ -31,7 +31,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   useEffect(() => {
-    document.documentElement.lang = language;
+    document.documentElement.lang = language === 'pt' ? 'pt-BR' : language;
+    document.title = language === 'es'
+      ? 'GIA Experiences - Turismo auténtico en El Salvador'
+      : language === 'pt'
+      ? 'GIA Experiences - Turismo autêntico em El Salvador'
+      : 'GIA Experiences - Authentic tourism in El Salvador';
   }, [language]);
 
   const t = translations[language];

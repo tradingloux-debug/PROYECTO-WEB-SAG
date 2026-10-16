@@ -1,3 +1,4 @@
+import { chooseLocale } from '../../data/ptPhrases';
 import React from 'react';
 import { useRouter } from '../../context/RouterContext';
 import { Compass, Route, Sparkles, ArrowRight } from 'lucide-react';
@@ -14,35 +15,35 @@ export const DiscoveryOptions: React.FC = () => {
   const threePaths = [
     {
       id: 'experiencias',
-      title: language === 'es' ? 'EXPERIENCIAS' : 'EXPERIENCES',
-      description: language === 'es' ? 'Encuentra actividades para unas horas o un día.' : 'Find activities for a few hours or a full day.',
-      cta: language === 'es' ? 'Explorar' : 'Explore',
+      title: chooseLocale(language, 'EXPERIENCIAS', 'EXPERIENCES'),
+      description: chooseLocale(language, 'Encuentra actividades para unas horas o un día.', 'Find activities for a few hours or a full day.'),
+      cta: chooseLocale(language, 'Explorar', 'Explore'),
       link: '/experiencias',
       image: expSurf,
       icon: Compass,
-      badge: language === 'es' ? 'Actividades por día' : 'Day activities',
+      badge: chooseLocale(language, 'Actividades por día', 'Day activities'),
       btnStyle: 'bg-[#00A6A6] hover:bg-[#009191] text-white',
     },
     {
       id: 'rutas',
-      title: language === 'es' ? 'RUTAS GIA' : 'GIA ROUTES',
-      description: language === 'es' ? 'Recorre distintos destinos en viajes de varios días.' : 'Visit several destinations on multi-day trips.',
-      cta: language === 'es' ? 'Ver rutas' : 'View routes',
+      title: chooseLocale(language, 'RUTAS GIA', 'GIA ROUTES'),
+      description: chooseLocale(language, 'Recorre distintos destinos en viajes de varios días.', 'Visit several destinations on multi-day trips.'),
+      cta: chooseLocale(language, 'Ver rutas', 'View routes'),
       link: '/rutas',
       image: routeEsencial,
       icon: Route,
-      badge: language === 'es' ? 'Itinerarios multidía' : 'Multi-day itineraries',
+      badge: chooseLocale(language, 'Itinerarios multidía', 'Multi-day itineraries'),
       btnStyle: 'bg-[#063A5B] hover:bg-[#04283f] text-white',
     },
     {
       id: 'planea',
-      title: language === 'es' ? 'PLANEA CON GIA' : 'PLAN WITH GIA',
-      description: language === 'es' ? 'Dinos lo que quieres vivir y crea un viaje personalizado.' : 'Tell us what you want to experience and create a custom trip.',
-      cta: language === 'es' ? 'Crear mi viaje' : 'Create my trip',
+      title: chooseLocale(language, 'PLANEA CON GIA', 'PLAN WITH GIA'),
+      description: chooseLocale(language, 'Dinos lo que quieres vivir y crea un viaje personalizado.', 'Tell us what you want to experience and create a custom trip.'),
+      cta: chooseLocale(language, 'Crear mi viaje', 'Create my trip'),
       link: '/planea-con-gia',
       image: heroCoatepeque,
       icon: Sparkles,
-      badge: language === 'es' ? 'Diseñador de viaje inteligente' : 'Smart Travel Designer',
+      badge: chooseLocale(language, 'Diseñador de viaje inteligente', 'Smart Travel Designer'),
       btnStyle: 'bg-[#00A6A6] hover:bg-[#009191] text-white ring-2 ring-[#00A6A6]/30',
     },
   ];
@@ -54,15 +55,15 @@ export const DiscoveryOptions: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-neutral-200/90 text-[#063A5B] text-xs font-bold font-mono uppercase shadow-2xs">
             <Compass className="w-3.5 h-3.5 text-[#00A6A6]" />
-            <span>{language === 'es' ? 'Tres formas de descubrir' : 'Three ways to discover'}</span>
+            <span>{chooseLocale(language, 'Tres formas de descubrir', 'Three ways to discover')}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black text-[#063A5B] tracking-tight font-display">
-            {language === 'es' ? '¿Cómo quieres viajar?' : 'How would you like to travel?'}
+            {chooseLocale(language, '¿Cómo quieres viajar?', 'How would you like to travel?')}
           </h2>
 
           <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
-            {language === 'es' ? 'Tres caminos diseñados para vivir El Salvador exactamente a tu medida.' : 'Three paths designed to experience El Salvador your way.'}
+            {chooseLocale(language, 'Tres caminos diseñados para vivir El Salvador exactamente a tu medida.', 'Three paths designed to experience El Salvador your way.')}
           </p>
         </div>
 

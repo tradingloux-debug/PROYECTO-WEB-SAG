@@ -1,3 +1,4 @@
+import { chooseLocale } from '../../data/ptPhrases';
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from '../../context/RouterContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -70,7 +71,7 @@ export const Navbar: React.FC = () => {
           type="button"
           onClick={() => handleNav('/')}
           className="flex items-center text-left focus-visible:outline-teal-600 rounded-md cursor-pointer transition-opacity hover:opacity-95 shrink-0"
-          aria-label={`GIA Experiences — ${language === 'es' ? 'Inicio' : 'Home'}`}
+          aria-label={`GIA Experiences — ${chooseLocale(language, 'Inicio', 'Home')}`}
         >
           <GiaLogo size="navbar" />
         </button>
@@ -88,7 +89,7 @@ export const Navbar: React.FC = () => {
             aria-current={isActive('/') ? 'page' : undefined}
           >
             <Home className="w-4 h-4" />
-            <span>{language === 'es' ? 'Inicio' : 'Home'}</span>
+            <span>{chooseLocale(language, 'Inicio', 'Home')}</span>
           </button>
 
           {/* 1. Menú "Explorar" con Dropdown Organizado */}
@@ -107,7 +108,7 @@ export const Navbar: React.FC = () => {
                   : 'hover:text-[#00A6A6]'
               }`}
             >
-              <span>{language === 'es' ? 'Explorar' : 'Explore'}</span>
+              <span>{chooseLocale(language, 'Explorar', 'Explore')}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
                   exploreDropdownOpen ? 'rotate-180 text-[#00A6A6]' : 'text-neutral-400'
@@ -119,7 +120,7 @@ export const Navbar: React.FC = () => {
             {exploreDropdownOpen && (
               <div className="absolute top-full -left-4 w-72 bg-white rounded-2xl border border-neutral-200/90 shadow-xl p-3 space-y-1 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-3 py-1.5 text-[10.5px] font-mono font-bold text-neutral-400 uppercase tracking-wider">
-                  {language === 'es' ? 'Experiencias' : 'Experiences'}
+                  {chooseLocale(language, 'Experiencias', 'Experiences')}
                 </div>
 
                 <button
@@ -130,22 +131,22 @@ export const Navbar: React.FC = () => {
                   <div className="flex items-center gap-2.5">
                     <Compass className="w-4 h-4 text-[#00A6A6]" />
                     <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#00A6A6]">
-                      {language === 'es' ? 'Todas las experiencias' : 'All experiences'}
+                      {chooseLocale(language, 'Todas las experiencias', 'All experiences')}
                     </span>
                   </div>
-                  <span className="text-[10px] text-neutral-400 font-mono">24 {language === 'es' ? 'activas' : 'active'}</span>
+                  <span className="text-[10px] text-neutral-400 font-mono">24 {chooseLocale(language, 'activas', 'active')}</span>
                 </button>
 
                 <div className="px-3 pt-2 pb-1 text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider border-t border-neutral-100">
-                  {language === 'es' ? 'Categorías principales' : 'Main categories'}
+                  {chooseLocale(language, 'Categorías principales', 'Main categories')}
                 </div>
 
                 <div className="grid grid-cols-2 gap-1 px-1">
                   {[
-                    { id: 'cultura', label: language === 'es' ? 'Cultura' : 'Culture', icon: '🎨' },
-                    { id: 'gastronomia', label: language === 'es' ? 'Gastronomía' : 'Food', icon: '🍽' },
-                    { id: 'naturaleza', label: language === 'es' ? 'Naturaleza' : 'Nature', icon: '🌿' },
-                    { id: 'aventura', label: language === 'es' ? 'Aventura' : 'Adventure', icon: '🧗' },
+                    { id: 'cultura', label: chooseLocale(language, 'Cultura', 'Culture'), icon: '🎨' },
+                    { id: 'gastronomia', label: chooseLocale(language, 'Gastronomía', 'Food'), icon: '🍽' },
+                    { id: 'naturaleza', label: chooseLocale(language, 'Naturaleza', 'Nature'), icon: '🌿' },
+                    { id: 'aventura', label: chooseLocale(language, 'Aventura', 'Adventure'), icon: '🧗' },
                   ].map((cat) => (
                     <button
                       key={cat.id}
@@ -168,10 +169,10 @@ export const Navbar: React.FC = () => {
                     <Heart className="w-4 h-4 text-[#55A94B]" />
                     <div>
                       <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#55A94B] block">
-                        {language === 'es' ? 'Experiencias locales' : 'Local experiences'}
+                        {chooseLocale(language, 'Experiencias locales', 'Local experiences')}
                       </span>
                       <span className="text-[10.5px] text-neutral-500 block">
-                        {language === 'es' ? 'Comunidades y tradiciones' : 'Communities and traditions'}
+                        {chooseLocale(language, 'Comunidades y tradiciones', 'Communities and traditions')}
                       </span>
                     </div>
                   </button>
@@ -184,10 +185,10 @@ export const Navbar: React.FC = () => {
                     <Compass className="w-4 h-4 text-[#00A6A6]" />
                     <div>
                       <span className="text-xs font-bold text-[#063A5B] group-hover:text-[#00A6A6] block">
-                        {language === 'es' ? 'Experiencias con imágenes 360°' : 'Experiences with 360° images'}
+                        {chooseLocale(language, 'Experiencias con imágenes 360°', 'Experiences with 360° images')}
                       </span>
                       <span className="text-[10.5px] text-neutral-500 block">
-                        {language === 'es' ? 'Exploración inmersiva' : 'Immersive exploration'}
+                        {chooseLocale(language, 'Exploración inmersiva', 'Immersive exploration')}
                       </span>
                     </div>
                   </button>
@@ -204,7 +205,7 @@ export const Navbar: React.FC = () => {
               isActive('/rutas') ? 'text-[#00A6A6] font-bold border-b-2 border-[#00A6A6]' : 'hover:text-[#00A6A6]'
             }`}
           >
-            {language === 'es' ? 'Rutas GIA' : 'GIA Routes'}
+            {chooseLocale(language, 'Rutas GIA', 'GIA Routes')}
           </button>
 
           {/* 3. Planea con GIA */}
@@ -218,7 +219,7 @@ export const Navbar: React.FC = () => {
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#FDBA2D]" />
-            <span>{language === 'es' ? 'Planea con GIA' : 'Plan with GIA'}</span>
+            <span>{chooseLocale(language, 'Planea con GIA', 'Plan with GIA')}</span>
           </button>
 
           {/* 4. Menú "Más" */}
@@ -232,7 +233,7 @@ export const Navbar: React.FC = () => {
               type="button"
               className="flex items-center gap-1 py-2 text-neutral-600 hover:text-[#063A5B] transition-colors cursor-pointer"
             >
-              <span>{language === 'es' ? 'Más' : 'More'}</span>
+              <span>{chooseLocale(language, 'Más', 'More')}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
                   moreDropdownOpen ? 'rotate-180 text-[#00A6A6]' : 'text-neutral-400'
@@ -249,7 +250,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
                   <Compass className="w-4 h-4 text-[#00A6A6]" />
-                  <span>{language === 'es' ? 'Quiénes somos' : 'About us'}</span>
+                  <span>{chooseLocale(language, 'Quiénes somos', 'About us')}</span>
                 </button>
 
                 <button
@@ -258,7 +259,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
                   <Heart className="w-4 h-4 text-[#55A94B]" />
-                  <span>{language === 'es' ? 'Experiencias locales' : 'Local experiences'}</span>
+                  <span>{chooseLocale(language, 'Experiencias locales', 'Local experiences')}</span>
                 </button>
 
                 <button
@@ -267,7 +268,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
                   <Compass className="w-4 h-4 text-[#00A6A6]" />
-                  <span>{language === 'es' ? 'Experiencias inmersivas' : 'Immersive experiences'}</span>
+                  <span>{chooseLocale(language, 'Experiencias inmersivas', 'Immersive experiences')}</span>
                 </button>
 
                 <button
@@ -276,7 +277,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
                   <Share2 className="w-4 h-4 text-[#FDBA2D]" />
-                  <span>{language === 'es' ? 'Comparte GIA' : 'Share GIA'}</span>
+                  <span>{chooseLocale(language, 'Comparte GIA', 'Share GIA')}</span>
                 </button>
 
                 <button
@@ -285,7 +286,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
                   <BookmarkCheck className="w-4 h-4 text-[#063A5B]" />
-                  <span>{language === 'es' ? 'Mis reservas' : 'My bookings'}</span>
+                  <span>{chooseLocale(language, 'Mis reservas', 'My bookings')}</span>
                 </button>
 
                 <button
@@ -294,7 +295,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer border-t border-neutral-100"
                 >
                   <Phone className="w-4 h-4 text-[#00A6A6]" />
-                  <span>{language === 'es' ? 'Contacto (+503 7011-9564)' : 'Contact (+503 7011-9564)'}</span>
+                  <span>{chooseLocale(language, 'Contacto (+503 7011-9564)', 'Contact (+503 7011-9564)')}</span>
                 </button>
 
                 <button
@@ -303,7 +304,7 @@ export const Navbar: React.FC = () => {
                   className="w-full text-left p-2.5 rounded-xl hover:bg-neutral-50 flex items-center gap-2.5 text-xs font-semibold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer"
                 >
                   <HelpCircle className="w-4 h-4 text-neutral-400" />
-                  <span>{language === 'es' ? 'Centro de Ayuda & FAQ' : 'Help Center & FAQ'}</span>
+                  <span>{chooseLocale(language, 'Centro de Ayuda & FAQ', 'Help Center & FAQ')}</span>
                 </button>
               </div>
             )}
@@ -324,7 +325,7 @@ export const Navbar: React.FC = () => {
             }`}
           >
             <User className="w-4 h-4" />
-            <span>{language === 'es' ? 'Cuenta' : 'Account'}</span>
+            <span>{chooseLocale(language, 'Cuenta', 'Account')}</span>
           </button>
 
           {/* CTA Destacado: PRIMARY Turquesa #00A6A6 */}
@@ -334,7 +335,7 @@ export const Navbar: React.FC = () => {
             className="px-5 py-2.5 bg-[#00A6A6] hover:bg-[#009191] active:scale-98 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-xs transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer hover:shadow-md"
           >
             <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
-            <span>{language === 'es' ? 'Crear mi viaje' : 'Create my trip'}</span>
+            <span>{chooseLocale(language, 'Crear mi viaje', 'Create my trip')}</span>
           </button>
         </div>
 
@@ -349,14 +350,14 @@ export const Navbar: React.FC = () => {
             aria-current={isActive('/') ? 'page' : undefined}
           >
             <Home className="w-4 h-4" />
-            <span>{language === 'es' ? 'Inicio' : 'Home'}</span>
+            <span>{chooseLocale(language, 'Inicio', 'Home')}</span>
           </button>
           {/* Header móvil limpio con logo a la izquierda y hamburguesa a la derecha */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2.5 text-[#063A5B] hover:bg-neutral-100 rounded-xl transition-colors cursor-pointer"
-            aria-label={mobileMenuOpen ? (language === 'es' ? 'Cerrar menú' : 'Close menu') : (language === 'es' ? 'Abrir menú' : 'Open menu')}
+            aria-label={mobileMenuOpen ? (chooseLocale(language, 'Cerrar menú', 'Close menu')) : (chooseLocale(language, 'Abrir menú', 'Open menu'))}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -374,7 +375,7 @@ export const Navbar: React.FC = () => {
                 isActive('/') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Inicio' : 'Home'}</span>
+              <span>{chooseLocale(language, 'Inicio', 'Home')}</span>
               <Home className="w-4 h-4 text-[#00A6A6]" />
             </button>
 
@@ -387,7 +388,7 @@ export const Navbar: React.FC = () => {
                   : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Explorar experiencias' : 'Explore experiences'}</span>
+              <span>{chooseLocale(language, 'Explorar experiencias', 'Explore experiences')}</span>
               <Compass className="w-4 h-4 text-[#00A6A6]" />
             </button>
 
@@ -398,7 +399,7 @@ export const Navbar: React.FC = () => {
                 isActive('/rutas') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Rutas GIA' : 'GIA Routes'}</span>
+              <span>{chooseLocale(language, 'Rutas GIA', 'GIA Routes')}</span>
               <Route className="w-4 h-4 text-[#063A5B]" />
             </button>
 
@@ -409,7 +410,7 @@ export const Navbar: React.FC = () => {
                 isActive('/planea-con-gia') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Planea con GIA' : 'Plan with GIA'}</span>
+              <span>{chooseLocale(language, 'Planea con GIA', 'Plan with GIA')}</span>
               <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
             </button>
 
@@ -420,7 +421,7 @@ export const Navbar: React.FC = () => {
                 isActive('/experiencias-locales') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Experiencias locales' : 'Local experiences'}</span>
+              <span>{chooseLocale(language, 'Experiencias locales', 'Local experiences')}</span>
               <Heart className="w-4 h-4 text-[#55A94B]" />
             </button>
 
@@ -431,7 +432,7 @@ export const Navbar: React.FC = () => {
                 isActive('/quienes-somos') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Quiénes somos' : 'About us'}</span>
+              <span>{chooseLocale(language, 'Quiénes somos', 'About us')}</span>
               <Compass className="w-4 h-4 text-neutral-400" />
             </button>
 
@@ -442,7 +443,7 @@ export const Navbar: React.FC = () => {
                 isActive('/mis-reservas') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Mis reservas' : 'My bookings'}</span>
+              <span>{chooseLocale(language, 'Mis reservas', 'My bookings')}</span>
               <BookmarkCheck className="w-4 h-4 text-neutral-400" />
             </button>
 
@@ -453,7 +454,7 @@ export const Navbar: React.FC = () => {
                 isActive('/mi-cuenta') ? 'bg-teal-50 text-[#00A6A6] font-bold' : 'hover:bg-neutral-50'
               }`}
             >
-              <span>{language === 'es' ? 'Mi cuenta' : 'My account'}</span>
+              <span>{chooseLocale(language, 'Mi cuenta', 'My account')}</span>
               <Share2 className="w-4 h-4 text-neutral-400" />
             </button>
 
@@ -466,7 +467,7 @@ export const Navbar: React.FC = () => {
             >
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#00A6A6]" />
-                <span>{language === 'es' ? 'Contacto (+503 7011-9564)' : 'Contact (+503 7011-9564)'}</span>
+                <span>{chooseLocale(language, 'Contacto (+503 7011-9564)', 'Contact (+503 7011-9564)')}</span>
               </div>
             </button>
 
@@ -479,13 +480,13 @@ export const Navbar: React.FC = () => {
             >
               <div className="flex items-center gap-2">
                 <HelpCircle className="w-4 h-4 text-[#00A6A6]" />
-                <span>{language === 'es' ? 'Centro de Ayuda & FAQ' : 'Help Center & FAQ'}</span>
+                <span>{chooseLocale(language, 'Centro de Ayuda & FAQ', 'Help Center & FAQ')}</span>
               </div>
             </button>
           </nav>
 
           <div className="pt-2 border-t border-neutral-100 flex items-center justify-between px-1">
-            <span className="text-xs font-semibold text-neutral-500">{language === 'es' ? 'Idioma:' : 'Language:'}</span>
+            <span className="text-xs font-semibold text-neutral-500">{chooseLocale(language, 'Idioma:', 'Language:')}</span>
             <LanguageSelector />
           </div>
 
@@ -496,7 +497,7 @@ export const Navbar: React.FC = () => {
               className="text-xs font-bold text-[#063A5B] flex items-center gap-1.5 hover:text-[#00A6A6]"
             >
               <User className="w-4 h-4" />
-              <span>{language === 'es' ? 'Mi cuenta' : 'My account'}</span>
+              <span>{chooseLocale(language, 'Mi cuenta', 'My account')}</span>
             </button>
           </div>
 
@@ -508,7 +509,7 @@ export const Navbar: React.FC = () => {
               className="w-full py-4 text-center text-xs font-extrabold uppercase tracking-wider text-white bg-[#00A6A6] hover:bg-[#009191] rounded-2xl shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-[#FDBA2D]" />
-              <span>{language === 'es' ? 'Crear mi viaje' : 'Create my trip'}</span>
+              <span>{chooseLocale(language, 'Crear mi viaje', 'Create my trip')}</span>
             </button>
           </div>
         </div>

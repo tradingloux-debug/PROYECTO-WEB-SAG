@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { chooseLocale } from '../data/ptPhrases';
 import { DEMO_ROUTES } from '../data/routes';
 import { TourRoute } from '../types/routes';
 import { MyTrip, PlannerPreferences } from '../types/trip';
@@ -140,15 +141,15 @@ export const TripPlannerPage: React.FC = () => {
         <div className="space-y-3 max-w-3xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-neutral-200/80 text-[#063A5B] text-xs font-bold font-mono shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-[#FDBA2D]" />
-            <span>✨ Diseñado para ti</span>
+            <span>{chooseLocale(language, "✨ Diseñado para ti", "✨ Designed for you")}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-[#063A5B] tracking-tight font-display leading-[1.12]">
-            Planea con GIA
+            {chooseLocale(language, "Planea con GIA", "Plan with GIA")}
           </h1>
 
           <p className="text-sm sm:text-base text-neutral-600 leading-relaxed font-normal">
-            Cuéntanos cómo quieres vivir El Salvador y diseñaremos una ruta alrededor de tus intereses, tiempo y presupuesto.
+            {chooseLocale(language, "Cuéntanos cómo quieres vivir El Salvador y diseñaremos una ruta alrededor de tus intereses, tiempo y presupuesto.", "Tell us how you want to experience El Salvador and we'll create an itinerary around your interests, time, and budget.")}
           </p>
         </div>
 
@@ -156,15 +157,15 @@ export const TripPlannerPage: React.FC = () => {
         {preloadedRoute && (
           <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 text-xs text-[#063A5B] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-[#00A6A6]">Ruta base precargada:</span>
-              <span className="font-semibold underline">{preloadedRoute.titleEs}</span>
+              <span className="font-bold text-[#00A6A6]">{chooseLocale(language, "Ruta base precargada:", "Preloaded base route:")}</span>
+              <span className="font-semibold underline">{language === 'es' ? preloadedRoute.titleEs : preloadedRoute.titleEn}</span>
             </div>
             <button
               type="button"
               onClick={() => navigate('/planea-con-gia')}
               className="text-xs text-[#00A6A6] hover:text-[#063A5B] font-bold cursor-pointer"
             >
-              Diseñar nueva ruta desde cero →
+              {chooseLocale(language, "Diseñar nueva ruta desde cero →", "Create a new route from scratch →")}
             </button>
           </div>
         )}
@@ -182,7 +183,7 @@ export const TripPlannerPage: React.FC = () => {
               }`}
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>1. Preferencias</span>
+              <span>{chooseLocale(language, "1. Preferencias", "1. Preferences")}</span>
             </button>
 
             <button
@@ -195,7 +196,7 @@ export const TripPlannerPage: React.FC = () => {
               }`}
             >
               <Eye className="w-3.5 h-3.5" />
-              <span>2. Ver Itinerario</span>
+              <span>{chooseLocale(language, "2. Ver Itinerario", "2. View itinerary")}</span>
             </button>
           </div>
         )}
@@ -250,7 +251,7 @@ export const TripPlannerPage: React.FC = () => {
           <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
             <div>
               <span className="text-[10px] text-neutral-400 block uppercase font-mono">
-                {currentTrip.daysCount} Días · {currentTrip.travelersCount} Viajeros
+                {currentTrip.daysCount} {chooseLocale(language, 'Días', 'Days')} · {currentTrip.travelersCount} {chooseLocale(language, 'Viajeros', 'Travelers')}
               </span>
               <span className="text-base font-black font-mono text-[#063A5B]">
                 ${currentTrip.estimatedTotal} USD
@@ -267,7 +268,7 @@ export const TripPlannerPage: React.FC = () => {
               }`}
             >
               <BookmarkCheck className="w-4 h-4" />
-              <span>{isSaved ? '¡Guardado!' : 'Guardar mi viaje'}</span>
+              <span>{isSaved ? chooseLocale(language, '¡Guardado!', 'Saved!') : chooseLocale(language, 'Guardar mi viaje', 'Save my trip')}</span>
             </button>
           </div>
         </div>

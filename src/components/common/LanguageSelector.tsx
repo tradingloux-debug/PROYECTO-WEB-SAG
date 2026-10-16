@@ -39,6 +39,20 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = 
       >
         EN
       </button>
+      <span className="text-neutral-300" aria-hidden="true">/</span>
+      <button
+        type="button"
+        onClick={() => setLanguage('pt')}
+        className={`px-2 py-1 rounded transition-colors ${
+          language === 'pt'
+            ? 'bg-white text-neutral-900 shadow-xs font-semibold'
+            : 'text-neutral-500 hover:text-neutral-800'
+        }`}
+        aria-label="Mudar idioma para português"
+        aria-pressed={language === 'pt'}
+      >
+        PT
+      </button>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { chooseLocale } from '../data/ptPhrases';
 import React from 'react';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -83,10 +84,10 @@ export const AboutUsPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           <Breadcrumbs
             items={[
-              { label: language === 'es' ? 'Quiénes somos' : 'About us' },
+              { label: chooseLocale(language, 'Quiénes somos', 'About us') },
             ]}
             backAction={{
-              label: language === 'es' ? '← Volver al inicio' : '← Back to Home',
+              label: chooseLocale(language, '← Volver al inicio', '← Back to Home'),
               path: '/',
             }}
           />
@@ -111,13 +112,11 @@ export const AboutUsPage: React.FC = () => {
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black font-display tracking-tight max-w-3xl leading-tight">
-            {language === 'es' ? 'Conoce GIA Experiences' : 'About GIA Experiences'}
+            {chooseLocale(language, 'Conoce GIA Experiences', 'About GIA Experiences')}
           </h1>
 
           <p className="text-base sm:text-xl text-slate-200 max-w-2xl leading-relaxed font-light">
-            {language === 'es'
-              ? 'GIA Experiences es una tour operadora salvadoreña enfocada en diseñar experiencias que permitan descubrir El Salvador de una manera personalizada, cercana y diferente.'
-              : 'GIA Experiences is a Salvadoran tour operator dedicated to crafting travel experiences that reveal El Salvador in a personalized, immersive, and distinctive way.'}
+            {chooseLocale(language, 'GIA Experiences es una tour operadora salvadoreña enfocada en diseñar experiencias que permitan descubrir El Salvador de una manera personalizada, cercana y diferente.', 'GIA Experiences is a Salvadoran tour operator dedicated to crafting travel experiences that reveal El Salvador in a personalized, immersive, and distinctive way.')}
           </p>
         </div>
       </section>
@@ -131,15 +130,13 @@ export const AboutUsPage: React.FC = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full pointer-events-none" />
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 text-[#00A6A6] text-xs font-mono font-extrabold tracking-wider uppercase">
               <Compass className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Nuestra Misión' : 'Our Mission'}</span>
+              <span>{chooseLocale(language, 'Nuestra Misión', 'Our Mission')}</span>
             </div>
             <h2 className="text-2xl font-black text-[#063A5B] font-display">
               MISIÓN
             </h2>
             <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-medium">
-              "{language === 'es'
-                ? 'Brindar experiencias turísticas personalizadas que permitan a las personas descubrir, disfrutar y conectar con los diferentes destinos y atractivos de El Salvador, ofreciendo opciones adaptadas a sus intereses.'
-                : 'To provide personalized tourism experiences that enable travelers to discover, enjoy, and connect with the diverse destinations and attractions of El Salvador, offering options tailored to their interests.'}"
+              "{chooseLocale(language, 'Brindar experiencias turísticas personalizadas que permitan a las personas descubrir, disfrutar y conectar con los diferentes destinos y atractivos de El Salvador, ofreciendo opciones adaptadas a sus intereses.', 'To provide personalized tourism experiences that enable travelers to discover, enjoy, and connect with the diverse destinations and attractions of El Salvador, offering options tailored to their interests.')}"
             </p>
           </div>
 
@@ -148,15 +145,13 @@ export const AboutUsPage: React.FC = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-full pointer-events-none" />
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-[#F47B3A] text-xs font-mono font-extrabold tracking-wider uppercase">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Nuestra Visión' : 'Our Vision'}</span>
+              <span>{chooseLocale(language, 'Nuestra Visión', 'Our Vision')}</span>
             </div>
             <h2 className="text-2xl font-black text-[#063A5B] font-display">
               VISIÓN
             </h2>
             <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-medium">
-              "{language === 'es'
-                ? 'Ser una marca turística reconocida en El Salvador por ofrecer experiencias innovadoras, personalizadas y de calidad, que motiven a las personas a descubrir y disfrutar el país de una manera diferente.'
-                : 'To be a renowned tourism brand in El Salvador recognized for delivering innovative, personalized, and high-quality experiences that inspire people to discover and enjoy the country in a truly unique way.'}"
+              "{chooseLocale(language, 'Ser una marca turística reconocida en El Salvador por ofrecer experiencias innovadoras, personalizadas y de calidad, que motiven a las personas a descubrir y disfrutar el país de una manera diferente.', 'To be a renowned tourism brand in El Salvador recognized for delivering innovative, personalized, and high-quality experiences that inspire people to discover and enjoy the country in a truly unique way.')}"
             </p>
           </div>
         </section>
@@ -166,15 +161,13 @@ export const AboutUsPage: React.FC = () => {
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#00A6A6] text-xs font-mono font-bold uppercase tracking-wider">
               <Gem className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Principios que nos guían' : 'Core Principles'}</span>
+              <span>{chooseLocale(language, 'Principios que nos guían', 'Core Principles')}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-[#063A5B] font-display tracking-tight">
-              {language === 'es' ? 'Nuestros valores' : 'Our Values'}
+              {chooseLocale(language, 'Nuestros valores', 'Our Values')}
             </h2>
             <p className="text-xs sm:text-sm text-neutral-500">
-              {language === 'es'
-                ? 'Pilares que sustentan cada ruta, encuentro comunitario y momento que diseñamos.'
-                : 'Foundational pillars supporting every tour route, community connection, and experience we design.'}
+              {chooseLocale(language, 'Pilares que sustentan cada ruta, encuentro comunitario y momento que diseñamos.', 'Foundational pillars supporting every tour route, community connection, and experience we design.')}
             </p>
           </div>
 
@@ -210,19 +203,13 @@ export const AboutUsPage: React.FC = () => {
                 <span>Turismo Auténtico y Responsable</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-[#063A5B] font-display tracking-tight leading-tight">
-                {language === 'es'
-                  ? 'Cómo queremos que descubras El Salvador'
-                  : 'How we want you to experience El Salvador'}
+                {chooseLocale(language, 'Cómo queremos que descubras El Salvador', 'How we want you to experience El Salvador')}
               </h2>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                {language === 'es'
-                  ? 'En GIA Experiences no creemos en itinerarios masivos ni rígidos. Creemos en el valor de los encuentros humanos, el respeto profundo por las comunidades anfitrionas y la riqueza inagotable de nuestra geografía: desde el pacífico oleaje de la costa hasta las cumbres de los volcanes y los pueblos con tradición viva.'
-                  : 'At GIA Experiences, we do not believe in cookie-cutter mass tourism. We celebrate real human connections, deep respect for host communities, and the boundless beauty of our land—from Pacific waves to volcano rims and heritage mountain towns.'}
+                {chooseLocale(language, 'En GIA Experiences no creemos en itinerarios masivos ni rígidos. Creemos en el valor de los encuentros humanos, el respeto profundo por las comunidades anfitrionas y la riqueza inagotable de nuestra geografía: desde el pacífico oleaje de la costa hasta las cumbres de los volcanes y los pueblos con tradición viva.', 'At GIA Experiences, we do not believe in cookie-cutter mass tourism. We celebrate real human connections, deep respect for host communities, and the boundless beauty of our land—from Pacific waves to volcano rims and heritage mountain towns.')}
               </p>
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                {language === 'es'
-                  ? 'Como tour operadora, coordinamos cada detalle logístico, de transporte, seguridad y acompañamiento local para que tu única preocupación sea disfrutar, aprender y conectar.'
-                  : 'As an authorized tour operator, we coordinate all logistics, transport, security, and local guidance so your only task is to enjoy, explore, and connect.'}
+                {chooseLocale(language, 'Como tour operadora, coordinamos cada detalle logístico, de transporte, seguridad y acompañamiento local para que tu única preocupación sea disfrutar, aprender y conectar.', 'As an authorized tour operator, we coordinate all logistics, transport, security, and local guidance so your only task is to enjoy, explore, and connect.')}
               </p>
             </div>
 
@@ -245,12 +232,10 @@ export const AboutUsPage: React.FC = () => {
         <section className="bg-gradient-to-r from-[#063A5B] via-[#04283f] to-[#063A5B] text-white rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-xl relative overflow-hidden">
           <div className="relative z-10 max-w-2xl mx-auto space-y-4">
             <h2 className="text-2xl sm:text-4xl font-black font-display tracking-tight text-white">
-              {language === 'es' ? '¿Listo para descubrir El Salvador?' : 'Ready to discover El Salvador?'}
+              {chooseLocale(language, '¿Listo para descubrir El Salvador?', 'Ready to discover El Salvador?')}
             </h2>
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-              {language === 'es'
-                ? 'Elige entre nuestras experiencias individuales curadas o utiliza nuestra herramienta inteligente para diseñar tu viaje a medida.'
-                : 'Choose from our curated individual experiences or use our smart trip planner to design your custom itinerary.'}
+              {chooseLocale(language, 'Elige entre nuestras experiencias individuales curadas o utiliza nuestra herramienta inteligente para diseñar tu viaje a medida.', 'Choose from our curated individual experiences or use our smart trip planner to design your custom itinerary.')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
               <button
@@ -259,7 +244,7 @@ export const AboutUsPage: React.FC = () => {
                 className="w-full sm:w-auto px-7 py-3.5 bg-[#00A6A6] hover:bg-[#009191] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Compass className="w-4 h-4" />
-                <span>{language === 'es' ? 'Descubre nuestras experiencias' : 'Explore our experiences'}</span>
+                <span>{chooseLocale(language, 'Descubre nuestras experiencias', 'Explore our experiences')}</span>
               </button>
 
               <button
@@ -268,7 +253,7 @@ export const AboutUsPage: React.FC = () => {
                 className="w-full sm:w-auto px-7 py-3.5 bg-[#FDBA2D] hover:bg-[#f5b124] text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-slate-950" />
-                <span>{language === 'es' ? 'Planea tu viaje' : 'Plan your trip'}</span>
+                <span>{chooseLocale(language, 'Planea tu viaje', 'Plan your trip')}</span>
               </button>
             </div>
           </div>

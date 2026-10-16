@@ -1,3 +1,4 @@
+import { chooseLocale } from '../data/ptPhrases';
 import React, { useEffect } from 'react';
 import { Hero } from '../components/home/Hero';
 import { DiscoveryOptions } from '../components/home/DiscoveryOptions';
@@ -41,13 +42,13 @@ export const HomePage: React.FC = () => {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#00A6A6] text-xs font-bold font-mono uppercase">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>{language === 'es' ? 'Experiencias destacadas' : 'Featured experiences'}</span>
+                <span>{chooseLocale(language, 'Experiencias destacadas', 'Featured experiences')}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-black text-[#063A5B] tracking-tight font-display">
-                {language === 'es' ? 'Empieza por aquí' : 'Start here'}
+                {chooseLocale(language, 'Empieza por aquí', 'Start here')}
               </h2>
               <p className="text-sm sm:text-base text-neutral-600 max-w-xl">
-                {language === 'es' ? 'Algunas experiencias para descubrir El Salvador.' : 'A few experiences to discover El Salvador.'}
+                {chooseLocale(language, 'Algunas experiencias para descubrir El Salvador.', 'A few experiences to discover El Salvador.')}
               </p>
             </div>
 
@@ -57,7 +58,7 @@ export const HomePage: React.FC = () => {
               onClick={() => navigate('/experiencias')}
               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#063A5B] hover:text-[#00A6A6] transition-colors cursor-pointer whitespace-nowrap self-start sm:self-auto group"
             >
-              <span>{language === 'es' ? 'Ver todas las experiencias' : 'View all experiences'} ({DEMO_EXPERIENCES.length})</span>
+              <span>{chooseLocale(language, 'Ver todas las experiencias', 'View all experiences')} ({DEMO_EXPERIENCES.length})</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
