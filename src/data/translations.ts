@@ -1,4 +1,5 @@
 import { TranslationDictionary, SupportedLanguage } from '../types/i18n';
+import { ptTranslations } from './translations.pt';
 
 export const translations: Record<SupportedLanguage, TranslationDictionary> = {
   es: {
@@ -427,4 +428,5 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       demoDisclaimer: 'Data presented is part of a demo environment for product hypothesis validation.',
     },
   },
+  pt: ptTranslations,
 };
