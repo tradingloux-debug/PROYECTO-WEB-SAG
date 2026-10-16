@@ -164,7 +164,18 @@ export const ptPhrases: Record<string, string> = {
   "Aplicar": "Aplicar",
   "Total de viajeros": "Total de viajantes",
   "Descuento": "Desconto",
-  "Créditos GIA aplicados": "Créditos GIA utilizados"
+  "Créditos GIA aplicados": "Créditos GIA utilizados",
+  "✨ Diseñado para ti": "✨ Planejado para você",
+  "Planea con GIA": "Planeje com a GIA",
+  "Cuéntanos cómo quieres vivir El Salvador y diseñaremos una ruta alrededor de tus intereses, tiempo y presupuesto.": "Conte como você deseja conhecer El Salvador e criaremos um roteiro de acordo com seus interesses, tempo e orçamento.",
+  "Ruta base precargada:": "Rota-base pré-carregada:",
+  "Diseñar nueva ruta desde cero →": "Criar novo roteiro do zero →",
+  "1. Preferencias": "1. Preferências",
+  "2. Ver Itinerario": "2. Ver itinerário",
+  "¡Guardado!": "Salvo!",
+  "Guardar mi viaje": "Salvar minha viagem",
+  "Días": "Dias",
+  "Viajeros": "Viajantes"
 };
 
 /** Mantém as versões espanhol e inglês intactas e permite português sem alterar a marcação visual. */
