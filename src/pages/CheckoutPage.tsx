@@ -1,3 +1,4 @@
+import { chooseLocale } from '../data/ptPhrases';
 import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -125,13 +126,11 @@ export const CheckoutPage: React.FC = () => {
     if (!formData.email.trim() || !formData.email.includes('@')) {
       errs.email = 'Ingresa un correo electrónico válido';
     }
-    if (!formData.phone.trim()) errs.phone = language === 'es' ? 'Ingresa tu teléfono o WhatsApp' : 'Please enter your phone or WhatsApp';
-    if (!formData.country.trim()) errs.country = language === 'es' ? 'Ingresa tu país de procedencia' : 'Please enter your country';
+    if (!formData.phone.trim()) errs.phone = chooseLocale(language, 'Ingresa tu teléfono o WhatsApp', 'Please enter your phone or WhatsApp');
+    if (!formData.country.trim()) errs.country = chooseLocale(language, 'Ingresa tu país de procedencia', 'Please enter your country');
     if (!formData.agreeTerms) {
       errs.agreeTerms =
-        language === 'es'
-          ? 'Debes aceptar los Términos y Condiciones y la Política de Privacidad'
-          : 'You must accept the Terms and Conditions and the Privacy Policy';
+        chooseLocale(language, 'Debes aceptar los Términos y Condiciones y la Política de Privacidad', 'You must accept the Terms and Conditions and the Privacy Policy');
     }
 
     setErrors(errs);
@@ -203,7 +202,7 @@ export const CheckoutPage: React.FC = () => {
       navigate('/reserva-confirmada');
     } catch (err) {
       console.error('Error saving booking', err);
-      setErrors({ form: language === 'es' ? 'No se pudo registrar la reserva. Intenta nuevamente.' : 'We could not save your booking. Please try again.' });
+      setErrors({ form: chooseLocale(language, 'No se pudo registrar la reserva. Intenta nuevamente.', 'We could not save your booking. Please try again.') });
     } finally {
       setIsSubmitting(false);
     }
@@ -232,12 +231,10 @@ export const CheckoutPage: React.FC = () => {
           <ShieldCheck className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
           <div className="text-xs text-teal-950">
             <p className="font-bold">
-              {language === 'es' ? 'Reserva Garantizada por GIA Experiences' : 'Guaranteed Booking by GIA Experiences'}
+              {chooseLocale(language, 'Reserva Garantizada por GIA Experiences', 'Guaranteed Booking by GIA Experiences')}
             </p>
             <p className="mt-0.5 leading-relaxed text-teal-900/90">
-              {language === 'es'
-                ? 'Tu solicitud será procesada y confirmada formalmente tras la verificación de disponibilidad. Podrás consultar el estado de tu experiencia en todo momento con tu código de reserva.'
-                : 'Your booking request will be processed and formally confirmed upon availability verification. You can track your experience anytime with your booking code.'}
+              {chooseLocale(language, 'Tu solicitud será procesada y confirmada formalmente tras la verificación de disponibilidad. Podrás consultar el estado de tu experiencia en todo momento con tu código de reserva.', 'Your booking request will be processed and formally confirmed upon availability verification. You can track your experience anytime with your booking code.')}
             </p>
           </div>
         </div>
@@ -274,7 +271,7 @@ export const CheckoutPage: React.FC = () => {
                 <p className="text-xs font-bold text-neutral-900 flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5 text-teal-700" />
                   <span>
-                    {draft.adults} {language === 'es' ? 'adultos' : 'adults'} {draft.children > 0 && `· ${draft.children} ${language === 'es' ? 'niños' : 'children'}`}
+                    {draft.adults} {chooseLocale(language, 'adultos', 'adults')} {draft.children > 0 && `· ${draft.children} ${chooseLocale(language, 'niños', 'children')}`}
                   </span>
                 </p>
               </div>
@@ -297,7 +294,7 @@ export const CheckoutPage: React.FC = () => {
                   type="text"
                   value={formData.firstName}
                   onChange={e => setFormData({ ...formData, firstName: e.target.value })}
-                  placeholder={language === 'es' ? 'Ej. Sofía' : 'E.g. Sophia'}
+                  placeholder={chooseLocale(language, 'Ej. Sofía', 'E.g. Sophia')}
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.firstName ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -314,7 +311,7 @@ export const CheckoutPage: React.FC = () => {
                   type="text"
                   value={formData.lastName}
                   onChange={e => setFormData({ ...formData, lastName: e.target.value })}
-                  placeholder={language === 'es' ? 'Ej. Martínez' : 'E.g. Martinez'}
+                  placeholder={chooseLocale(language, 'Ej. Martínez', 'E.g. Martinez')}
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.lastName ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -365,7 +362,7 @@ export const CheckoutPage: React.FC = () => {
                   type="text"
                   value={formData.country}
                   onChange={e => setFormData({ ...formData, country: e.target.value })}
-                  placeholder={language === 'es' ? 'Ej. Estados Unidos, Canadá, España, El Salvador...' : 'E.g. United States, Canada, Spain, El Salvador...'}
+                  placeholder={chooseLocale(language, 'Ej. Estados Unidos, Canadá, España, El Salvador...', 'E.g. United States, Canada, Spain, El Salvador...')}
                   className={`w-full px-3.5 py-2 text-xs rounded-xl border bg-neutral-50/50 focus:bg-white focus:outline-hidden focus:ring-2 ${
                     errors.country ? 'border-red-400 focus:ring-red-300' : 'border-neutral-200 focus:ring-teal-700'
                   }`}
@@ -399,14 +396,14 @@ export const CheckoutPage: React.FC = () => {
             <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200/80 space-y-2">
               <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                 <Tag className="w-3.5 h-3.5 text-teal-700" />
-                <span>{language === 'es' ? '¿Tienes un código GIA o de recomendación?' : 'Do you have a GIA or referral code?'}</span>
+                <span>{chooseLocale(language, '¿Tienes un código GIA o de recomendación?', 'Do you have a GIA or referral code?')}</span>
               </label>
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={promoCodeInput}
                   onChange={e => setPromoCodeInput(e.target.value.toUpperCase())}
-                  placeholder={language === 'es' ? 'Ej. BIENVENIDO5' : 'E.g. BIENVENIDO5'}
+                  placeholder={chooseLocale(language, 'Ej. BIENVENIDO5', 'E.g. BIENVENIDO5')}
                   className="flex-1 px-3.5 py-2 text-xs rounded-xl border border-neutral-200 bg-white font-mono uppercase focus:ring-2 focus:ring-teal-700"
                 />
                 <button
@@ -414,7 +411,7 @@ export const CheckoutPage: React.FC = () => {
                   onClick={handleApplyPromo}
                   className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-colors shrink-0"
                 >
-                  {language === 'es' ? 'Aplicar' : 'Apply'}
+                  {chooseLocale(language, 'Aplicar', 'Apply')}
                 </button>
               </div>
 
@@ -462,7 +459,7 @@ export const CheckoutPage: React.FC = () => {
                 <span className="font-mono">${draft.pricePerPerson} USD</span>
               </div>
               <div className="flex items-center justify-between text-neutral-600">
-                <span>{language === 'es' ? 'Total de viajeros' : 'Total travelers'}</span>
+                <span>{chooseLocale(language, 'Total de viajeros', 'Total travelers')}</span>
                 <span className="font-mono">{totalPeople}</span>
               </div>
               <div className="flex items-center justify-between text-neutral-600">
@@ -472,14 +469,14 @@ export const CheckoutPage: React.FC = () => {
 
               {discountAmount > 0 && (
                 <div className="flex items-center justify-between text-emerald-700 font-semibold">
-                  <span>{language === 'es' ? 'Descuento' : 'Discount'} ({appliedPromo?.code})</span>
+                  <span>{chooseLocale(language, 'Descuento', 'Discount')} ({appliedPromo?.code})</span>
                   <span className="font-mono">-${discountAmount} USD</span>
                 </div>
               )}
 
               {creditsAmount > 0 && (
                 <div className="flex items-center justify-between text-emerald-700 font-semibold">
-                  <span>{language === 'es' ? 'Créditos GIA aplicados' : 'GIA Credits applied'}</span>
+                  <span>{chooseLocale(language, 'Créditos GIA aplicados', 'GIA Credits applied')}</span>
                   <span className="font-mono">-${creditsAmount} USD</span>
                 </div>
               )}
